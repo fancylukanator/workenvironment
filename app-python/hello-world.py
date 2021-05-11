@@ -1,16 +1,26 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QGridLayout, QWidget
+from functions import create_batch
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QMessageBox
 
-app = QApplication([])
-window = QMainWindow()
-widget = QWidget(window)
-layout = QGridLayout()
-widget.setLayout(layout)
 
-label = QLabel()
-label.setText('Hello world!')
 
-layout.addWidget(label, 0, 0)
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    w = QWidget()
+    w.resize(600,600)
+    w.setWindowTitle('Work Environment')
+    
+    label = QLabel(w)
+    label.setText("click to save current work environment")
+    label.move(100,130)
+    label.show()
 
-window.setCentralWidget(widget)
-window.show()
-app.exec_()
+    btn = QPushButton(w)
+    btn.setText('Save')
+    btn.move(110,200)
+    btn.show()
+    btn.clicked.connect(create_batch)
+
+    
+    w.show()
+    sys.exit(app.exec_())
