@@ -23,7 +23,7 @@ def get_urls():
 
     return urls
 
-def get_programs():
+def get_programs():      #https://stackoverflow.com/questions/54827918/get-list-of-running-windows-applications-using-python
     active_applications = []
     cmd = 'powershell "gps | where {$_.MainWindowTitle } | select Name'
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -35,7 +35,7 @@ def get_programs():
 
     return active_applications
 
-def create_batch():
+def create_batch():        #https://datatofish.com/create-batch-file-python/
     active_applications = get_programs()
     urls = get_urls()
     myBat = open(r'C:\Users\user\Documents\Projects\workenvironment\app-python\test.bat','w+')
