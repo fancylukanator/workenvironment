@@ -7,9 +7,8 @@ const { app, BrowserWindow, shell, ipcMain} = require('electron');
 const ipc = ipcMain;
 
 
-
+// Create the browser window.
 function createWindow () {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -52,9 +51,8 @@ app.on('window-all-closed', function () {
 
 
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
 
+// LISTENERS
 
 // Waiting to hear if the launch button is clicked
 ipc.on('launch', function(event) {
@@ -63,6 +61,9 @@ ipc.on('launch', function(event) {
 
 
 
+
+
+// FUNCTIONS
 
 // Function to launch project with a specific name
 function openProject(project_name){
@@ -97,3 +98,4 @@ function openProject(project_name){
         shell.openPath(applications[i]);
     }
 }
+
