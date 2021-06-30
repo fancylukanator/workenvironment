@@ -6,32 +6,39 @@ document.getElementById('launch').addEventListener('click',function(){
     ipc.send('launch')
 })
 
-// Updates list of links
-document.getElementById('link').addEventListener('change', (event) => {
-    var input = document.getElementById("link").value; 
-    var child = "<li>" + input + "</li>";
-    document.getElementById("linkList").innerHTML += '<ul>'+child+'<ul>';
-    document.getElementById("link").value = ""; // clear the value
+// Adds new link to the table...
+document.getElementById('url').addEventListener('change', (event) => {
+    var table = document.getElementById("urlList");
+    var row = table.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = "URL";
+    cell2.innerHTML = document.getElementById('url').value;
+    document.getElementById("url").value = ""; // clear the value
   });
 
-// Updates list of files
+// Adds new files to the table...
 document.getElementById('addfile').addEventListener('change', (event) => {
+    var table = document.getElementById("fileList");
     var input = document.getElementById('addfile');
-    var output = document.getElementById('fileList');
-    var children = "";
     for (var i = 0; i < input.files.length; ++i) {
-        children += '<li>' + input.files.item(i).name + '</li>';
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = "FILE";
+        cell2.innerHTML = input.files.item(i).name;
     }
-    output.innerHTML += '<ul>'+children+'</ul>';
   });
 
-// Updates list of applications
+// Adds new apps to the table...
 document.getElementById('addapp').addEventListener('change', (event) => {
+    var table = document.getElementById("appList");
     var input = document.getElementById('addapp');
-    var output = document.getElementById('appList');
-    var children = "";
     for (var i = 0; i < input.files.length; ++i) {
-        children += '<li>' + input.files.item(i).name + '</li>';
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = "APP";
+        cell2.innerHTML = input.files.item(i).name;
     }
-    output.innerHTML += '<ul>'+children+'</ul>';
   });

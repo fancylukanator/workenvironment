@@ -18,34 +18,32 @@
       <!-- text input to name the workspace-->
       <label for="wspace"> Name your workspace: </label><br>
       <input type="text" id="wspace" name="wspace"><br>
-      <h2></h2>
+      <br>
 
       <!-- text input to add links-->
-      <label for="addlink"> Add a link: </label><br>
+      <label for="addurl"> Add a link: </label><br>
       <div>
-        <input type="text" id="link" name="link">
-        <!-- <button id="addlink" name="addlink">Add</button> -->
+        <input type="text" id="url" name="url">
+        <!-- <button id="addurl" name="addurl">Add</button> -->
       </div>
-      <h2></h2>
+      <br>
 
       <!-- upload a file-->
       <label for="addfile"> Upload files: </label><br>
       <input type="file" multiple id="addfile" name="addfile"><br>
-      <h2></h2>
+      <br>
 
       <!-- link an application-->
       <label for="addapp"> Link applications: </label><br>
       <input type="file" multiple id="addapp" name="addapp" accept=".app,.exe"><br>
-      <h2></h2>
+      <br>
 
-      <!-- Display the selected links, files, and applications-->
-      <p>Selected links:</p>
-      <div id="linkList"></div>
-      <p>Selected files:</p>
-      <div id="fileList"></div>
-      <p>Selected applications:</p>
-      <div id="appList"></div>
-      <h2></h2>
+      <!-- Table to display everything that is apart of the project-->
+      <p>Project Details:</p>
+      <table id = "urlList"></table>
+      <table id = "fileList"></table>
+      <table id = "appList"></table>
+      <br>
 
       <!-- submit form, this would link it to a php but could also do somethin
       like owen did with the launch button-->
