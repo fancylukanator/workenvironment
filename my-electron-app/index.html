@@ -4,13 +4,35 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Flutter</title>
   </head>
   <body>
     <h1>Flutter V.0.1</h1>
 
     <h2>Now to launch a project...</h2>
     <button id="launch">Launch Project</button>
+
+    <h2> Or create a project...</h2>
+    <!-- By creating a form, we can link output to a php? There might be a better way to do this but this will store the variables-->
+    <form>
+      <!-- text input to name the workspace-->
+      <label for="wspace"> Name your workspace: </label><br>
+      <input type="text" id="wspace" name="wspace"><br>
+      <!-- text input to add a link-->
+      <label for="alink"> Add a link: </label><br>
+      <input type="text" id="alink" name="alink"><br>
+      <!-- upload a file-->
+      <label for="afile"> Upload a file to workspace: </label><br>
+      <input type="file" id="afile" name="afile"><br>
+      <!-- submit form, this would link it to a php but could also do somethin
+      like owen did with the launch button-->
+      <dev>
+        <!-- Just to space her out a little more-->
+        <h2>     </h2>
+      </dev>
+      <input type="submit" value="Create Workspace">
+
+    </form>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
