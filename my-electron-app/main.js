@@ -68,7 +68,7 @@ ipc.on('create_new_proj', (event) =>{
 
 // Waiting to see if user created a new project...
 ipc.on('created_proj', (event) =>{
-  BrowserWindow.getFocusedWindow().loadFile('./NEW.html')
+  BrowserWindow.getFocusedWindow().loadFile('./renderer/home.html')
   console.log("Open home...")
 });
 
