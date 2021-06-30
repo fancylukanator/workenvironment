@@ -21,7 +21,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('home.html')
+  mainWindow.loadFile('./renderer/home.html')
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -61,7 +61,7 @@ ipc.on('launch', function(event) {
 
 // Waiting to see if users wants to create new project
 ipc.on('create_new_proj', (event) =>{
-  BrowserWindow.getFocusedWindow().loadFile('create_project.html')
+  BrowserWindow.getFocusedWindow().loadFile('./renderer/create_project.html')
 });
 
 

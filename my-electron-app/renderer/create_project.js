@@ -37,3 +37,6 @@ document.getElementById('addapp').addEventListener('change', (event) => {
         cell2.innerHTML = input.files.item(i).name;
     }
   });
+
+  document.getElementById('create_proj').addEventListener('click', function() {
+  });
