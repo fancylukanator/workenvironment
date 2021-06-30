@@ -10,7 +10,7 @@
     <h1>Flutter V.0.1</h1>
     <h2> Create new project...</h2>
     <!-- By creating a form, we can link output to a php? There might be a better way to do this but this will store the variables-->
-    <form>
+    <form id = "new_proj">
       <!-- text input to name the workspace-->
       <label for="wspace"> Name your workspace: </label><br>
       <input type="text" id="wspace" name="wspace"><br>
@@ -44,8 +44,7 @@
       <!-- submit form, this would link it to a php but could also do somethin
       like owen did with the launch button-->
       <dev></dev>
-      <input type="submit" id="create_proj" value="Create Workspace">
-
+      <button type="submit">Create Workspace</button>
     </form>
 
     <!-- You can also require other files to run in this process -->

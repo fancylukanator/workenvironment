@@ -38,5 +38,6 @@ document.getElementById('addapp').addEventListener('change', (event) => {
     }
   });
 
-  document.getElementById('create_proj').addEventListener('click', function() {
+document.getElementById('new_proj').addEventListener('submit', function() {
+    ipc.send('created_proj')
   });

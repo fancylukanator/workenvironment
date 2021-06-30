@@ -22,6 +22,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadFile('./renderer/home.html')
+  console.log("Open home...")
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -54,15 +55,24 @@ app.on('window-all-closed', function () {
 
 // LISTENERS
 
-// Waiting to hear if the launch button is clicked
+// Waiting to hear if the launch button is clicked...
 ipc.on('launch', function(event) {
   openProject("test");
 });
 
-// Waiting to see if users wants to create new project
+// Waiting to see if users wants to create new project...
 ipc.on('create_new_proj', (event) =>{
   BrowserWindow.getFocusedWindow().loadFile('./renderer/create_project.html')
+  console.log("Open create new project...")
 });
+
+// Waiting to see if user created a new project...
+ipc.on('created_proj', (event) =>{
+  BrowserWindow.getFocusedWindow().loadFile('./NEW.html')
+  console.log("Open home...")
+});
+
+
 
 
 
