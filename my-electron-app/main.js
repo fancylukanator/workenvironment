@@ -79,6 +79,9 @@ function openProject(project_name){
         applications = ["/Applications/zoom.us.app", "/Applications/Microsoft Outlook.app"];
     }
 
+    // Minimize window upon opening a project
+    BrowserWindow.getFocusedWindow().minimize()
+
     // Open all of the urls that are required
     for(let i = 0; i < urls.length; i++){
         shell.openExternal(urls[i]);
@@ -93,7 +96,4 @@ function openProject(project_name){
     for(let i = 0; i < applications.length; i++){
         shell.openPath(applications[i]);
     }
-
-    // Minimize window upon opening a project
-    BrowserWindow.fromId(1).minimize()
 }
