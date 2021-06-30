@@ -34,3 +34,8 @@ document.getElementById('addapp').addEventListener('change', (event) => {
         cell2.innerHTML = input.files.item(i).name;
     }
   });
+
+  // Tells main that a project has just been created...
+document.getElementById('new_proj').addEventListener('submit', function() {
+  document.getElementById("content").style.display = "none";
+});

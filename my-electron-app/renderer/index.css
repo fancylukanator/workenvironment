@@ -1,14 +1,16 @@
-#container {
+#home{
     width: 100%;
 }
 
-#left {
+#left{
     float: left;
     width: auto;
 }
 
-#content{
+#create_project{
     float: right;
     width: auto;
-    height: auto;
+    height: 5000pt;
+    display: none;
+
 }

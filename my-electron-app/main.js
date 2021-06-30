@@ -21,7 +21,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('./renderer/home.html')
+  mainWindow.loadFile('./renderer/index.html')
   console.log("Open home...")
 
   // Open the DevTools.

@@ -1,0 +1,73 @@
+<!--index.html-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Flutter</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+
+    <div id="home">
+      <div id ="left">
+        <h1>Flutter V.0.1</h1>
+        <h2>Projects</h2>
+        <button id="launch">Launch Pre-made Project</button>
+        <br>
+        <br>
+    
+        <h2>Options</h2>
+        <button id="create_new_proj">Create New Project</button>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <div id ="create_project">
+      <h2> Create new project...</h2>
+      <!-- By creating a form, we can link output to a php? There might be a better way to do this but this will store the variables-->
+      <form id = "new_proj">
+        <!-- text input to name the workspace-->
+        <label for="wspace"> Name your workspace: </label><br>
+        <input type="text" id="wspace" name="wspace"><br>
+        <br>
+  
+        <!-- text input to add links-->
+        <label for="addurl"> Add a link: </label><br>
+        <div>
+          <input type="text" id="url" name="url">
+          <!-- <button id="addurl" name="addurl">Add</button> -->
+        </div>
+        <br>
+  
+        <!-- upload a file-->
+        <label for="addfile"> Upload files: </label><br>
+        <input type="file" multiple id="addfile" name="addfile"><br> <!-- add webkitdirectory for directory selection -->
+        <br>
+  
+        <!-- link an application-->
+        <label for="addapp"> Link applications: </label><br>
+        <input type="file" multiple id="addapp" name="addapp" accept=".app,.exe"><br>
+        <br>
+  
+        <!-- Table to display everything that is apart of the project-->
+        <h3>Project Details:</h3>
+        <table id = "urlList"></table>
+        <table id = "fileList"></table>
+        <table id = "appList"></table>
+        <br>
+  
+        <!-- submit form, this would link it to a php but could also do somethin like owen did with the launch button-->
+        <dev></dev>
+        <button type="submit">Create Workspace</button>
+      </form>
+  
+      <!-- You can also require other files to run in this process -->
+      <script src="./create_project.js"></script>
+    </div>
+
+
+    <script src="./index.js"></script>
+  </body>
+</html>
