@@ -62,14 +62,12 @@ ipc.on('launch', function(event) {
 
 // Waiting to see if users wants to create new project...
 ipc.on('create_new_proj', (event) =>{
-  BrowserWindow.getFocusedWindow().loadFile('./renderer/create_project.html')
-  console.log("Open create new project...")
+  console.log("Open project creation portal...")
 });
 
 // Waiting to see if user created a new project...
 ipc.on('created_proj', (event) =>{
-  BrowserWindow.getFocusedWindow().loadFile('./renderer/home.html')
-  console.log("Open home...")
+  console.log("Closing create project portal...")
 });
 
 

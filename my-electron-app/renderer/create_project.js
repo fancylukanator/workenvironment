@@ -1,6 +1,3 @@
-const electron = require('electron');
-const ipc = electron.ipcRenderer;
-
 // Adds new link to the table...
 document.getElementById('url').addEventListener('change', (event) => {
     var table = document.getElementById("urlList");
@@ -36,8 +33,4 @@ document.getElementById('addapp').addEventListener('change', (event) => {
         cell1.innerHTML = "APP";
         cell2.innerHTML = input.files.item(i).name;
     }
-  });
-
-document.getElementById('new_proj').addEventListener('submit', function() {
-    ipc.send('created_proj')
   });
