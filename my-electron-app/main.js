@@ -21,7 +21,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('home.html')
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -56,10 +56,13 @@ app.on('window-all-closed', function () {
 
 // Waiting to hear if the launch button is clicked
 ipc.on('launch', function(event) {
-    openProject("test");
+  openProject("test");
 });
 
-
+// Waiting to see if users wants to create new project
+ipc.on('create_new_proj', (event) =>{
+  BrowserWindow.getFocusedWindow().loadFile('create_project.html')
+});
 
 
 
@@ -98,4 +101,3 @@ function openProject(project_name){
         shell.openPath(applications[i]);
     }
 }
-

@@ -1,11 +1,6 @@
 const electron = require('electron');
 const ipc = electron.ipcRenderer;
 
-// Checks for when the launch button is clicked
-document.getElementById('launch').addEventListener('click',function(){
-    ipc.send('launch')
-})
-
 // Adds new link to the table...
 document.getElementById('url').addEventListener('change', (event) => {
     var table = document.getElementById("urlList");

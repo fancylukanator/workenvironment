@@ -8,11 +8,7 @@
   </head>
   <body>
     <h1>Flutter V.0.1</h1>
-
-    <h2>Now to launch a project...</h2>
-    <button id="launch">Launch Project</button>
-
-    <h2> Or create a project...</h2>
+    <h2> Create new project...</h2>
     <!-- By creating a form, we can link output to a php? There might be a better way to do this but this will store the variables-->
     <form>
       <!-- text input to name the workspace-->
@@ -30,7 +26,7 @@
 
       <!-- upload a file-->
       <label for="addfile"> Upload files: </label><br>
-      <input type="file" multiple id="addfile" name="addfile"><br>
+      <input type="file" multiple id="addfile" name="addfile"><br> <!-- add webkitdirectory for directory selection -->
       <br>
 
       <!-- link an application-->
@@ -53,6 +49,6 @@
     </form>
 
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <script src="./create_project.js"></script>
   </body>
 </html>
