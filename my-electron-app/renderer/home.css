@@ -1,4 +1,14 @@
-.content{
-    background-color: aquamarine;
-    width: 100px;
+#container {
+    width: 100%;
+}
+
+#left {
+    float: left;
+    width: auto;
+}
+
+#content{
+    float: right;
+    width: auto;
+    height: auto;
 }
