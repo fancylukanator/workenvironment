@@ -49,7 +49,17 @@ const addProject = (ev) => {
   
   // save to localStorage
   localStorage.setItem('MyProjectList', JSON.stringify(projects));
+
+  // create button on home page for project
+  //var btn = document.createElement("button");
+  //btn.innerHTML = project.name;
+  //document.body.appendChild(btn);
+  //const currentHeader = document.getElementById("home");
+  //document.body.insertBefore(btn, currentHeader);
+
+
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn').addEventListener('click', addProject);
