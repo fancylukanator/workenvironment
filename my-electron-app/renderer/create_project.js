@@ -23,10 +23,7 @@ document.getElementById('addapp').addEventListener('change', (event) => {
   console.warn('added', {appArray} );
 });
 
-  // Tells main that a project has just been created...
-document.getElementById('new_proj').addEventListener('submit', function() {
-  document.getElementById("content").style.display = "none";
-});
+
 
 
 // creates array of JSON objects containing project information...
@@ -51,16 +48,20 @@ const addProject = (ev) => {
   localStorage.setItem('MyProjectList', JSON.stringify(projects));
 
   // create button on home page for project
-  //var btn = document.createElement("button");
-  //btn.innerHTML = project.name;
-  //document.body.appendChild(btn);
-  //const currentHeader = document.getElementById("home");
-  //document.body.insertBefore(btn, currentHeader);
+  var btn = document.createElement("button");
+  // name the btn
+  btn.innerHTML = project.name; 
+  // choose where to place the btn
+  var myDiv = document.getElementById("projBtn");
+  myDiv.appendChild(btn);
 
 
+  // hide create project form, return to home
+  document.getElementById("create_project").style.display = "none";
 }
 
-
+// execute addProject function when button is clicked
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn').addEventListener('click', addProject);
 });
+
