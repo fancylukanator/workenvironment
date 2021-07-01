@@ -1,41 +1,56 @@
-// Adds new link to the table...
+// Adds new link to the URLS array...
+urlArray = [];
 document.getElementById('url').addEventListener('change', (event) => {
-    var table = document.getElementById("urlList");
-    var row = table.insertRow(-1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.innerHTML = "URL";
-    cell2.innerHTML = document.getElementById('url').value;
-    document.getElementById("url").value = ""; // clear the value
-  });
+  let url = document.getElementById('url').value;
+  urlArray.push(url);
+  document.getElementById("url").value = ""; // clear the value
+  console.warn('added', {urlArray} );
+});
 
-// Adds new files to the table...
+// Adds new files to the FILE array...
+fileArray = [];
 document.getElementById('addfile').addEventListener('change', (event) => {
-    var table = document.getElementById("fileList");
-    var input = document.getElementById('addfile');
-    for (var i = 0; i < input.files.length; ++i) {
-        var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.innerHTML = "FILE";
-        cell2.innerHTML = input.files.item(i).name;
-    }
-  });
+  let file = document.getElementById('addfile').value;
+  fileArray.push(file);
+  console.warn('added', {fileArray} );
+});
 
-// Adds new apps to the table...
+// Adds new apps to the APP array...
+appArray = [];
 document.getElementById('addapp').addEventListener('change', (event) => {
-    var table = document.getElementById("appList");
-    var input = document.getElementById('addapp');
-    for (var i = 0; i < input.files.length; ++i) {
-        var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.innerHTML = "APP";
-        cell2.innerHTML = input.files.item(i).name;
-    }
-  });
+  let app = document.getElementById('addapp').value;
+  appArray.push(app);
+  console.warn('added', {appArray} );
+});
 
   // Tells main that a project has just been created...
 document.getElementById('new_proj').addEventListener('submit', function() {
   document.getElementById("content").style.display = "none";
+});
+
+
+// creates array of JSON objects containing project information...
+let projects = [];
+// example {name: 'project1', }
+const addProject = (ev) => {
+  ev.preventDefault();      // stop form from submitting
+  //get table content
+  let project = {
+    name: document.getElementById('wspace').value,
+    urls: urlArray,
+    files: fileArray,
+    apps: appArray
+  }
+  projects.push(project);
+  document.forms[0].reset();
+  
+  //display
+  console.warn('added', {projects} );
+  
+  // save to localStorage
+  localStorage.setItem('MyProjectList', JSON.stringify(projects));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn').addEventListener('click', addProject);
 });
