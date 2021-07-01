@@ -27,8 +27,9 @@ document.getElementById('addapp').addEventListener('change', (event) => {
 
 
 // creates array of JSON objects containing project information...
+// creates a project button
+// hides form content when submitted
 let projects = [];
-// example {name: 'project1', }
 const addProject = (ev) => {
   ev.preventDefault();      // stop form from submitting
   //get table content
@@ -47,17 +48,9 @@ const addProject = (ev) => {
   // save to localStorage
   localStorage.setItem('MyProjectList', JSON.stringify(projects));
 
-  // create button on home page for project
-  var btn = document.createElement("button");
-  // name the btn
-  btn.innerHTML = project.name; 
-  // choose where to place the btn
-  var myDiv = document.getElementById("projBtn");
-  myDiv.appendChild(btn);
-
-
   // hide create project form, return to home
   document.getElementById("create_project").style.display = "none";
+
 }
 
 // execute addProject function when button is clicked
