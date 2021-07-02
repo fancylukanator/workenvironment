@@ -1,16 +1,16 @@
 // function that displays all information about the project
 function displayProject(index) {
 
-    projectData = JSON.parse(localStorage.MyProjectList)[index];
-
+    projectData = JSON.parse(localStorage.MyProjectList);
+    //console.log(projectData[index].name);
     // show all data
-    document.getElementById("projectName").innerHTML = projectData.name;
-    for(var j in projectData.urls){
-        var linkList = document.getElementById("projectURLs");
-        var linkEntry = document.createElement('li');
-        linkEntry.appendChild(document.createTextNode(projectData.urls[j]));
-        linkList.appendChild(linkEntry);
-    }
+    document.getElementById("projectName").innerHTML = projectData[index].name;
+    //for(var j in projectData.urls){
+        //var linkList = document.getElementById("projectURLs");
+        //var linkEntry = document.createElement('li');
+        //linkEntry.appendChild(document.createTextNode(projectData.urls[j]));
+        //linkList.appendChild(linkEntry);
+    //}
 }
     /*for(var k in projectData.files) {
         var fileList = document.getElementById("projectFiles");

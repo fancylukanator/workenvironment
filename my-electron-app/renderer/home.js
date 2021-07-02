@@ -21,7 +21,7 @@ function updateProjectList(){
     for(var i in projectData) {
         var entry = document.createElement('li');
         entry.id = projectData[i].name;
-        //entry.onclick = display.displayProject(i); // Send the index for the project to displayProject
+        entry.ondblclick = display.displayProject(i); // Send the index for the project to displayProject
         entry.appendChild(document.createTextNode(projectData[i].name));
         projectList.appendChild(entry);
     }
