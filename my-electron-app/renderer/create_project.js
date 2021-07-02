@@ -55,14 +55,16 @@ function updateTable(table, array, type){
 // creates array of JSON objects containing project information...
 // creates a project button
 // hides form content when submitted
-let projects = JSON.parse(localStorage.getItem('MyProjectList')) || [];
 
 const addProject = (ev) => {
-  ev.preventDefault();      // stop form from submitting
-  //get table content
 
-  // Ensure that the project has a name
-  if(document.getElementById('wspace').value != ""){
+  // Loads in current projects
+  let projects = JSON.parse(localStorage.getItem('MyProjectList')) || [];
+
+  ev.preventDefault();// stop form from submitting
+  
+  // Ensure that the project has a name and that the name is unique
+  if(document.getElementById('wspace').value != "" && !projects.map(({ name }) => name).includes(document.getElementById('wspace').value)){
     let project = {
       name: document.getElementById('wspace').value,
       urls: urlArray.slice(),
@@ -86,7 +88,7 @@ const addProject = (ev) => {
     fileArray = [];
     appArray = [];
   
-  
+
     // hide create project form, return to home
     document.getElementById("create_project").style.display = "none";
   
