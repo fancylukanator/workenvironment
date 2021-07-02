@@ -2,31 +2,33 @@
 const display = require("./display_project");
 
 // Initial call to create a project list
-try{
-    updateProjectList();
-}
-catch(e){
-    console.log(e)
-}
+updateProjectList();
 
 // Create a list element for each project in localStorage
 function updateProjectList(){
-    var projectList = document.getElementById("projectList");
+    try{
+        var projectList = document.getElementById("projectList");
 
-    // Clear the current project list
-    projectList.innerHTML = "";
-
-    // Construct new project list
-    projectData = JSON.parse(localStorage.MyProjectList);
-    for(var i in projectData) {
-        var entry = document.createElement('li');
-        entry.id = i;
-        entry.onclick = function() {
-            display.displayProject(this.id); // Send the index for the project to displayProject
+        // Clear the current project list
+        projectList.innerHTML = "";
+    
+        // Construct new project list
+        projectData = JSON.parse(localStorage.MyProjectList);
+        for(var i in projectData) {
+            var entry = document.createElement('li');
+            entry.id = "project-" + i;
+            entry.index = i
+            entry.onclick = function() {
+                display.displayProject(this.index); // Send the index for the project to displayProject
+            }
+            entry.appendChild(document.createTextNode(projectData[i].name));
+            projectList.appendChild(entry);
         }
-        entry.appendChild(document.createTextNode(projectData[i].name));
-        projectList.appendChild(entry);
     }
+    catch(e){
+        console.log(e);
+    }
+
 }
 
 // Checks for when the new project button is clicked
