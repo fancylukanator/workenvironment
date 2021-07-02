@@ -27,3 +27,11 @@ function displayProject () {
     });
     document.getElementById("display_project").style.display = "block";
 }
+
+module.exports = { displayProject }
+
+function test() {
+    console.log("js files are linked properly")
+}
+
+module.exports = { test }

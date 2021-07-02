@@ -8,12 +8,17 @@ document.getElementById('launch').addEventListener('click',function(){
     ipc.send('launch')
 });
 
+// load in displayproject function from display_project.js
+const display = require("./display_project.js");
+
+
 // create a list element for each project in localStorage
 var projectList = document.getElementById("projectList");
 projectData = JSON.parse(localStorage.MyProjectList);
 for(var i in projectData) {
     var entry = document.createElement('li');
-    //entry.onclick = displayProject();
+    entry.onclick = display.test();
     entry.appendChild(document.createTextNode(projectData[i].name));
     projectList.appendChild(entry);
 }
+
