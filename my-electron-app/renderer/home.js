@@ -31,4 +31,5 @@ function updateProjectList(){
 // Checks for when the new project button is clicked
 document.getElementById('create_new_proj').addEventListener('click',function(){
     document.getElementById("create_project").style.display = "block";
+    document.getElementById("display_project").style.display = "none";
 })

@@ -35,6 +35,7 @@ function displayProject(index) {
         appList.appendChild(appEntry);
     }
     document.getElementById("display_project").style.display = "block";
+    document.getElementById("create_project").style.display = "none";
 }
 
 
