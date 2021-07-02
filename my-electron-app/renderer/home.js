@@ -1,9 +1,12 @@
+// load in displayproject function from display_project.js
+const display = require("./display_project");
+
 // Initial call to create a project list
 try{
     updateProjectList();
 }
 catch(e){
-    console.log("No current projects.")
+    console.log(e)
 }
 
 // Create a list element for each project in localStorage
@@ -18,7 +21,7 @@ function updateProjectList(){
     for(var i in projectData) {
         var entry = document.createElement('li');
         entry.id = projectData[i].name;
-        //entry.onclick = displayProject();
+        entry.onclick = display.displayProject(i); // Send the index for the project to displayProject
         entry.appendChild(document.createTextNode(projectData[i].name));
         projectList.appendChild(entry);
     }
@@ -33,6 +36,3 @@ document.getElementById('create_new_proj').addEventListener('click',function(){
 document.getElementById('launch').addEventListener('click',function(){
     ipc.send('launch')
 });
-
-// load in displayproject function from display_project.js
-const display = require("./display_project.js");
