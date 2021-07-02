@@ -61,9 +61,9 @@ const addProject = (ev) => {
   //get table content
   let project = {
     name: document.getElementById('wspace').value,
-    urls: urlArray,
-    files: fileArray,
-    apps: appArray
+    urls: urlArray.slice(),
+    files: fileArray.slice(),
+    apps: appArray.slice()
   }
   projects.push(project);
   document.forms[0].reset();
@@ -73,6 +73,15 @@ const addProject = (ev) => {
   
   // save to localStorage
   localStorage.setItem('MyProjectList', JSON.stringify(projects));
+
+  // Reset and clear all project creation stuff
+  document.getElementById('urlList').innerHTML = "";
+  document.getElementById('fileList').innerHTML = "";
+  document.getElementById('appList').innerHTML = "";
+  urlArray = [];
+  fileArray = [];
+  appArray = [];
+
 
   // hide create project form, return to home
   document.getElementById("create_project").style.display = "none";
