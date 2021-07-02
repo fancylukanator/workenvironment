@@ -47,17 +47,12 @@ document.getElementById('deleteProject').addEventListener('click',function(){
     // Get all of the projects
     var projects = JSON.parse(localStorage.MyProjectList);
 
-    // Remove the key
-    localStorage.removeItem("MyProjectList")
-
     // Remove the project from the storage
-    projects = projects.splice(index, 1);
-
-    console.log(projects)
-    console.log(projects[-1])
+    projects.splice(index, 1);
     
-    //localStorage.setItem('MyProjectList3', JSON.stringify(projects))
+    //reset the data in the key
     localStorage.setItem('MyProjectList', JSON.stringify(projects))
+    console.log("deleted")
 
     document.getElementById("display_project").style.display = "none";
     updateProjectList()

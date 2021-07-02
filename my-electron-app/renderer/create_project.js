@@ -28,7 +28,7 @@ document.getElementById('addfile').addEventListener('change', (event) => {
 // Adds new apps to the APP array...
 appArray = [];
 document.getElementById('addapp').addEventListener('change', (event) => {
-  let app = document.getElementById('addapp').value;
+  let app = document.getElementById('addapp').files[0].path;
 
   // Ensure app is both unique and not null
   if(app != "" && !appArray.includes(app)){
