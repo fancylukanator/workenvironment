@@ -15,27 +15,31 @@ document.getElementById('url').addEventListener('change', (event) => {
 // Adds new files to the FILE array...
 fileArray = [];
 document.getElementById('addfile').addEventListener('change', (event) => {
-  let file = document.getElementById('addfile').files[0].path;
+  let files = document.getElementById('addfile').files;
 
-  // Ensure file is both unique and not null
-  if(file != "" && !fileArray.includes(file)){
-    fileArray.push(file);
-    console.warn('added', {fileArray});
-    updateTable(document.getElementById('fileList'), fileArray, "FILE")
+  for(var i = 0; i < files.length; i++){
+    // Ensure file is both unique and not null
+    if(files[i] != "" && !fileArray.includes(files[i])){
+      fileArray.push(files[i].path);
+      console.warn('added', {fileArray});
+    }
   }
+  updateTable(document.getElementById('fileList'), fileArray, "FILE")
 });
 
 // Adds new apps to the APP array...
 appArray = [];
 document.getElementById('addapp').addEventListener('change', (event) => {
-  let app = document.getElementById('addapp').files[0].path;
+  let apps = document.getElementById('addapp').files;
 
-  // Ensure app is both unique and not null
-  if(app != "" && !appArray.includes(app)){
-    appArray.push(app);
-    console.warn('added', {appArray} );
-    updateTable(document.getElementById('appList'), appArray, "APP")
+  for(var i = 0; i < apps.length; i++){
+    // Ensure file is both unique and not null
+    if(apps[i] != "" && !appArray.includes(apps[i])){
+      appArray.push(apps[i].path);
+      console.warn('added', {appArray});
+    }
   }
+  updateTable(document.getElementById('appList'), appArray, "APP")
 });
 
 // Function to update the specific table
