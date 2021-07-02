@@ -1,24 +1,27 @@
 // function that displays all information about the project
 function displayProject(index) {
 
-    projectData = JSON.parse(localStorage.MyProjectList);
-    //console.log(projectData[index].name);
-    // show all data
-    document.getElementById("projectName").innerHTML = projectData[index].name;
-    document.getElementById("display_project").style.display = "block";
-    //for(var j in projectData.urls){
-        //var linkList = document.getElementById("projectURLs");
-        //var linkEntry = document.createElement('li');
-        //linkEntry.appendChild(document.createTextNode(projectData.urls[j]));
-        //linkList.appendChild(linkEntry);
-    //}
-}
-    /*for(var k in projectData.files) {
+    projectData = JSON.parse(localStorage.MyProjectList)[index];
+
+    document.getElementById("projectName").innerHTML = projectData.name;
+
+    document.getElementById("projectURLs").innerHTML = "";
+    for(var j in projectData.urls){
+        var linkList = document.getElementById("projectURLs");
+        var linkEntry = document.createElement('li');
+        linkEntry.appendChild(document.createTextNode(projectData.urls[j]));
+        linkList.appendChild(linkEntry);
+    }
+
+    document.getElementById("projectFiles").innerHTML = "";
+    for(var k in projectData.files) {
         var fileList = document.getElementById("projectFiles");
         var fileEntry = document.createElement('li');
         fileEntry.appendChild(document.createTextNode(projectData.files[k]));
         fileList.appendChild(fileEntry);
     }
+
+    document.getElementById("projectApps").innerHTML = "";
     for(var l in projectData.apps) {
         var appList = document.getElementById("projectApps");
         var appEntry = document.createElement('li');
@@ -34,6 +37,5 @@ document.getElementById('deleteProject').addEventListener('click',function(){
     });
     document.getElementById("display_project").style.display = "block";
 }
-*/
 
 module.exports = { displayProject }

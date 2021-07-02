@@ -20,9 +20,9 @@ function updateProjectList(){
     projectData = JSON.parse(localStorage.MyProjectList);
     for(var i in projectData) {
         var entry = document.createElement('li');
-        entry.id = projectData[i].name;
+        entry.id = i;
         entry.onclick = function() {
-            display.displayProject(i); // Send the index for the project to displayProject
+            display.displayProject(this.id); // Send the index for the project to displayProject
         }
         entry.appendChild(document.createTextNode(projectData[i].name));
         projectList.appendChild(entry);
