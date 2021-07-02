@@ -15,7 +15,7 @@ document.getElementById('url').addEventListener('change', (event) => {
 // Adds new files to the FILE array...
 fileArray = [];
 document.getElementById('addfile').addEventListener('change', (event) => {
-  let file = document.getElementById('addfile').value;
+  let file = document.getElementById('addfile').files[0].path;
 
   // Ensure file is both unique and not null
   if(file != "" && !fileArray.includes(file)){
@@ -101,4 +101,5 @@ const addProject = (ev) => {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn').addEventListener('click', addProject);
 });
+
 

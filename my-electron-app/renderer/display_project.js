@@ -31,8 +31,9 @@ function displayProject(index) {
     
 
     // delete project and minimize project details
-document.getElementById('deleteProject').addEventListener('click',function(){
-        localStorage.removeItem('MyProjectList[0]');
+    document.getElementById('deleteProject').addEventListener('click',function(){
+        console.log(localStorage.MyProjectList[index]);
+        localStorage.removeItem(localStorage.MyProjectList[0]);
         document.getElementById("display_project").style.display = "none";
     });
     document.getElementById("display_project").style.display = "block";
