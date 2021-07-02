@@ -1,6 +1,3 @@
-// load in displayproject function from display_project.js
-const display = require("./display_project");
-
 // Initial call to create a project list
 updateProjectList();
 
@@ -19,7 +16,7 @@ function updateProjectList(){
             entry.id = "project-" + i;
             entry.index = i
             entry.onclick = function() {
-                display.displayProject(this.index); // Send the index for the project to displayProject
+                displayProject(this.index); // Send the index for the project to displayProject
             }
             entry.appendChild(document.createTextNode(projectData[i].name));
             projectList.appendChild(entry);
@@ -35,8 +32,3 @@ function updateProjectList(){
 document.getElementById('create_new_proj').addEventListener('click',function(){
     document.getElementById("create_project").style.display = "block";
 })
-
-// Checks for when the launch button is clicked
-document.getElementById('launch').addEventListener('click',function(){
-    ipc.send('launch')
-});

@@ -38,8 +38,9 @@ function displayProject(index) {
 }
 
 
+
 // Delete project and minimize project details
-document.getElementById('deleteProject').addEventListener('click',function(){
+document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
     // Get the index of the project to be deleted
     index = document.getElementById("projectName").index
@@ -48,14 +49,49 @@ document.getElementById('deleteProject').addEventListener('click',function(){
     var projects = JSON.parse(localStorage.MyProjectList);
 
     // Remove the project from the storage
-    projects.splice(index, 1);
-    
+    projects.splice(index,1);
+
     //reset the data in the key
     localStorage.setItem('MyProjectList', JSON.stringify(projects))
     console.log("deleted")
 
     document.getElementById("display_project").style.display = "none";
     updateProjectList()
+
     });
 
-module.exports = { displayProject }
+
+
+// Open a specific project
+document.getElementById('launchProject').addEventListener('click', (event) =>{
+    
+    // Get the index of the project to be deleted
+    index = document.getElementById("projectName").index
+
+    // Get project data of interest
+    projectData = JSON.parse(localStorage.MyProjectList)[index];
+
+    // Hide the project
+    document.getElementById("display_project").style.display = "none";
+
+    // Minimize window upon opening a project
+    ipc.send('minimize');
+
+    // Open all of the urls
+    for(var j in projectData.urls){
+        shell.openExternal(projectData.urls[j]);
+    }
+
+    // Open all of the files
+    for(var k in projectData.files) {
+        shell.openPath(projectData.files[k]);
+    }
+
+    // Open all of the applications
+    for(var l in projectData.apps) {
+        shell.openPath(projectData.apps[l]);
+    }
+
+    // Close the project display
+    document.getElementById("display_project").style.display = "block";
+});

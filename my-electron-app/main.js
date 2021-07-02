@@ -55,57 +55,7 @@ app.on('window-all-closed', function () {
 
 // LISTENERS
 
-// Waiting to hear if the launch button is clicked...
-ipc.on('launch', function(event) {
-  openProject("test");
+// Waiting to hear if the window should be minimized...
+ipc.on('minimize', function(event) {
+  BrowserWindow.getFocusedWindow().minimize();
 });
-
-// Waiting to see if users wants to create new project...
-ipc.on('create_new_proj', (event) =>{
-  console.log("Open project creation portal...")
-});
-
-// Waiting to see if user created a new project...
-ipc.on('created_proj', (event) =>{
-  console.log("Closing create project portal...")
-});
-
-
-
-
-
-// FUNCTIONS
-
-// Function to launch project with a specific name
-function openProject(project_name){
-
-    // Initialize arrays to hold the components of the project
-    var urls = [];
-    var files = [];
-    var applications = [];
-
-    // Will use the project_name to find which project to access (Access database? File?)
-    if (project_name == "test"){
-        urls = ["https://www.electronjs.org/docs/api/shell#shellopenpathpath", "https://mail.google.com/mail/u/0/#inbox", "https://www.google.ca"];
-        files = ["/Users/owenkent/Desktop/QICSI/Code-of-Conduct-QICSI-2021-copy.pdf","/Users/owenkent/Desktop/QICSI/QICSI-waiver.docx"];
-        applications = ["/Applications/zoom.us.app", "/Applications/Microsoft Outlook.app"];
-    }
-
-    // Minimize window upon opening a project
-    BrowserWindow.getFocusedWindow().minimize()
-
-    // Open all of the urls that are required
-    for(let i = 0; i < urls.length; i++){
-        shell.openExternal(urls[i]);
-    }
-
-    // Open all of the files that are required
-    for(let i = 0; i < files.length; i++){
-        shell.openPath(files[i]);
-    }
-
-    // Open all of the applications that are required
-    for(let i = 0; i < applications.length; i++){
-        shell.openPath(applications[i]);
-    }
-}
