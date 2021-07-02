@@ -55,7 +55,8 @@ function updateTable(table, array, type){
 // creates array of JSON objects containing project information...
 // creates a project button
 // hides form content when submitted
-let projects = [];
+let projects = JSON.parse(localStorage.getItem('MyProjectList')) || [];
+
 const addProject = (ev) => {
   ev.preventDefault();      // stop form from submitting
   //get table content
@@ -85,6 +86,9 @@ const addProject = (ev) => {
 
   // hide create project form, return to home
   document.getElementById("create_project").style.display = "none";
+
+  // Update the project list
+  updateProjectList()
 
 }
 
