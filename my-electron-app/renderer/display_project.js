@@ -5,6 +5,7 @@ function displayProject(index) {
     //console.log(projectData[index].name);
     // show all data
     document.getElementById("projectName").innerHTML = projectData[index].name;
+    document.getElementById("display_project").style.display = "block";
     //for(var j in projectData.urls){
         //var linkList = document.getElementById("projectURLs");
         //var linkEntry = document.createElement('li');
