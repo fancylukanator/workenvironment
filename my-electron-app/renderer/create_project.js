@@ -2,28 +2,54 @@
 urlArray = [];
 document.getElementById('url').addEventListener('change', (event) => {
   let url = document.getElementById('url').value;
-  urlArray.push(url);
-  document.getElementById("url").value = ""; // clear the value
-  console.warn('added', {urlArray} );
+
+  // Ensure url is both unique and not null
+  if(url != "" && !urlArray.includes(url)){
+    urlArray.push(url);
+    document.getElementById("url").value = ""; // clear the value
+    console.warn('added', {urlArray} );
+    updateTable(document.getElementById('urlList'), urlArray, "URL")
+  }
 });
 
 // Adds new files to the FILE array...
 fileArray = [];
 document.getElementById('addfile').addEventListener('change', (event) => {
   let file = document.getElementById('addfile').value;
-  fileArray.push(file);
-  console.warn('added', {fileArray} );
+
+  // Ensure file is both unique and not null
+  if(file != "" && !fileArray.includes(file)){
+    fileArray.push(file);
+    console.warn('added', {fileArray});
+    updateTable(document.getElementById('fileList'), fileArray, "FILE")
+  }
 });
 
 // Adds new apps to the APP array...
 appArray = [];
 document.getElementById('addapp').addEventListener('change', (event) => {
   let app = document.getElementById('addapp').value;
-  appArray.push(app);
-  console.warn('added', {appArray} );
+
+  // Ensure app is both unique and not null
+  if(app != "" && !appArray.includes(app)){
+    appArray.push(app);
+    console.warn('added', {appArray} );
+    updateTable(document.getElementById('appList'), appArray, "APP")
+  }
 });
 
+// Function to update the specific table
+function updateTable(table, array, type){
+  table.innerHTML = "";
 
+  for(var i = 0; i < array.length; i++){
+    row = table.insertRow()
+    var cell1 = row.insertCell();
+    var cell2 = row.insertCell();
+    cell1.innerHTML = type;
+    cell2.innerHTML = array[i];
+  }
+}
 
 
 // creates array of JSON objects containing project information...
