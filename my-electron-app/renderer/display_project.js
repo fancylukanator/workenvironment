@@ -38,13 +38,6 @@ function displayProject(index) {
 }
 
 
-<<<<<<< Updated upstream
-    // delete project and minimize project details
-    document.getElementById('deleteProject').addEventListener('click',function(){
-        console.log(localStorage.MyProjectList[index]);
-        localStorage.removeItem(localStorage.MyProjectList[0]);
-        document.getElementById("display_project").style.display = "none";
-=======
 // Delete project and minimize project details
 document.getElementById('deleteProject').addEventListener('click',function(){
 
@@ -68,7 +61,6 @@ document.getElementById('deleteProject').addEventListener('click',function(){
 
     document.getElementById("display_project").style.display = "none";
     updateProjectList()
->>>>>>> Stashed changes
     });
 
 module.exports = { displayProject }
