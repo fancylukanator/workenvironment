@@ -42,6 +42,9 @@ function displayProject(index) {
 // Delete project and minimize project details
 document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
+    // prevent multiple button clicks
+    event.preventDefault();
+
     // Get the index of the project to be deleted
     index = document.getElementById("projectName").index
 
