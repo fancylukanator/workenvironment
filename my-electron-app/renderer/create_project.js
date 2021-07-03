@@ -1,6 +1,9 @@
 // Adds new link to the URLS array...
 urlArray = [];
-document.getElementById('url').addEventListener('change', (event) => {
+document.getElementById('addurl').addEventListener('click', (event) => {
+  // prevent multiple button clicks
+  event.preventDefault();
+
   let url = document.getElementById('url').value;
 
   // Ensure url is both unique and not null
@@ -60,7 +63,7 @@ function updateTable(table, array, type){
 // creates a project button
 // hides form content when submitted
 
-const addProject = (ev) => {
+document.getElementById('created_proj').addEventListener('click', (ev) => {
 
   // Loads in current projects
   let projects = JSON.parse(localStorage.getItem('MyProjectList')) || [];
@@ -99,11 +102,6 @@ const addProject = (ev) => {
     // Update the project list
     updateProjectList()
   }
-}
-
-// execute addProject function when button is clicked
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btn').addEventListener('click', addProject);
 });
 
 
