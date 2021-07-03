@@ -29,7 +29,26 @@ function updateProjectList(){
 }
 
 // Checks for when the new project button is clicked
-document.getElementById('create_new_proj').addEventListener('click',function(){
-    document.getElementById("create_project").style.display = "block";
-    document.getElementById("display_project").style.display = "none";
+document.getElementById('create_new_proj').addEventListener('click',(event) => {
+    
+    // Checks to see if the person is not already making a project
+    if(document.getElementById("create_project").style.display != "block"){
+
+        // Reset the tentative project
+        document.forms[0].reset();
+        document.getElementById('urlList').innerHTML = "";
+        document.getElementById('fileList').innerHTML = "";
+        document.getElementById('appList').innerHTML = "";
+        urlArray = [];
+        fileArray = [];
+        appArray = [];
+
+        // Display the create project portal
+        document.getElementById("create_project").style.display = "block";
+        document.getElementById("display_project").style.display = "none";
+    }
+    // If the user is trying to close create a project
+    else{
+        document.getElementById("create_project").style.display = "none";
+    }
 })
