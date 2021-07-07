@@ -1,0 +1,59 @@
+{
+  "name": "Ditto",
+  "version": "1.0.0",
+  "description": "Transition between projects like never before.",
+  "main": "main.js",
+  "author": "Ditto Development Team",
+  "license": "",
+  "scripts": {
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "make-mac": "electron-forge make --platform darwin",
+    "make-win": "electron-forge make --platform win32",
+    "make-linux": "electron-forge make --platform linux"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "get-chrome-tabs": "^1.0.0",
+    "open": "^8.2.1",
+    "ps-list": "^7.2.0",
+    "tasklist": "^4.0.1"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.57",
+    "@electron-forge/maker-deb": "^6.0.0-beta.57",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.57",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
+    "@electron-forge/maker-zip": "^6.0.0-beta.57",
+    "electron": "13.1.6",
+    "webextension-polyfill": "^0.8.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "platforms": ["win32"],
+          "config": {
+            "name": "my_electron_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": ["darwin","linux"]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
