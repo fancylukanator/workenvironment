@@ -42,8 +42,8 @@ function detailsTable(table, array, active, type){
     var cell2 = row.insertCell();
     var cell3 = row.insertCell();
     cell1.innerHTML = type;
-    cell2.innerHTML = "Active";
-    cell3.innerHTML = "Delete"
+    cell2.innerHTML = ""; //"Selected";
+    cell3.innerHTML = ""; //"Delete";
 
     // Add contents to the table
     for(var i = 0; i < array.length; i++){
@@ -68,7 +68,7 @@ function detailsTable(table, array, active, type){
       }
 
       // Third cell allows the item to be deleted from the project
-      cell3.innerHTML = '<button type="button" id = "c3-' + type + '-' + i + '">X</button>';
+      cell3.innerHTML = '<button type="button" id = "c3-' + type + '-' + i + '">x</button>';
       var del = document.getElementById("c3-" + type + "-" + i);
       del.id = "delete-" + type + "-" + i;
       del.index = i
@@ -76,7 +76,89 @@ function detailsTable(table, array, active, type){
           deleteItem(type,this.index);
       }
     }
+
+    // Final row to add additional stuff
+    row = table.insertRow()
+    var cell1 = row.insertCell();
+    
+    // Set type specific input options
+    switch(type){
+        case "URLs":
+            cell1.innerHTML = '<input type="text" id="select-new-url"><button type="button" id = "add-new-url">Add</button>';
+            var add = document.getElementById("add-new-url");
+            add.onclick = function() {
+                addItem(type);
+            }
+            break;
+        case "Files":
+            cell1.innerHTML = '<input type="file" multiple id="select-new-files">';
+            var add = document.getElementById("select-new-files");
+            add.onchange = function() {
+                addItem(type);
+            }
+            break;
+        case "Apps":
+            cell1.innerHTML = '<input type="file" multiple id="select-new-apps" accept=".app,.exe">';
+            var add = document.getElementById("select-new-apps");
+            add.onchange = function() {
+                addItem(type);
+            }
+            break;
+    }
   }
+
+
+
+function addItem(type){
+
+    // Get the index of the project
+    p_index = document.getElementById("projectName").index
+
+    // Get all of the projects
+    var projects = JSON.parse(localStorage.MyProjectList);
+
+    // Snag the project to be editted
+    var project = projects[p_index]
+    
+    // Add the new item to the array
+    switch(type){
+        case "URLs":
+            let url = document.getElementById('select-new-url').value;
+            if(url != "" && !project.urls.includes(url)){
+                project.urls.push(url)
+                project.urls_active.push(1)
+            }
+            break;
+        case "Files":
+            let files = document.getElementById('select-new-files').files;
+            for(var i = 0; i < files.length; i++){
+                if(files[i].path != "" && !project.files.includes(files[i].path)){
+                    project.files.push(files[i].path)
+                    project.files_active.push(1)
+                }
+            }
+            break;
+        case "Apps":
+            let apps = document.getElementById('select-new-apps').files;
+            for(var i = 0; i < apps.length; i++){
+                if(apps[i].path != "" && !project.apps.includes(apps[i].path)){
+                    project.apps.push(apps[i].path)
+                    project.apps_active.push(1)
+                }
+            }
+            break;
+    }
+
+    // Update the project in the storage
+    projects.splice(p_index, 1, project);
+
+    // Update the data in the key
+    localStorage.setItem('MyProjectList', JSON.stringify(projects))
+
+    // Reload the project display
+    document.getElementById("display_project").style.display = "none";
+    displayProject(p_index)
+}
 
 
 
@@ -219,4 +301,31 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
     // Close the project display
     document.getElementById("display_project").style.display = "block";
+});
+
+
+// Check to see if the user changed a project name
+document.getElementById('projectName').addEventListener('input', (event) =>{
+
+    // Get the index of the project to be deleted
+    index = document.getElementById("projectName").index
+
+    // Get all of the projects
+    var projects = JSON.parse(localStorage.MyProjectList);
+
+    // Snag the project to be editted
+    var project = projects[index]
+
+    // Change the project name
+    project.name = document.getElementById("projectName").textContent
+
+    // Update the project in the storage
+    projects.splice(index, 1, project);
+
+    //reset the data in the key
+    localStorage.setItem('MyProjectList', JSON.stringify(projects))
+    console.log("Updated the name.")
+
+    // Update the name of the project
+    updateProjectList()
 });

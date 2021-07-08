@@ -27,7 +27,7 @@ document.getElementById('addfile').addEventListener('change', (event) => {
   let files = document.getElementById('addfile').files;
   for(var i = 0; i < files.length; i++){
     // Ensure file is both unique and not null
-    if(files[i] != "" && !fileArray.includes(files[i])){
+    if(files[i].path != "" && !fileArray.includes(files[i].path)){
       fileArray.push(files[i].path);
       console.warn('added', {fileArray});
     }
@@ -43,7 +43,7 @@ document.getElementById('addapp').addEventListener('change', (event) => {
 
   for(var i = 0; i < apps.length; i++){
     // Ensure file is both unique and not null
-    if(apps[i] != "" && !appArray.includes(apps[i])){
+    if(apps[i].path != "" && !appArray.includes(apps[i].path)){
       appArray.push(apps[i].path);
       console.warn('added', {appArray});
     }
