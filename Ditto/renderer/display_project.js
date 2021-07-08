@@ -1,3 +1,5 @@
+const { watchFile } = require('original-fs');
+
 // function that displays all information about the project
 function displayProject(index) {
 
@@ -84,9 +86,13 @@ function detailsTable(table, array, active, type){
     // Set type specific input options
     switch(type){
         case "URLs":
-            cell1.innerHTML = '<input type="text" id="select-new-url"><button type="button" id = "add-new-url">Add</button>';
+            cell1.innerHTML = '<input type="text" id="select-new-url"><button type="button" id = "add-new-url">Add</button><button type="button" id = "new-captured-urls">Capture</button>';
             var add = document.getElementById("add-new-url");
             add.onclick = function() {
+                addItem("URL");
+            }
+            var capture = document.getElementById("new-captured-urls");
+            capture.onclick = function() {
                 addItem(type);
             }
             break;
@@ -109,7 +115,7 @@ function detailsTable(table, array, active, type){
 
 
 
-function addItem(type){
+async function addItem(type){
 
     // Get the index of the project
     p_index = document.getElementById("projectName").index
@@ -122,12 +128,22 @@ function addItem(type){
     
     // Add the new item to the array
     switch(type){
-        case "URLs":
+        case "URL":
             let url = document.getElementById('select-new-url').value;
             if(url != "" && !project.urls.includes(url)){
                 project.urls.push(url)
                 project.urls_active.push(1)
             }
+            break;
+        case "URLs":
+            var tabData = await captureURLs();
+            for(var i = 0; i < tabData.length; i++){
+                console.log(tabData[i].url)
+                if(tabData[i].url != "" && !project.urls.includes(tabData[i].url)){
+                    project.urls.push(tabData[i].url)
+                    project.urls_active.push(1)
+                }
+            }    
             break;
         case "Files":
             let files = document.getElementById('select-new-files').files;
@@ -158,6 +174,16 @@ function addItem(type){
     // Reload the project display
     document.getElementById("display_project").style.display = "none";
     displayProject(p_index)
+}
+
+
+// Function used to capture the URLs on Chrome
+async function captureURLs(){
+    const getChromeTabs = require('get-chrome-tabs');
+    // get the data and wait for it to be loaded
+    const tabData = await getChromeTabs();
+
+    return tabData;
 }
 
 
