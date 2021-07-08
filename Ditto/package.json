@@ -19,6 +19,7 @@
     "get-chrome-tabs": "^1.0.0",
     "open": "^8.2.1",
     "ps-list": "^7.2.0",
+    "read-browser-tabs": "^1.0.4",
     "tasklist": "^4.0.1"
   },
   "devDependencies": {
@@ -27,7 +28,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.57",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
     "@electron-forge/maker-zip": "^6.0.0-beta.57",
-    "electron": "13.1.6",
+    "electron": "^13.1.6",
     "webextension-polyfill": "^0.8.0"
   },
   "config": {
@@ -36,14 +37,19 @@
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
-          "platforms": ["win32"],
+          "platforms": [
+            "win32"
+          ],
           "config": {
             "name": "my_electron_app"
           }
         },
         {
           "name": "@electron-forge/maker-zip",
-          "platforms": ["darwin","linux"]
+          "platforms": [
+            "darwin",
+            "linux"
+          ]
         },
         {
           "name": "@electron-forge/maker-deb",

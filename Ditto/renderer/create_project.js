@@ -20,6 +20,16 @@ document.getElementById('addurl').addEventListener('click', (event) => {
   }
 });
 
+// Add new link to the URLS array from auto generated list
+function addTabDataUrl(url) {
+  if(url != "" && !urlArray.includes(url)){
+    urlArray.push(url);
+    //document.getElementById("url").value = ""; // clear the value
+    console.warn('added', {urlArray} );
+    updateTable(document.getElementById('urlList'), urlArray, "URLs")
+  }
+}
+
 
 
 // Adds new files to the FILE array...
