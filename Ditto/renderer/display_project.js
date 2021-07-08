@@ -1,5 +1,3 @@
-const { watchFile } = require('original-fs');
-
 // function that displays all information about the project
 function displayProject(index) {
 
