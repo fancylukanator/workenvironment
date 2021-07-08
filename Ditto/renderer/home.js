@@ -36,12 +36,14 @@ document.getElementById('create_new_proj').addEventListener('click',(event) => {
 
         // Reset the tentative project
         document.forms[0].reset();
-        document.getElementById('urlList').innerHTML = "";
-        document.getElementById('fileList').innerHTML = "";
-        document.getElementById('appList').innerHTML = "";
+
         urlArray = [];
         fileArray = [];
         appArray = [];
+
+        updateTable(document.getElementById('urlList'), urlArray, "URLs")
+        updateTable(document.getElementById('fileList'), urlArray, "Files")
+        updateTable(document.getElementById('appList'), urlArray, "Apps")
 
         // Display the create project portal
         document.getElementById("create_project").style.display = "block";

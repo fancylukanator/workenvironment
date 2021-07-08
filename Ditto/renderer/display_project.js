@@ -15,34 +15,142 @@ function displayProject(index) {
         document.getElementById("projectName").index = index
 
         // List out all of the URLs
-        document.getElementById("projectURLs").innerHTML = "";
-        for(var j in projectData.urls){
-            var linkList = document.getElementById("projectURLs");
-            var linkEntry = document.createElement('li');
-            linkEntry.appendChild(document.createTextNode(projectData.urls[j]));
-            linkList.appendChild(linkEntry);
-        }
+        detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
 
         // List out all of the files
-        document.getElementById("projectFiles").innerHTML = "";
-        for(var k in projectData.files) {
-            var fileList = document.getElementById("projectFiles");
-            var fileEntry = document.createElement('li');
-            fileEntry.appendChild(document.createTextNode(projectData.files[k]));
-            fileList.appendChild(fileEntry);
-        }
+        detailsTable(document.getElementById("projectFiles"),projectData.files,projectData.files_active,"Files")
 
         // List all of the applications
-        document.getElementById("projectApps").innerHTML = "";
-        for(var l in projectData.apps) {
-            var appList = document.getElementById("projectApps");
-            var appEntry = document.createElement('li');
-            appEntry.appendChild(document.createTextNode(projectData.apps[l]));
-            appList.appendChild(appEntry);
-        }
+        detailsTable(document.getElementById("projectApps"),projectData.apps,projectData.apps_active,"Apps")
+
         document.getElementById("display_project").style.display = "block";
         document.getElementById("create_project").style.display = "none";
     }
+}
+
+
+
+// Function to display details of the project
+function detailsTable(table, array, active, type){
+
+    // Reset the table
+    table.innerHTML = "";
+
+    // Add in the header to the table
+    row = table.insertRow()
+    var cell1 = row.insertCell();
+    var cell2 = row.insertCell();
+    var cell3 = row.insertCell();
+    cell1.innerHTML = type;
+    cell2.innerHTML = "Active";
+    cell3.innerHTML = "Delete"
+
+    // Add contents to the table
+    for(var i = 0; i < array.length; i++){
+      row = table.insertRow()
+      var cell1 = row.insertCell();
+      var cell2 = row.insertCell();
+      var cell3 = row.insertCell();
+
+      // First cell contains the path
+      cell1.innerHTML = array[i];
+
+      // Second cell contains ability to toggle activation
+      cell2.innerHTML = '<input type="checkbox" id = "c2-' + type + '-' + i + '"/>';
+      var cb = document.getElementById("c2-" + type + "-" + i);
+      cb.id = "checkbox-" + type + "-" + i;
+      cb.index = i
+      cb.onclick = function() {
+          activate(type,this.index);
+      }
+      if(active[i]){
+          cb.checked = true; // Sets the check box to be on if previously active
+      }
+
+      // Third cell allows the item to be deleted from the project
+      cell3.innerHTML = '<button type="button" id = "c3-' + type + '-' + i + '">X</button>';
+      var del = document.getElementById("c3-" + type + "-" + i);
+      del.id = "delete-" + type + "-" + i;
+      del.index = i
+      del.onclick = function() {
+          deleteItem(type,this.index);
+      }
+    }
+  }
+
+
+
+// Function to toggle if something will be launched
+function activate(type,index){
+
+    // Get the index of the project
+    p_index = document.getElementById("projectName").index
+
+    // Get all of the projects
+    var projects = JSON.parse(localStorage.MyProjectList);
+
+    // Snag the project to be editted
+    var project = projects[p_index]
+    
+    // Toggles the activation of the requested item
+    switch(type){
+        case "URLs":
+            project.urls_active[index] = (project.urls_active[index] == 0 ? 1 : 0);
+            break;
+        case "Files":
+            project.files_active[index] = (project.files_active[index] == 0 ? 1 : 0);
+            break;
+        case "Apps":
+            project.apps_active[index] = (project.apps_active[index] == 0 ? 1 : 0);
+            break;
+    }
+
+    // Update the project in the storage
+    projects.splice(p_index, 1, project);
+
+    // Update the data in the key
+    localStorage.setItem('MyProjectList', JSON.stringify(projects))
+}
+
+
+
+// Delete a specific url, file, or app from a project
+function deleteItem(type, index){
+
+    // Get the index of the project
+    p_index = document.getElementById("projectName").index
+
+    // Get all of the projects
+    var projects = JSON.parse(localStorage.MyProjectList);
+
+    // Snag the project to be editted
+    var project = projects[p_index]
+    
+    // Removes the item and its active status
+    switch(type){
+        case "URLs":
+            project.urls.splice(index,1)
+            project.urls_active.splice(index,1)
+            break;
+        case "Files":
+            project.files.splice(index,1)
+            project.files_active.splice(index,1)
+            break;
+        case "Apps":
+            project.apps.splice(index,1)
+            project.apps_active.splice(index,1)
+            break;
+    }
+
+    // Update the project in the storage
+    projects.splice(p_index, 1, project);
+
+    // Update the data in the key
+    localStorage.setItem('MyProjectList', JSON.stringify(projects))
+
+    // Reload the project display
+    document.getElementById("display_project").style.display = "none";
+    displayProject(p_index)
 }
 
 
@@ -88,19 +196,25 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
     // Minimize window upon opening a project
     ipc.send('minimize');
 
-    // Open all of the urls
+    // Open all of the active urls
     for(var j in projectData.urls){
-        shell.openExternal(projectData.urls[j]);
+        if(projectData.urls_active[j]){
+            shell.openExternal(projectData.urls[j]);
+        }
     }
 
-    // Open all of the files
+    // Open all of the active files
     for(var k in projectData.files) {
-        shell.openPath(projectData.files[k]);
+        if(projectData.files_active[k]){
+            shell.openPath(projectData.files[k]);
+        }
     }
 
-    // Open all of the applications
+    // Open all of the active applications
     for(var l in projectData.apps) {
-        shell.openPath(projectData.apps[l]);
+        if(projectData.apps_active[l]){
+            shell.openPath(projectData.apps[l]);
+        }
     }
 
     // Close the project display
