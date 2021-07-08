@@ -53,4 +53,30 @@ document.getElementById('create_new_proj').addEventListener('click',(event) => {
     else{
         document.getElementById("create_project").style.display = "none";
     }
+
+    // Auto generate list of URLs from open chrome window
+    const getChromeTabs = require('get-chrome-tabs');
+    async function getTabs() {
+        // get the data and wait for it to be loaded
+        const tabData = await getChromeTabs();
+        // display data in list on page
+        var tabDataList = document.getElementById("tabDataList");
+        // Clear the current url list
+        tabDataList.innerHTML = "";
+        // Construct new url list
+        for(var i in tabData) {
+            var entry = document.createElement('li');
+            entry.id = "url-" + i;
+            entry.index = i;
+            entry.onclick = function() {
+                addTabDataUrl(tabData[this.index].url); // Send the url to urlArray
+            }
+            entry.appendChild(document.createTextNode(tabData[i].url));
+            tabDataList.appendChild(entry);
+        }
+
+
+    }
+    // Run the above async function
+    getTabs();
 })
