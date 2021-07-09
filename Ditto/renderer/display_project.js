@@ -289,8 +289,23 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
 // Open a specific project
 document.getElementById('launchProject').addEventListener('click', (event) =>{
+
+    // Generate a list of PID's before project is launched
+    const psList = require('ps-list');
+    async function before() {
+        psBeforeLaunch = await psList();
+        // create array of all PID's
+        pidBefore = [];
+        for(var i in psBeforeLaunch) {
+            pidBefore.push(psBeforeLaunch[i].pid);
+        }
+        console.log('received before processes');
+        //console.log(psBeforeLaunch)
+        return pidBefore;
+    }
+    before();
     
-    // Get the index of the project to be deleted
+    // Get the index of the project to be opened
     index = document.getElementById("projectName").index
 
     // Get project data of interest

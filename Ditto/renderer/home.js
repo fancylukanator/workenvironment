@@ -83,6 +83,7 @@ document.getElementById('create_new_proj').addEventListener('click',(event) => {
 
 
 
+
 // Checks for when the TEST button is clicked
 const psList = require('ps-list');
 // get processes on before button
@@ -124,7 +125,7 @@ document.getElementById('close').addEventListener('click',(event) => {
     for(var i in psNew) {
         try {
             terminate(psNew[i]);
-            console.log('terminated', psNew[i]);
+            //console.log('terminated', psNew[i]);
         }catch(e) {
             console.log(e);
         }
