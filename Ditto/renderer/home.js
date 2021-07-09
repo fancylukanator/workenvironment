@@ -80,3 +80,64 @@ document.getElementById('create_new_proj').addEventListener('click',(event) => {
     // Run the above async function
     getTabs();
 })
+
+
+
+// Checks for when the TEST button is clicked
+const psList = require('ps-list');
+// get processes on before button
+document.getElementById('before').addEventListener('click',(event) => {
+    async function before() {
+        psBeforeLaunch = await psList();
+        // create array of all PID's
+        pidBefore = [];
+        for(var i in psBeforeLaunch) {
+            pidBefore.push(psBeforeLaunch[i].pid);
+        }
+        console.log('received before processes');
+        return pidBefore;
+    }
+    before();
+})
+// get processes on after button
+document.getElementById('after').addEventListener('click',(event) => {
+    async function after() {
+        psAfterLaunch = await psList();
+        // create array of all PID's
+        pidAfter = [];
+        for(var i in psAfterLaunch) {
+            pidAfter.push(psAfterLaunch[i].pid);
+        }
+        console.log('received after processes');
+        return pidAfter;
+    }
+    after();
+})
+// get the difference between before and after to close the 'new' process
+var terminate = require('terminate');
+document.getElementById('close').addEventListener('click',(event) => {
+    console.log('b',pidBefore.length);
+    console.log('a',pidAfter.length);
+    var psNew = pidAfter.filter(function(obj) { return pidBefore.indexOf(obj) == -1; });
+    console.log(psNew);
+    try {
+        terminate(psNew[0])
+    }catch(e) {
+        console.log(e)
+    }
+    /*for(var i in psNew) {
+        try {
+            terminate(i)
+        }catch(e) {
+            console.log(e)
+        }*/
+        /*terminate(i, function (err) {
+            if (err) { // you will get an error if you did not supply a valid process.pid
+              console.log("Oopsy: " + err); // handle errors in your preferred way.
+            }
+            else {
+              console.log('terminated process',i); // terminating the Processes succeeded.
+            }
+          });*/
+    //}
+})
