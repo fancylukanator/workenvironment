@@ -300,7 +300,6 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
             pidBefore.push(psBeforeLaunch[i].pid);
         }
         console.log('received before processes');
-        //console.log(psBeforeLaunch)
         return pidBefore;
     }
     before();
@@ -340,8 +339,36 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
     // Close the project display
     document.getElementById("display_project").style.display = "block";
+
+    //  Generate a list of PID's after project is launched
+    async function after() {
+        psAfterLaunch = await psList();
+        // create array of all PID's after project launch
+        pidAfter = [];
+        for(var i in psAfterLaunch) {
+            pidAfter.push(psAfterLaunch[i].pid);
+        }
+        console.log('received after processes');
+        return pidAfter;
+    }
+    after();
 });
 
+// Close project - get the difference between before and after pids
+var terminate = require('terminate');
+document.getElementById('closeProject').addEventListener('click', (event) =>{
+    // Filter for new pids
+    var psNew = pidAfter.filter(function(obj) { return pidBefore.indexOf(obj) == -1; });
+    // Terminate new pids
+    for(var i in psNew) {
+        try {
+            terminate(psNew[i]);
+            console.log('terminated', psNew[i]);
+        }catch(e) {
+            console.log(e);
+        }
+    }
+})
 
 // Check to see if the user changed a project name
 document.getElementById('projectName').addEventListener('input', (event) =>{
