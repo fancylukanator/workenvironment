@@ -95,6 +95,7 @@ document.getElementById('before').addEventListener('click',(event) => {
             pidBefore.push(psBeforeLaunch[i].pid);
         }
         console.log('received before processes');
+        console.log(psBeforeLaunch)
         return pidBefore;
     }
     before();
@@ -120,24 +121,12 @@ document.getElementById('close').addEventListener('click',(event) => {
     console.log('a',pidAfter.length);
     var psNew = pidAfter.filter(function(obj) { return pidBefore.indexOf(obj) == -1; });
     console.log(psNew);
-    try {
-        terminate(psNew[0])
-    }catch(e) {
-        console.log(e)
-    }
-    /*for(var i in psNew) {
+    for(var i in psNew) {
         try {
-            terminate(i)
+            terminate(psNew[i]);
+            console.log('terminated', psNew[i]);
         }catch(e) {
-            console.log(e)
-        }*/
-        /*terminate(i, function (err) {
-            if (err) { // you will get an error if you did not supply a valid process.pid
-              console.log("Oopsy: " + err); // handle errors in your preferred way.
-            }
-            else {
-              console.log('terminated process',i); // terminating the Processes succeeded.
-            }
-          });*/
-    //}
+            console.log(e);
+        }
+    }
 })
