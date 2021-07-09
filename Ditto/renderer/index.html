@@ -39,13 +39,26 @@
         <br>
   
         <!-- text input to add links-->
-        <label for="addurl"> Add a link: </label><br>
+        <label for="addurl"> Manually add an URL: </label><br>
         <div>
           <input type="text" id="url" name="url">
           <button id="addurl" name="addurl">Add</button>
-          <!-- list that displays open urls -->
-          <ul id="tabDataList"></ul>
         </div>
+
+        <!-- list that displays open urls -->
+        <label for="addurls"></label><br>
+        <form>
+          <div class="multiselect">
+            <div class="selectBox" id = "selectURLs">
+              <select>
+                <option>Select open URLs...</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div id="checkboxes-urls">
+            </div>
+          </div>
+        </form>
 
         <br>
   
@@ -53,11 +66,21 @@
         <label for="addfile"> Upload files: </label><br>
         <input type="file" multiple id="addfile" name="addfile"><br> <!-- add webkitdirectory for directory selection -->
         <br>
-  
+
         <!-- link an application-->
-        <label for="addapp"> Link applications: </label><br>
-        <input type="file" multiple id="addapp" name="addapp" accept=".app,.exe"><br>
-        <br>
+        <label for="addapp"></label><br>
+        <form>
+          <div class="multiselect">
+            <div class="selectBox" id = "selectApps">
+              <select>
+                <option>Select Applications...</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div id="checkboxes-apps">
+            </div>
+          </div>
+        </form>
   
         <!-- Table to display everything that is apart of the project-->
         <h3>Project Details:</h3>

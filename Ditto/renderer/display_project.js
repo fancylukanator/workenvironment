@@ -1,5 +1,15 @@
+var latest_app = "";
+
+
+
 // function that displays all information about the project
 function displayProject(index) {
+
+    // Clear out the apps and urls from create_project
+    appList = document.getElementById("checkboxes-apps");
+    appList.innerHTML = "";
+    var tabList = document.getElementById("checkboxes-urls");
+    tabList.innerHTML = "";
 
     // If the user is already previewing the project they clicked on... hide the project
     if(document.getElementById("projectName").index == index && document.getElementById("display_project").style.display == "block"){
@@ -102,14 +112,80 @@ function detailsTable(table, array, active, type){
             }
             break;
         case "Apps":
-            cell1.innerHTML = '<input type="file" multiple id="select-new-apps" accept=".app,.exe">';
-            var add = document.getElementById("select-new-apps");
-            add.onchange = function() {
-                addItem(type);
+            cell1.innerHTML = '<form><div class="multiselect"><div class="selectBox" id = "select-new-apps"><select><option>Select Applications...</option></select><div class="overSelect"></div></div><div id="checkboxes-apps-display"></div></div></form>';
+            var dropdown = document.getElementById("select-new-apps");
+            dropdown.onclick = function(){
+                dropdownApps();
+                console.log("Dropdown")
             }
+            displayApps(array);
             break;
     }
   }
+
+
+
+// Select applications from dropdown menu
+var expandedApp = false;
+function dropdownApps(){
+    var checkboxes = document.getElementById("checkboxes-apps-display");
+    if (!expandedApp) {
+      checkboxes.style.display = "block";
+      expandedApp = true;
+    } else {
+      checkboxes.style.display = "none";
+      expandedApp = false;
+    }
+}
+
+
+function displayApps(current_apps){
+    // Access the files in the application folder
+    // Notes:
+    // -> Could add in /System/Applications for Mac default apps
+    // -> Could also further explore directories within /Applications folder
+    var folder = "/Applications/"
+    var fs = require('fs');
+    var files = fs.readdirSync(folder);
+
+    // Reset the checkbox html code
+    appList = document.getElementById("checkboxes-apps-display");
+    appList.innerHTML = "";
+
+    // Add each of the .app files to the dropdown menu
+    for(var i = 0; i < files.length; i++){
+        if(files[i].endsWith(".app")){
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.index = i;
+            checkbox.id = folder + files[checkbox.index];
+            checkbox.value = "Apps";
+
+            if(current_apps.includes(folder + files[checkbox.index])){
+                checkbox.checked = true;
+            }
+
+            checkbox.onclick = function() {
+                latest_app = this.id;
+                console.log(latest_app)
+                console.log(this.checked)
+                expandedApp = false; // Only can select one app at a time for whatever reason... Temp fix
+                addItem(this.value);
+            }
+         
+            var label = document.createElement('label')
+            label.htmlFor = folder + files[checkbox.index];
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(files[checkbox.index].slice(0,-4)));
+    
+            appList.appendChild(label);
+        }
+    }
+}
+
+
+
+
 
 
 
@@ -153,12 +229,16 @@ async function addItem(type){
             }
             break;
         case "Apps":
-            let apps = document.getElementById('select-new-apps').files;
-            for(var i = 0; i < apps.length; i++){
-                if(apps[i].path != "" && !project.apps.includes(apps[i].path)){
-                    project.apps.push(apps[i].path)
-                    project.apps_active.push(1)
-                }
+            var app = document.getElementById(latest_app);
+            console.log(latest_app)
+            if(!app.checked){
+                console.log("DELETED FROM LIST")
+                deleteItem(type,project.apps.indexOf(latest_app))
+                return;
+            }
+            else{
+                project.apps.push(latest_app)
+                project.apps_active.push(1)
             }
             break;
     }
@@ -231,6 +311,8 @@ function deleteItem(type, index){
 
     // Snag the project to be editted
     var project = projects[p_index]
+
+    console.log(project)
     
     // Removes the item and its active status
     switch(type){
@@ -243,6 +325,12 @@ function deleteItem(type, index){
             project.files_active.splice(index,1)
             break;
         case "Apps":
+            try {
+                document.getElementById(project.apps[index]).checked = false;
+              } catch (error) {
+                console.log(error)
+              }
+            console.log(project.apps[index])
             project.apps.splice(index,1)
             project.apps_active.splice(index,1)
             break;
@@ -315,17 +403,16 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
             shell.openPath(projectData.files[k]);
         }
     }
-
     // Open all of the active applications
     for(var l in projectData.apps) {
         if(projectData.apps_active[l]){
             shell.openPath(projectData.apps[l]);
         }
     }
-
     // Close the project display
     document.getElementById("display_project").style.display = "block";
 });
+
 
 
 // Check to see if the user changed a project name

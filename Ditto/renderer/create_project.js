@@ -5,7 +5,7 @@ appArray = [];
 
 
 
-// Adds new link to the URLS array...
+// Adds new manual link to the URL array...
 document.getElementById('addurl').addEventListener('click', (event) => {
   // Prevent multiple button clicks
   event.preventDefault();
@@ -20,14 +20,36 @@ document.getElementById('addurl').addEventListener('click', (event) => {
   }
 });
 
-// Add new link to the URLS array from auto generated list
-function addTabDataUrl(url) {
-  if(url != "" && !urlArray.includes(url)){
-    urlArray.push(url);
-    //document.getElementById("url").value = ""; // clear the value
-    console.warn('added', {urlArray} );
-    updateTable(document.getElementById('urlList'), urlArray, "URLs")
+
+
+// Select URLs from dropdown menu
+var expandedURLs = false;
+document.getElementById("selectURLs").addEventListener('click', (event) => {
+  var checkboxes = document.getElementById("checkboxes-urls");
+  if (!expandedURLs) {
+    checkboxes.style.display = "block";
+    expandedURLs = true;
+  } else {
+    checkboxes.style.display = "none";
+    expandedURLs = false;
   }
+});
+
+
+
+// Adds new open URLs to the URL array...
+function addURL(url){
+
+  if(!urlArray.includes(url)){
+    urlArray.push(url);
+  }
+  else{
+    var index = urlArray.indexOf(url);
+    if (index !== -1) {
+      urlArray.splice(index, 1);
+    }
+  }
+  updateTable(document.getElementById('urlList'), urlArray, "URLs")
 }
 
 
@@ -47,19 +69,35 @@ document.getElementById('addfile').addEventListener('change', (event) => {
 
 
 
-// Adds new apps to the APP array...
-document.getElementById('addapp').addEventListener('change', (event) => {
-  let apps = document.getElementById('addapp').files;
+// Select applications from dropdown menu
+var expandedApps = false;
+document.getElementById("selectApps").addEventListener('click', (event) => {
+  var checkboxes = document.getElementById("checkboxes-apps");
+  if (!expandedApps) {
+    checkboxes.style.display = "block";
+    expandedApps = true;
+  } else {
+    checkboxes.style.display = "none";
+    expandedApps = false;
+  }
+});
 
-  for(var i = 0; i < apps.length; i++){
-    // Ensure file is both unique and not null
-    if(apps[i].path != "" && !appArray.includes(apps[i].path)){
-      appArray.push(apps[i].path);
-      console.warn('added', {appArray});
+
+
+// Adds new apps to the APP array...
+function addApp(path){
+
+  if(!appArray.includes(path)){
+    appArray.push(path);
+  }
+  else{
+    var index = appArray.indexOf(path);
+    if (index !== -1) {
+      appArray.splice(index, 1);
     }
   }
   updateTable(document.getElementById('appList'), appArray, "Apps")
-});
+}
 
 
 
@@ -102,6 +140,11 @@ function updateTable(table, array, type){
 function deleteTempItem(type,index){
   switch(type){
     case "URLs":
+      try {
+        document.getElementById(urlArray[index]).checked = false;
+      } catch (error) {
+        console.log(error)
+      }
       urlArray.splice(index,1)
       updateTable(document.getElementById('urlList'), urlArray, "URLs")
       break;
@@ -110,6 +153,11 @@ function deleteTempItem(type,index){
       updateTable(document.getElementById('fileList'), fileArray, "Files")
       break;
     case "Apps":
+      try {
+        document.getElementById(appArray[index]).checked = false;
+      } catch (error) {
+        console.log(error)
+      }
       appArray.splice(index,1)
       updateTable(document.getElementById('appList'), appArray, "Apps")
       break;
