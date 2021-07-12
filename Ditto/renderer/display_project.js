@@ -379,7 +379,7 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 // Listen to if the user wishes to open a specific project
 document.getElementById('launchProject').addEventListener('click', (event) =>{
     // Minimize window upon opening a project
-    ipc.send('minimize');
+    // ipc.send('minimize');
 
     // Call async function to open project
     launchProject();
@@ -400,6 +400,7 @@ async function launchProject(){
     }
     
     console.log('received before processes');
+    console.log('opening items within the project');
     
     // Get the index of the project to be opened
     index = document.getElementById("projectName").index
