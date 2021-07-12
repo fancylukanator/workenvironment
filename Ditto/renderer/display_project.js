@@ -1,5 +1,6 @@
 var latest_app = "";
-
+var pidBefore = [];
+var pidAfter = [];
 
 
 // function that displays all information about the project
@@ -375,22 +376,30 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
 
 
-// Open a specific project
+// Listen to if the user wishes to open a specific project
 document.getElementById('launchProject').addEventListener('click', (event) =>{
+    // Minimize window upon opening a project
+    ipc.send('minimize');
+
+    // Call async function to open project
+    launchProject();
+});
+
+
+// Launches a project and tracks the processes
+async function launchProject(){
 
     // Generate a list of PID's before project is launched
     const psList = require('ps-list');
-    async function before() {
-        psBeforeLaunch = await psList();
-        // create array of all PID's
-        pidBefore = [];
-        for(var i in psBeforeLaunch) {
-            pidBefore.push(psBeforeLaunch[i].pid);
-        }
-        console.log('received before processes');
-        return pidBefore;
+    psBeforeLaunch = await psList();
+
+    // create array of all PID's
+    pidBefore = [];
+    for(var i in psBeforeLaunch) {
+        pidBefore.push(psBeforeLaunch[i].pid);
     }
-    before();
+    
+    console.log('received before processes');
     
     // Get the index of the project to be opened
     index = document.getElementById("projectName").index
@@ -400,9 +409,6 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
     // Hide the project
     document.getElementById("display_project").style.display = "none";
-
-    // Minimize window upon opening a project
-    ipc.send('minimize');
 
     // Open all of the active urls
     for(var j in projectData.urls){
@@ -423,22 +429,22 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
             shell.openPath(projectData.apps[l]);
         }
     }
+
     // Close the project display
     document.getElementById("display_project").style.display = "block";
 
     //  Generate a list of PID's after project is launched
-    async function after() {
-        psAfterLaunch = await psList();
-        // create array of all PID's after project launch
-        pidAfter = [];
-        for(var i in psAfterLaunch) {
-            pidAfter.push(psAfterLaunch[i].pid);
-        }
-        console.log('received after processes');
-        return pidAfter;
+    psAfterLaunch = await psList();
+
+    // create array of all PID's after project launch
+    pidAfter = [];
+    for(var i in psAfterLaunch) {
+        pidAfter.push(psAfterLaunch[i].pid);
     }
-    after();
-});
+    
+    console.log('received after processes');
+}
+
 
 // Close project - get the difference between before and after pids
 var terminate = require('terminate');
