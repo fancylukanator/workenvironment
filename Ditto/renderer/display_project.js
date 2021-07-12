@@ -1,3 +1,4 @@
+const psList = require('ps-list');
 var latest_app = "";
 var pidBefore = [];
 var pidAfter = [];
@@ -388,20 +389,34 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
 // Launches a project and tracks the processes
 async function launchProject(){
+    await beforeProcesses();
+    await openItems();
+    await afterProcesses();
 
-    // Generate a list of PID's before project is launched
-    const psList = require('ps-list');
-    psBeforeLaunch = await psList();
+    // Close the project display
+    document.getElementById("display_project").style.display = "block";
 
-    // create array of all PID's
+}
+
+async function beforeProcesses(){
     pidBefore = [];
-    for(var i in psBeforeLaunch) {
-        pidBefore.push(psBeforeLaunch[i].pid);
+    currentProcesses = await psList();
+    for(var i in currentProcesses) {
+        pidBefore.push(currentProcesses[i].pid);
     }
-    
-    console.log('received before processes');
-    console.log('opening items within the project');
-    
+    console.log("Before processes logged.")
+}
+
+async function afterProcesses(){
+    pidAfter = [];
+    currentProcesses = await psList();
+    for(var i in currentProcesses) {
+        pidAfter.push(currentProcesses[i].pid);
+    }
+    console.log("After processes logged.")
+}
+
+function openItems(){
     // Get the index of the project to be opened
     index = document.getElementById("projectName").index
 
@@ -430,22 +445,8 @@ async function launchProject(){
             shell.openPath(projectData.apps[l]);
         }
     }
-
-    // Close the project display
-    document.getElementById("display_project").style.display = "block";
-
-    //  Generate a list of PID's after project is launched
-    psAfterLaunch = await psList();
-
-    // create array of all PID's after project launch
-    pidAfter = [];
-    for(var i in psAfterLaunch) {
-        pidAfter.push(psAfterLaunch[i].pid);
-    }
-    
-    console.log('received after processes');
+    console.log("Opened project.")
 }
-
 
 // Close project - get the difference between before and after pids
 var terminate = require('terminate');
