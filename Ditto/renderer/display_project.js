@@ -389,8 +389,10 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
 // Launches a project and tracks the processes
 async function launchProject(){
-
-    await afterProcesses();
+    
+    await beforeProcesses();
+    await openItems();
+    setTimeout(await afterProcesses(),3000);
 
     // Close the project display
     document.getElementById("display_project").style.display = "block";
@@ -407,8 +409,6 @@ async function beforeProcesses(){
 }
 
 async function afterProcesses(){
-    await openItems();
-
     pidAfter = [];
     currentProcesses = await psList();
     for(var i in currentProcesses) {
@@ -418,8 +418,6 @@ async function afterProcesses(){
 }
 
 async function openItems(){
-    await beforeProcesses();
-    
     // Get the index of the project to be opened
     index = document.getElementById("projectName").index
 
