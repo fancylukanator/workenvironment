@@ -389,8 +389,7 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
 // Launches a project and tracks the processes
 async function launchProject(){
-    await beforeProcesses();
-    await openItems();
+
     await afterProcesses();
 
     // Close the project display
@@ -408,6 +407,8 @@ async function beforeProcesses(){
 }
 
 async function afterProcesses(){
+    await openItems();
+
     pidAfter = [];
     currentProcesses = await psList();
     for(var i in currentProcesses) {
@@ -416,7 +417,9 @@ async function afterProcesses(){
     console.log("After processes logged.")
 }
 
-function openItems(){
+async function openItems(){
+    await beforeProcesses();
+    
     // Get the index of the project to be opened
     index = document.getElementById("projectName").index
 
