@@ -391,7 +391,7 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 async function launchProject(){
     
     await beforeProcesses();
-    await openItems();
+    setTimeout(await openItems(),3000);
     setTimeout(await afterProcesses(),3000);
 
     // Close the project display
