@@ -309,3 +309,33 @@ async function addToWorkspace(type){
     document.getElementById("display_project").style.display = "none";
     displayProject(p_index)
 }
+
+
+// FUNTION TO LAUNCH A PROJECT
+function openWorkspace(workspaceName) {
+
+    // Get project data of interest
+    project = JSON.parse(localStorage.getItem(workspaceName));
+
+    // Hide the project
+    document.getElementById("display_project").style.display = "none";
+
+    // Open all of the active urls
+    for(var j in project.urls){
+        if(project.urls_active[j]){
+            shell.openExternal(project.urls[j]);
+        }
+    }
+    // Open all of the active files
+    for(var k in project.files) {
+        if(project.files_active[k]){
+            shell.openPath(project.files[k]);
+        }
+    }
+    // Open all of the active applications
+    for(var l in project.apps) {
+        if(project.apps_active[l]){
+            shell.openPath(project.apps[l]);
+        }
+    }
+}

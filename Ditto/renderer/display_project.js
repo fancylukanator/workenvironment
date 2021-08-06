@@ -1,14 +1,4 @@
-const psList = require('ps-list');
 var latest_app = "";
-var pidBefore = [];
-var pidAfter = [];
-
-
-
-
-
-
-
 
 // Select applications from dropdown menu
 var expandedApp = false;
@@ -69,14 +59,6 @@ function displayApps(current_apps){
 }
 
 
-
-
-
-
-
-
-
-
 // Function used to capture the URLs on Chrome
 async function captureURLs(){
     const getChromeTabs = require('get-chrome-tabs');
@@ -85,16 +67,6 @@ async function captureURLs(){
 
     return tabData;
 }
-
-
-
-
-
-
-
-
-
-
 
 // Delete project and minimize project details
 document.getElementById('deleteProject').addEventListener('click', (event)=> {
@@ -111,7 +83,6 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
     document.getElementById("display_project").style.display = "none";
     updateProjectList()
-
 });
 
 
@@ -122,87 +93,8 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
     ipc.send('minimize');
 
     // Call async function to open project
-    launchProject();
+    openWorkspace(document.getElementById("projectName").index);
 });
-
-
-// Launches a project and tracks the processes
-async function launchProject(){
-    
-    await beforeProcesses();
-    setTimeout(await openItems(),3000);
-    setTimeout(await afterProcesses(),3000);
-
-    // Close the project display
-    document.getElementById("display_project").style.display = "block";
-
-}
-
-async function beforeProcesses(){
-    pidBefore = [];
-    currentProcesses = await psList();
-    for(var i in currentProcesses) {
-        pidBefore.push(currentProcesses[i].pid);
-    }
-    console.log("Before processes logged.")
-}
-
-async function afterProcesses(){
-    pidAfter = [];
-    currentProcesses = await psList();
-    for(var i in currentProcesses) {
-        pidAfter.push(currentProcesses[i].pid);
-    }
-    console.log("After processes logged.")
-}
-
-async function openItems(){
-    // Get the index of the project to be opened
-    index = document.getElementById("projectName").index
-
-    // Get project data of interest
-    projectData = JSON.parse(localStorage.MyProjectList)[index];
-
-    // Hide the project
-    document.getElementById("display_project").style.display = "none";
-
-    // Open all of the active urls
-    for(var j in projectData.urls){
-        if(projectData.urls_active[j]){
-            shell.openExternal(projectData.urls[j]);
-        }
-    }
-
-    // Open all of the active files
-    for(var k in projectData.files) {
-        if(projectData.files_active[k]){
-            shell.openPath(projectData.files[k]);
-        }
-    }
-    // Open all of the active applications
-    for(var l in projectData.apps) {
-        if(projectData.apps_active[l]){
-            shell.openPath(projectData.apps[l]);
-        }
-    }
-    console.log("Opened project.")
-}
-
-// Close project - get the difference between before and after pids
-var terminate = require('terminate');
-document.getElementById('closeProject').addEventListener('click', (event) =>{
-    // Filter for new pids
-    var psNew = pidAfter.filter(function(obj) { return pidBefore.indexOf(obj) == -1; });
-    // Terminate new pids
-    for(var i in psNew) {
-        try {
-            terminate(psNew[i]);
-            console.log('terminated', psNew[i]);
-        }catch(e) {
-            console.log(e);
-        }
-    }
-})
 
 
 // Check to see if the user changed a project name
@@ -211,21 +103,19 @@ document.getElementById('projectName').addEventListener('input', (event) =>{
     // Get the index of the project to be deleted
     index = document.getElementById("projectName").index
 
-    // Get all of the projects
-    var projects = JSON.parse(localStorage.MyProjectList);
-
-    // Snag the project to be editted
-    var project = projects[index]
+    // Get the project
+    var project = JSON.parse(localStorage.getItem(index));
 
     // Change the project name
-    project.name = document.getElementById("projectName").textContent
-
-    // Update the project in the storage
-    projects.splice(index, 1, project);
+    project.name = document.getElementById("projectName").textContent;
 
     //reset the data in the key
-    localStorage.setItem('MyProjectList', JSON.stringify(projects))
+    localStorage.removeItem(index)
+    localStorage.setItem(project.name, JSON.stringify(project))
     console.log("Updated the name.")
+
+    // Update the index of the element
+    document.getElementById("projectName").index = project.name
 
     // Update the name of the project
     updateProjectList()
