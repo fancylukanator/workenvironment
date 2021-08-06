@@ -59,3 +59,4 @@ app.on('window-all-closed', function () {
 ipc.on('minimize', function(event) {
   BrowserWindow.getFocusedWindow().minimize();
 });
+

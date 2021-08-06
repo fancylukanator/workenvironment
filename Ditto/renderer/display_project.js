@@ -4,41 +4,8 @@ var pidBefore = [];
 var pidAfter = [];
 
 
-// function that displays all information about the project
-function displayProject(index) {
 
-    // Clear out the apps and urls from create_project
-    appList = document.getElementById("checkboxes-apps");
-    appList.innerHTML = "";
-    var tabList = document.getElementById("checkboxes-urls");
-    tabList.innerHTML = "";
 
-    // If the user is already previewing the project they clicked on... hide the project
-    if(document.getElementById("projectName").index == index && document.getElementById("display_project").style.display == "block"){
-        document.getElementById("display_project").style.display = "none";
-    }
-    // If the user wants to view a new project...
-    else{
-        // Get project data of interest
-        projectData = JSON.parse(localStorage.MyProjectList)[index];
-
-        // Set the name of the project and its index in storage
-        document.getElementById("projectName").textContent = projectData.name;
-        document.getElementById("projectName").index = index
-
-        // List out all of the URLs
-        detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
-
-        // List out all of the files
-        detailsTable(document.getElementById("projectFiles"),projectData.files,projectData.files_active,"Files")
-
-        // List all of the applications
-        detailsTable(document.getElementById("projectApps"),projectData.apps,projectData.apps_active,"Apps")
-
-        document.getElementById("display_project").style.display = "block";
-        document.getElementById("create_project").style.display = "none";
-    }
-}
 
 
 

@@ -170,54 +170,31 @@ function deleteTempItem(type,index){
 // creates a project button
 // hides form content when submitted
 
+
 document.getElementById('created_proj').addEventListener('click', (ev) => {
 
-  // Loads in current projects
-  let projects = JSON.parse(localStorage.getItem('MyProjectList')) || [];
-
   ev.preventDefault();// stop form from submitting
-  
-  // Ensure that the project has a name and that the name is unique
-  if(document.getElementById('wspace').value != "" && !projects.map(({ name }) => name).includes(document.getElementById('wspace').value)){
-    
-    let project = {
-      name: document.getElementById('wspace').value, // Name of the project
 
-      // Items contained within the project
-      urls: urlArray.slice(),
-      files: fileArray.slice(),
-      apps: appArray.slice(),
+  // save project to localStorage
+  saveWorkspace(urlArray, fileArray, appArray, document.getElementById('wspace').value);
 
-      // Activation status of each of the items
-      urls_active: new Array(urlArray.length).fill(1),
-      files_active: new Array(fileArray.length).fill(1),
-      apps_active: new Array(appArray.length).fill(1)
-    }
+  // reset project creation portal
+  document.forms[0].reset();
 
-    // Add the project and reset project creation portal
-    projects.push(project);
-    document.forms[0].reset();
-    
-    // Display
-    console.warn('added', {projects} );
-    
-    // Save to localStorage
-    localStorage.setItem('MyProjectList', JSON.stringify(projects));
+  // Reset and clear all project creation stuff
+  document.getElementById('urlList').innerHTML = "";
+  document.getElementById('fileList').innerHTML = "";
+  document.getElementById('appList').innerHTML = "";
+  urlArray = [];
+  fileArray = [];
+  appArray = [];
+
+  // Hide create project form, return to home
+  document.getElementById("create_project").style.display = "none";
   
-    // Reset and clear all project creation stuff
-    document.getElementById('urlList').innerHTML = "";
-    document.getElementById('fileList').innerHTML = "";
-    document.getElementById('appList').innerHTML = "";
-    urlArray = [];
-    fileArray = [];
-    appArray = [];
-  
-    // Hide create project form, return to home
-    document.getElementById("create_project").style.display = "none";
-  
-    // Update the project list
-    updateProjectList()
-  }
+  // Update the project list
+  updateProjectList()
+
 });
 
 
