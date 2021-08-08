@@ -28,47 +28,22 @@ function createWindow () {
   mainWindow.webContents.openDevTools()
 }
 
-/*app.on('ready', () => {
-  tray = new Tray(path.join(__dirname,'Icon.png'));
-
-  if (process.platform === 'win32') {
-    tray.on('click', tray.popUpContextMenu);
-  }
-
-  const menu = Menu.buildFromTemplate([
-    {
-      label: 'Quit',
-      click() { app.quit(); }
-    }
-  ]);
-
-  tray.setToolTip('Ditto');
-  tray.setContextMenu(menu);
-});*/
-
 
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-let tray
+const TrayWindow  = require('./tray/TrayWindow');
+const TrayIcon = require('./tray/TrayIcon');
+
+let tray = null;
+let trayIcon = null;
 
 app.whenReady().then(() => {
 
-  const icon = nativeImage.createFromPath('icon@2x.png')
-  tray = new Tray(icon)
+  tray = new TrayWindow();
+  trayIcon = new TrayIcon(tray.window);
 
-  
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2 but looooonger', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
-  ])
-  
-  tray.setContextMenu(contextMenu)
-
-  tray.setToolTip('Ditto')
 
     createWindow()
 
@@ -96,4 +71,3 @@ app.on('window-all-closed', function () {
 ipc.on('minimize', function(event) {
   BrowserWindow.getFocusedWindow().minimize();
 });
-

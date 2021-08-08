@@ -197,4 +197,7 @@ document.getElementById('created_proj').addEventListener('click', (ev) => {
 
 });
 
-
+document.getElementById('capture').addEventListener('click', (ev) => {
+  captureWorkspace();
+  console.log('sup')
+});
