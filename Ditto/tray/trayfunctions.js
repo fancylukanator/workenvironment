@@ -12,6 +12,7 @@ function updateToolbarList(){
             var entry = document.createElement('li');
             entry.id = "project-" + i;
             entry.index = projectData[i]
+            entry.tabIndex = 1;
             entry.onclick = function() {
                 selectWorkspace(this.index); // Send the index for the project to selectProject
             }
@@ -25,7 +26,10 @@ function updateToolbarList(){
 }
 
 // FUNCTION THAT INDICATES WHICH PROJECT IS SELECTED SO THAT IT CAN BE OPENED OR CLOSED
-function selectWorkspace() {
-
+function selectWorkspace(index) {
+    // send workspace name to sessionStorage so that open/close
+    // button know what workspace to operate on
+    sessionStorage.setItem('selectedWorkspace', index);
 }
+
 

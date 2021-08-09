@@ -45,7 +45,7 @@ function displayApps(current_apps){
                 console.log(latest_app)
                 console.log(this.checked)
                 expandedApp = false; // Only can select one app at a time for whatever reason... Temp fix
-                addItem(this.value);
+                addToWorkspace(this.value);
             }
          
             var label = document.createElement('label')

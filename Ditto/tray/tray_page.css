@@ -1,4 +1,31 @@
-#button1 , #button2 {
-    display:inline-block;
-    }
-    
+
+.controls {
+    margin: 0 auto;
+}
+
+.action {
+    display: inline-block;
+    width: calc(50% - 4px);
+    margin: 0 auto;
+  }
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0px;
+    padding-left: 15px;
+    text-align: left;
+    padding-bottom: 5px;
+    border-top: 1px solid grey;
+}
+
+ul li:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+li:focus {
+    background-color: rgb(245, 245, 245);;
+}

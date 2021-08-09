@@ -2,17 +2,27 @@
 <html>
   <head>
     <script src="./trayfunctions.js"></script>
+    <link rel="stylesheet" href="tray_page.css">
   </head>
 
   <!-- no-drag option makes our new window non-draggable -->
   <body style='-webkit-app-region: no-drag'>
-    <div id = "controls">
-      <button id="open">Open</button>
-      <button id="close">Close</button>
+    <!-- no project opened  -->
+    <div class = "controls">
+      <button id="open" class="action open">Open</button>
+      <button id="close" class="action create">Close</button>
     </div>
-    <div id="projects">
-      <h2>Projects</h2>
-      <ul id="toolbarList"></ul>
+    <!--
+    <div class = "closeControls">
+      <button id="save" class="action save">Save</button>
+      <button id="close" class="action close">Create</button>
+    </div>
+
+    <div class = "switchControls">
+      <button id="switch" class="action switch">Switch</button>
+    </div>-->
+    <div class ="workspaces">
+      <ul tabindex="1" id="toolbarList"></ul>
       <br>
       <br>
     </div>

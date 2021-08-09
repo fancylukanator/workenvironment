@@ -1,6 +1,23 @@
 // this file controls button clicks etc on the toolbar window
-
+// create the list of workSpaces
 updateToolbarList()
 
-// In such way we connect ipcRenderer to our page.
-window.ipcRenderer = require('electron').ipcRenderer;
+//Open Button
+document.getElementById('open').addEventListener('click', (event) => {
+    //retrieve workspaceName
+    workspaceName = sessionStorage.getItem('selectedWorkspace');
+
+    //open workspace
+    openWorkspace(workspaceName);
+})
+
+//Close Button
+document.getElementById('close').addEventListener('click', (event) => {
+    //retrieve workspaceName
+    workspaceName = sessionStorage.getItem('selectedWorkspace');
+
+    //open workspace
+    closeWorkspace(workspaceName);
+})
+
+document.getElementById("close").disabled = true;
