@@ -1,7 +1,9 @@
 // Initialize arrays to store all we need
 urlArray = [];
 fileArray = [];
+fileAppsArray = [];
 appArray = [];
+defaultBrowser = "";
 
 
 

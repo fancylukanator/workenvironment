@@ -7,7 +7,7 @@ updateProjectList();
 
 
 // Checks for when the new project button is clicked
-document.getElementById('create_new_proj').addEventListener('click',(event) => {
+document.getElementById('create_new_proj').addEventListener('click', async => {
     
     // Checks to see if the person is not already making a project
     if(document.getElementById("create_project").style.display != "block"){
@@ -17,7 +17,11 @@ document.getElementById('create_new_proj').addEventListener('click',(event) => {
 
         urlArray = [];
         fileArray = [];
+        fileAppsArray = [];
         appArray = [];
+        defaultBrowser = "";
+
+        captureWorkspace();
 
         updateTable(document.getElementById('urlList'), urlArray, "URLs")
         updateTable(document.getElementById('fileList'), urlArray, "Files")

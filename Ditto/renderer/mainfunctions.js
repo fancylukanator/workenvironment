@@ -339,3 +339,178 @@ function openWorkspace(workspaceName) {
         }
     }
 }
+
+
+
+// FUNCTION TO CAPTURE WORKSPACE
+async function captureWorkspace() {
+        // Initializes arrays to store the open apps, tabs, and documents
+        let apps = [];
+        let tabs = [];
+        let documents = [];
+      
+        // Array to keep track of what app should be used to open each document
+        let documentApps = [];
+      
+        // Variable to store the web browser
+        let webBrowser;
+      
+        // Detect applications that are open
+        detectApps = await execShPromise('osascript -e \'tell application "System Events" to get the name of every process whose background only is false\'', true);
+        openApps = parseText(String(detectApps.stdout));
+      
+      
+      
+        // SECTION FOR WHICH APPS TO IGNORE IN THE CAPTURE
+      
+        // Ignore ditto
+        var index = openApps.indexOf("ditto");
+        if (index !== -1) {
+          openApps.splice(index, 1);
+        }
+      
+        // Ignore Finder
+        var index = openApps.indexOf("Finder");
+        if (index !== -1) {
+          openApps.splice(index, 1);
+        }
+      
+      
+      
+        // SECTION TO RENAME SPECIFIC APPS IN THE CAPTURE
+      
+        // Quick fix for Adobe Reader
+        var index = openApps.indexOf("AdobeReader");
+        if (index !== -1) {
+          openApps.splice(index, 1, "Adobe Acrobat Reader DC");
+        }
+      
+        // Visual Studio Code displays as 'Electron' for whatever reason
+        var index = openApps.indexOf("Electron");
+        if (index !== -1) {
+          openApps.splice(index, 1, "Visual Studio Code");
+        }
+      
+      
+        // Loop through all of the open apps to see if they have open documents or tabs
+        for(var i = 0; i < openApps.length; i++){
+      
+          // Different cases for specific apps
+          switch(openApps[i]){
+      
+            // All browsers are treated the same
+            case "Safari":
+            case "Google Chrome":
+            case "Firefox":
+            case "Brave":
+            case "Opera":
+            case "Chromium":
+      
+              // Collect the open tabs
+              detectTabs = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get URL of tabs of windows \nend try\'', true);
+              openTabs = parseText(String(detectTabs.stdout));
+              tabs = tabs.concat(openTabs)
+      
+              // Set the default browser
+              if(openTabs.length > 0){
+                webBrowser = openApps[i]
+              }
+      
+              // Adds browser to list of apps if no tabs are open
+              if(openTabs.length == 0){
+                apps.push(openApps[i]);
+              }
+      
+              break;
+            
+            // Special case for finding MS PowerPoint files
+            case "Microsoft PowerPoint":
+              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of presentations \nend try\'', true);
+              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of presentations \nend try\'', true);
+              findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
+              break;
+      
+            // Special case for finding Adobe Reader files
+            case "Adobe Acrobat Reader DC":
+              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get file alias of documents \nend try\'', true);
+              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
+              findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
+              break;
+      
+            // If the app has no special case run the default
+            default:
+              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
+              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
+              findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
+              break;
+          }
+        }
+    
+        urlArray = tabs;
+        fileArray = documents;
+        fileAppsArray = documentApps;
+        appArray = apps;
+        defaultBrowser = webBrowser;
+}
+
+
+
+
+// FUNCTION TO BREAKDOWN COMMA/SPACE DELIMITED TEXT INTO ARRAY
+function parseText(text){
+
+    // Removes text for formatting
+    text = text.replace('\n','');
+    text = text.replace('alias Macintosh HD','')
+    text = text.replace('Macintosh HD','')
+  
+    // Replaces : with / for propper formatting
+    if(!text.includes('/')){
+      text = text.replaceAll(':','/');
+    }
+  
+    // Transform delimited text into array
+    var array = text.split(', ');
+  
+    // Remove an empty indices
+    var index = array.indexOf('');
+    if (index !== -1) {
+      array.splice(index, 1);
+    }
+  
+    // Remove unknown elements
+    var index = array.indexOf('missing value');
+    if (index !== -1) {
+      array.splice(index, 1);
+    }
+    return array;
+}
+
+
+// FUNCTION TO LOCATE OPEN DOCUMENTS WITHIN APPS
+function findFiles(app, apps, documents, documentApps, detectDocPaths, detectDocNames){
+  
+    // Parses the text into an array
+    docPaths = parseText(String(detectDocPaths.stdout));
+    docNames = parseText(String(detectDocNames.stdout));
+  
+    // Loops through each file/document within an app
+    for(var j = 0; j < docPaths.length; j++){
+  
+      // Keep track of what app is used to open each document
+      documentApps.push(app);
+  
+      // Adds the full path name of any open documents
+      if(docPaths[j].includes(docNames[j])){
+        documents.push(docPaths[j]);
+      }
+      else{
+        documents.push(docPaths[j] + "/" + docNames[j]);
+      }
+    }
+  
+    // Adds the app to the list of apps if it has no documents opened in it
+    if(docPaths.length == 0){
+      apps.push(app);
+    }
+}
