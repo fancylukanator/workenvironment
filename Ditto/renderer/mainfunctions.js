@@ -342,6 +342,9 @@ async function addToWorkspace(type){
 // FUNTION TO LAUNCH A PROJECT
 async function openWorkspace(workspaceName) {
 
+    // Update icon tray title
+    ipc.send('update-title-tray-window-event', workspaceName);
+
     // Get project data of interest
     project = JSON.parse(localStorage.getItem(workspaceName));
 
@@ -418,6 +421,9 @@ async function openWorkspace(workspaceName) {
 // FUNCTION TO CLOSE WORKSPACE
 // ISSUE: If app is already closed when closing tabs or documents, it'll reopen the app
 async function closeWorkspace(workspaceName){
+
+    //update tray title
+    ipc.send('update-title-tray-window-event', '');
 
     // Get project data of interest
     project = JSON.parse(localStorage.getItem(workspaceName));

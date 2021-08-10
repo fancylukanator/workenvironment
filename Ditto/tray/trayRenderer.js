@@ -18,10 +18,8 @@ document.getElementById('open').addEventListener('click', (event) => {
     displayButtons();
 
     //open workspace
-    //openWorkspace(workspaceName);
+    openWorkspace(workspaceName);
 
-    //update tray title 
-    ipcRenderer.send('update-title-tray-window-event', workspaceName);
 })
 
 //Create Button
@@ -41,9 +39,6 @@ document.getElementById('close').addEventListener('click', (event) => {
 
     //close workspace
     closeWorkspace(workspaceName);
-
-    //update tray title
-    ipcRenderer.send('update-title-tray-window-event', '');
 })
 
 
