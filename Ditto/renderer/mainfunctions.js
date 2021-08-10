@@ -1,5 +1,5 @@
 // FUNCTION THAT TAKES TABS, DOCUMENTS, APPS, NAME AND SAVES A WORKSPACE IN LOCALSTORAGE
-function saveWorkspace(tabs, documents, apps, workspaceName) {
+function saveWorkspace(tabs, defaultBrowser, documents, documentApps, apps, workspaceName) {
     // create project object
     let project = {
         name: workspaceName, // Name of the project
@@ -8,7 +8,13 @@ function saveWorkspace(tabs, documents, apps, workspaceName) {
         urls: tabs,
         files: documents,
         apps: apps,
-  
+
+        // Keeps track of which broswer to use for tabs
+        browser: defaultBrowser,
+
+        // Keeps track of which apps to use for each document
+        fileApps: documentApps,
+
         // Activation status of each of the items
         urls_active: new Array(urlArray.length).fill(1),
         files_active: new Array(fileArray.length).fill(1),
@@ -53,40 +59,30 @@ function updateProjectList(){
 
 
 // FUNCTION TO DISPLAY THE DETAILS OF A WORKSPACE
-function displayProject(index) {
+async function displayProject(index) {
 
-
-    // Clear out the apps and urls from create_project
+    // Clear out the apps from create_project
     appList = document.getElementById("checkboxes-apps");
     appList.innerHTML = "";
-    var tabList = document.getElementById("checkboxes-urls");
-    tabList.innerHTML = "";
 
-    // If the user is already previewing the project they clicked on... hide the project
-    if(document.getElementById("projectName").index == index && document.getElementById("display_project").style.display == "block"){
-        document.getElementById("display_project").style.display = "none";
-    }
-    // If the user wants to view a new project...
-    else{
-        // Get project data of interest
-        projectData = JSON.parse(localStorage.getItem(index));
+    // Get project data of interest
+    projectData = JSON.parse(localStorage.getItem(index));
 
-        // Set the name of the project and its index in storage
-        document.getElementById("projectName").textContent = index;
-        document.getElementById("projectName").index = index
+    // Set the name of the project and its index in storage
+    document.getElementById("projectName").textContent = index;
+    document.getElementById("projectName").index = index
 
-        // List out all of the URLs
-        detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
+    // List out all of the URLs
+    detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
 
-        // List out all of the files
-        detailsTable(document.getElementById("projectFiles"),projectData.files,projectData.files_active,"Files")
+    // List out all of the files
+    detailsTable(document.getElementById("projectFiles"),projectData.files,projectData.files_active,"Files")
 
-        // List all of the applications
-        detailsTable(document.getElementById("projectApps"),projectData.apps,projectData.apps_active,"Apps")
+    // List all of the applications
+    detailsTable(document.getElementById("projectApps"),projectData.apps,projectData.apps_active,"Apps")
 
-        document.getElementById("display_project").style.display = "block";
-        document.getElementById("create_project").style.display = "none";
-    }
+    document.getElementById("display_project").style.display = "block";
+    document.getElementById("create_project").style.display = "none";
 }
 
 
@@ -116,6 +112,8 @@ function detailsTable(table, array, active, type){
       cell1.innerHTML = array[i];
 
       // Second cell contains ability to toggle activation
+      
+      /* CURRENTLY INACTIVE - Activation toggle.
       cell2.innerHTML = '<input type="checkbox" id = "c2-' + type + '-' + i + '"/>';
       var cb = document.getElementById("c2-" + type + "-" + i);
       cb.id = "checkbox-" + type + "-" + i;
@@ -126,6 +124,7 @@ function detailsTable(table, array, active, type){
       if(active[i]){
           cb.checked = true; // Sets the check box to be on if previously active
       }
+      */
 
       // Third cell allows the item to be deleted from the project
       cell3.innerHTML = '<button type="button" id = "c3-' + type + '-' + i + '">x</button>';
@@ -144,14 +143,10 @@ function detailsTable(table, array, active, type){
     // Set type specific input options
     switch(type){
         case "URLs":
-            cell1.innerHTML = '<input type="text" id="select-new-url"><button type="button" id = "add-new-url">Add</button><button type="button" id = "new-captured-urls">Capture</button>';
+            cell1.innerHTML = '<input type="text" id="select-new-url"><button type="button" id = "add-new-url">Add</button>';
             var add = document.getElementById("add-new-url");
             add.onclick = function() {
                 addToWorkspace("URL");
-            }
-            var capture = document.getElementById("new-captured-urls");
-            capture.onclick = function() {
-                addToWorkspace(type);
             }
             break;
         case "Files":
@@ -166,7 +161,6 @@ function detailsTable(table, array, active, type){
             var dropdown = document.getElementById("select-new-apps");
             dropdown.onclick = function(){
                 dropdownApps();
-                console.log("Dropdown")
             }
             displayApps(array);
             break;
@@ -219,6 +213,7 @@ function deleteItem(type, index){
         case "Files":
             project.files.splice(index,1)
             project.files_active.splice(index,1)
+            project.fileApps.splice(index,1)
             break;
         case "Apps":
             try {
@@ -239,6 +234,25 @@ function deleteItem(type, index){
     // Reload the project display
     document.getElementById("display_project").style.display = "none";
     displayProject(p_index)
+}
+
+
+
+// FUNCTION TO SAVE-OVER A WORKSPACE
+async function resaveWorkspace(workspaceName){
+
+    // Recapture the open workspace
+    await captureWorkspace();
+
+    // Delete the current workspace in memory
+    deleteWorkspace(workspaceName);
+
+    // Save the new workspace into memory
+    saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
+    
+    updateProjectList();
+
+    await displayProject(index);
 }
 
 
@@ -289,9 +303,7 @@ async function addToWorkspace(type){
             break;
         case "Apps":
             var app = document.getElementById(latest_app);
-            console.log(latest_app)
             if(!app.checked){
-                console.log("DELETED FROM LIST")
                 deleteItem(type,project.apps.indexOf(latest_app))
                 return;
             }
@@ -312,31 +324,119 @@ async function addToWorkspace(type){
 
 
 // FUNTION TO LAUNCH A PROJECT
-function openWorkspace(workspaceName) {
+async function openWorkspace(workspaceName) {
 
     // Get project data of interest
     project = JSON.parse(localStorage.getItem(workspaceName));
 
-    // Hide the project
-    document.getElementById("display_project").style.display = "none";
 
-    // Open all of the active urls
-    for(var j in project.urls){
-        if(project.urls_active[j]){
-            shell.openExternal(project.urls[j]);
+    // Open all of the active urls in a new browser window
+    let script = "";
+
+    // Checks to see if the browser app is already instantiated
+    let alreadyOpen = await execShPromise('osascript -e \'tell application "System Events" to (name of processes) contains "' + project.browser + '"\'', true);
+
+    // If there are are tabs to be opened...
+    if(project.urls.length > 0){
+        switch(project.browser){
+
+            // Creates a script to open all tabs in Safari in a new window
+            case "Safari":
+                script = 'osascript -e \'try \ntell application "Safari"';
+                if(alreadyOpen.stdout == "true\n"){
+                    script += '\nmake new document'
+                }
+                script += '\nactivate \nset URL of front document to {"' + project.urls[0] + '"}'
+
+                for(let j = 1; j < project.urls.length; j++){
+                    script += '\nset myTab to make new tab at end of tabs of window 1';
+                    script += '\nset URL of myTab to "' + project.urls[j] + '"'
+                }
+                script += '\nend tell \nend try\'';
+                break;
+    
+            // Creates a script to open all tabs in any other browser in a new window
+            default:
+                script = 'osascript -e \'try \ntell application "' + project.browser + '"';
+                if(alreadyOpen.stdout == "true\n"){
+                    script += '\nmake new window'
+                }
+                script += '\nopen location "' + project.urls[0] + '"'
+
+                for(let j = 1; j < project.urls.length; j++){
+                    script += '\nset myTab to make new tab at end of tabs of window 1'
+                    script += '\nset URL of myTab to "' + project.urls[j] + '"'
+                }
+                script += '\nend tell \nend try\'';
+                break;
         }
+        await execShPromise(script, true);
     }
-    // Open all of the active files
+
+    // Open all of the files
     for(var k in project.files) {
         if(project.files_active[k]){
-            shell.openPath(project.files[k]);
+            console.log("Open file " + project.files[k]);
+
+            // Switches the order of the 'activate' and 'open' for Word to ensure no startup screen
+            switch(project.fileApps[k]){
+                case "Microsoft Word":
+                    await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '"\nopen "' + project.files[k] + '" \nactivate \nend tell \nend try\'', true);
+                    break;
+                default:
+                    await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '" \nactivate \nopen "' + project.files[k] + '" \nend tell \nend try\'', true);
+                    break;
+            }
         }
     }
-    // Open all of the active applications
+    // Open all of the applications
     for(var l in project.apps) {
         if(project.apps_active[l]){
-            shell.openPath(project.apps[l]);
+            await execShPromise('osascript -e \'try \ntell application "' + project.apps[l] + '" to activate \nend try\'', true);
         }
+    }
+}
+
+
+
+// FUNCTION TO CLOSE WORKSPACE
+// ISSUE: If app is already closed when closing tabs or documents, it'll reopen the app
+async function closeWorkspace(workspaceName){
+
+    // Get project data of interest
+    project = JSON.parse(localStorage.getItem(workspaceName));
+
+    // Close all of the tabs
+    for(var j in project.urls) {
+        await execShPromise('osascript -e \'try \ntell windows of application "' + project.browser + '"\ndelete (tabs whose URL contains "' + project.urls[j] + '") \nend tell \nend try\'', true);
+        console.log("Closed url " + project.urls[j]);
+
+    }
+
+    // Quit the web browser if it has no other windows open
+    if(project.urls.length > 0){
+        await execShPromise('osascript -e \'try \ntell application "' + project.browser + '"\nif (count of windows) = 0 then quit \nend tell \nend try\'');
+    }
+
+    // Close all of the documents
+    for(var k in project.files){
+
+        // Get the filename without the path for easier document finding
+        fileName = project.files[k].substring(project.files[k].lastIndexOf('/')+1,project.files[k].lastIndexOf('.'))
+        console.log("Closed file " + fileName);
+
+        // Closes the documents
+        // ISSUE: THIS KILLS ADOBE ACROBAT READER FOR SOME REASON.
+        await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '"\nclose (documents whose name contains "' + fileName + '") \nend tell \nend try\'');
+        
+        // Closes the app if it has no other documents open
+        await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend try\'');
+
+    }
+
+    // Close all of the applications
+    for(var l in project.apps) {
+        await execShPromise('osascript -e \'try \nquit app "' + project.apps[l] + '"\nend try\'', true);
     }
 }
 
@@ -385,11 +485,11 @@ async function captureWorkspace() {
           openApps.splice(index, 1, "Adobe Acrobat Reader DC");
         }
       
-        // Visual Studio Code displays as 'Electron' for whatever reason
-        var index = openApps.indexOf("Electron");
-        if (index !== -1) {
-          openApps.splice(index, 1, "Visual Studio Code");
-        }
+        // ISSUE: Visual Studio Code displays as 'Electron' for whatever reason
+        //var index = openApps.indexOf("Electron");
+        //if (index !== -1) {
+        //  openApps.splice(index, 1, "Visual Studio Code");
+        //}
       
       
         // Loop through all of the open apps to see if they have open documents or tabs
@@ -463,6 +563,7 @@ function parseText(text){
     text = text.replace('\n','');
     text = text.replace('alias Macintosh HD','')
     text = text.replace('Macintosh HD','')
+    text = text.replace('alias ','')
   
     // Replaces : with / for propper formatting
     if(!text.includes('/')){

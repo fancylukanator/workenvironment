@@ -33,17 +33,15 @@ function displayApps(current_apps){
             var checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.index = i;
-            checkbox.id = folder + files[checkbox.index];
+            checkbox.id = files[checkbox.index].slice(0,-4);
             checkbox.value = "Apps";
 
-            if(current_apps.includes(folder + files[checkbox.index])){
+            if(current_apps.includes(files[checkbox.index].slice(0,-4))){
                 checkbox.checked = true;
             }
 
             checkbox.onclick = function() {
                 latest_app = this.id;
-                console.log(latest_app)
-                console.log(this.checked)
                 expandedApp = false; // Only can select one app at a time for whatever reason... Temp fix
                 addToWorkspace(this.value);
             }
@@ -56,16 +54,6 @@ function displayApps(current_apps){
             appList.appendChild(label);
         }
     }
-}
-
-
-// Function used to capture the URLs on Chrome
-async function captureURLs(){
-    const getChromeTabs = require('get-chrome-tabs');
-    // get the data and wait for it to be loaded
-    const tabData = await getChromeTabs();
-
-    return tabData;
 }
 
 // Delete project and minimize project details
@@ -83,6 +71,40 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
     document.getElementById("display_project").style.display = "none";
     updateProjectList()
+});
+
+
+// Re-save the project
+document.getElementById('saveProject').addEventListener('click', (event)=> {
+
+    // prevent multiple button clicks
+    event.preventDefault();
+
+    // Get the index of the project to be saved over
+    index = document.getElementById("projectName").index;
+
+    // Resave the workspace
+    resaveWorkspace(index);
+    console.log("resaved");
+
+});
+
+
+
+// Close the project
+document.getElementById('closeProject').addEventListener('click', (event)=> {
+
+    // prevent multiple button clicks
+    event.preventDefault();
+
+    // Get the index of the project to be saved over
+    index = document.getElementById("projectName").index;
+
+    // Close the workspace
+    closeWorkspace(index);
+
+    console.log("closed");
+
 });
 
 

@@ -24,21 +24,6 @@ document.getElementById('addurl').addEventListener('click', (event) => {
 
 
 
-// Select URLs from dropdown menu
-var expandedURLs = false;
-document.getElementById("selectURLs").addEventListener('click', (event) => {
-  var checkboxes = document.getElementById("checkboxes-urls");
-  if (!expandedURLs) {
-    checkboxes.style.display = "block";
-    expandedURLs = true;
-  } else {
-    checkboxes.style.display = "none";
-    expandedURLs = false;
-  }
-});
-
-
-
 // Adds new open URLs to the URL array...
 function addURL(url){
 
@@ -104,7 +89,7 @@ function addApp(path){
 
 
 // Function to display details of the project
-function updateTable(table, array, type){
+async function updateTable(table, array, type){
 
   // Reset the table
   table.innerHTML = "";
@@ -178,7 +163,7 @@ document.getElementById('created_proj').addEventListener('click', (ev) => {
   ev.preventDefault();// stop form from submitting
 
   // save project to localStorage
-  saveWorkspace(urlArray, fileArray, appArray, document.getElementById('wspace').value);
+  saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, document.getElementById('wspace').value);
 
   // reset project creation portal
   document.forms[0].reset();
@@ -190,6 +175,8 @@ document.getElementById('created_proj').addEventListener('click', (ev) => {
   urlArray = [];
   fileArray = [];
   appArray = [];
+  appArray = [];
+  defaultBrowser = "";
 
   // Hide create project form, return to home
   document.getElementById("create_project").style.display = "none";
@@ -197,9 +184,4 @@ document.getElementById('created_proj').addEventListener('click', (ev) => {
   // Update the project list
   updateProjectList()
 
-});
-
-document.getElementById('capture').addEventListener('click', (ev) => {
-  captureWorkspace();
-  console.log('sup')
 });

@@ -7,8 +7,12 @@ updateProjectList();
 
 
 // Checks for when the new project button is clicked
-document.getElementById('create_new_proj').addEventListener('click', async => {
-    
+document.getElementById('create_new_proj').addEventListener('click', () => {
+    loadCreateProject();
+});
+
+// Loads in the current workspace as the new workspace
+async function loadCreateProject(){
     // Checks to see if the person is not already making a project
     if(document.getElementById("create_project").style.display != "block"){
 
@@ -21,62 +25,28 @@ document.getElementById('create_new_proj').addEventListener('click', async => {
         appArray = [];
         defaultBrowser = "";
 
-        captureWorkspace();
+        await captureWorkspace();
 
-        updateTable(document.getElementById('urlList'), urlArray, "URLs")
-        updateTable(document.getElementById('fileList'), urlArray, "Files")
-        updateTable(document.getElementById('appList'), urlArray, "Apps")
+        await updateTable(document.getElementById('urlList'), urlArray, "URLs")
+        await updateTable(document.getElementById('fileList'), fileArray, "Files")
+        await updateTable(document.getElementById('appList'), appArray, "Apps")
 
         // Display the create project portal
         document.getElementById("create_project").style.display = "block";
         document.getElementById("display_project").style.display = "none";
 
-        // Run the above async function
-        getTabs();
-
         // Detect which applications are installed...
-        getApps();
+        await getApps();
     }
     // If the user is trying to close create a project
     else{
         document.getElementById("create_project").style.display = "none";
     }
-
-})
-
-
-
-async function getTabs() {
-    // Auto generate list of URLs from open chrome window
-    const getChromeTabs = require('get-chrome-tabs');
-    // get the data and wait for it to be loaded
-    const tabData = await getChromeTabs();
-    // display data in list on page
-    var tabList = document.getElementById("checkboxes-urls");
-    // Clear the current url list
-    tabList.innerHTML = "";
-    // Construct new url list
-    for(var i = 0; i < tabData.length; i++) {
-        var checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = tabData[i].url;
-        checkbox.value = tabData[i].url;
-        checkbox.onclick = function(){
-            addURL(this.value);
-        }
-         
-        var label = document.createElement('label')
-        label.htmlFor = tabData[i].url;
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(tabData[i].title)); // Display url with: tabData[i].url
-    
-        tabList.appendChild(label);
-    }
 }
 
 
 
-function getApps(){
+async function getApps(){
 
     // Access the files in the application folder
     // Notes:
@@ -95,8 +65,8 @@ function getApps(){
         if(files[i].endsWith(".app")){
             var checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.id = folder + files[i];
-            checkbox.value = folder + files[i];
+            checkbox.id = files[i].slice(0, -4);
+            checkbox.value = files[i].slice(0, -4);
             checkbox.onclick = function() {
                 addApp(this.value);
             }

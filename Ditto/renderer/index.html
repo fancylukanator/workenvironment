@@ -32,7 +32,7 @@
     <!-- div that shows / hides when create project is clicked -->
     <div id ="create_project">
       <h2> Create new project...</h2>
-      <button id="capture" name="capture">Capture Workspace</button>
+      <!-- <button id="capture" name="capture">Capture Workspace</button> -->
       <!-- By creating a form, we can link output to a php? There might be a better way to do this but this will store the variables-->
       <form id = "new_proj">
         <!-- text input to name the workspace-->
@@ -46,21 +46,6 @@
           <input type="text" id="url" name="url">
           <button id="addurl" name="addurl">Add</button>
         </div>
-
-        <!-- list that displays open urls -->
-        <label for="addurls"></label><br>
-        <form>
-          <div class="multiselect">
-            <div class="selectBox" id = "selectURLs">
-              <select>
-                <option>Select open URLs...</option>
-              </select>
-              <div class="overSelect"></div>
-            </div>
-            <div id="checkboxes-urls">
-            </div>
-          </div>
-        </form>
 
         <br>
   
@@ -112,6 +97,7 @@
       <table id = "projectApps"></table>
       <br>
       <button id="launchProject">Launch</button>
+      <button id="saveProject">Save</button>
       <button id="closeProject">Close</button>
       <button id="deleteProject">Delete</button>
 
