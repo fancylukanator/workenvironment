@@ -238,7 +238,7 @@ function deleteItem(type, index){
 
 
 
-// FUNCTION TO SAVE-OVER A WORKSPACE
+// FUNCTION TO SAVE-OVER A WORKSPACE IN MAIN APP
 async function resaveWorkspace(workspaceName){
 
     // Recapture the open workspace
@@ -253,6 +253,22 @@ async function resaveWorkspace(workspaceName){
     updateProjectList();
 
     await displayProject(index);
+}
+
+// FUNCTION TO SAVE-OVER A WORKSPACE IN TOOLBAR APP
+async function toolbarsaveWorkspace(workspaceName){
+
+    // Recapture the open workspace
+    await captureWorkspace();
+
+    // Delete the current workspace in memory
+    deleteWorkspace(workspaceName);
+
+    // Save the new workspace into memory
+    saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
+    
+    updateProjectList();
+
 }
 
 

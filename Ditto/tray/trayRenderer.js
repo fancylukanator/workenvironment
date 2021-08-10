@@ -1,4 +1,9 @@
 // this file controls button clicks etc on the toolbar window
+const electron = require('electron');
+const { app, BrowserWindow, shell, ipcMain} = require('electron');
+const ipc = electron.ipcRenderer;
+const execShPromise = require("exec-sh").promise;
+
 // create the list of workSpaces
 updateToolbarList();
 
@@ -13,7 +18,13 @@ document.getElementById('open').addEventListener('click', (event) => {
     displayButtons();
 
     //open workspace
-    //openWorkspace(workspaceName);
+    openWorkspace(workspaceName);
+})
+
+//Create Button
+document.getElementById('create').addEventListener('click', (event) => {
+    // not sure how to do this
+    // need to close dropdown and open main app as if 'create project' button was just clicked
 })
 
 //Close Button
@@ -22,10 +33,11 @@ document.getElementById('close').addEventListener('click', (event) => {
     workspaceName = sessionStorage.getItem('selectedWorkspace');
 
     sessionStorage.removeItem('openedWorkspace');
+    sessionStorage.removeItem('selectedWorkspace');
     displayButtons();
 
-    //open workspace
-    //closeWorkspace(workspaceName);
+    //close workspace
+    closeWorkspace(workspaceName);
 })
 
 
@@ -35,18 +47,18 @@ document.getElementById('save').addEventListener('click', (event) => {
     workspaceName = sessionStorage.getItem('selectedWorkspace');
 
     //save workspace
-    //saveWorkspace(workspaceName);
+    toolbarsaveWorkspace(workspaceName);
 })
 
 
 //Switch Button
-document.getElementById('save').addEventListener('click', (event) => {
+document.getElementById('switch').addEventListener('click', (event) => {
     //retrieve workspaceName
     newworkspaceName = sessionStorage.getItem('selectedWorkspace');
     currentworkspaceName = sessionStorage.getItem('openedWorkspace');
 
     //switch workspace
-    //saveWorkspace(currrentworkspaceName);
-    //closeWorkspace(currentworkspaceName);
-    //openWorkspace(newworkspacenName);
+    //toolbarsaveWorkspace(currrentworkspaceName);
+    closeWorkspace(currentworkspaceName);
+    openWorkspace(newworkspaceName);
 })

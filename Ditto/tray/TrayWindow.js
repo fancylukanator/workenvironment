@@ -11,7 +11,12 @@ class TrayWindow {
       width: 600,
       frame: false,  // This option will remove frame buttons. By default window has standart chrome header buttons (close, hide, minimize). We should change this option because we want to display our window like tray window not like common chrome-like window.
       backgroundColor: '#E4ECEF',
-      resizable: false
+      resizable: false,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: true,
+      }
     });
 
     // Link to the HTML file that will render app window.
