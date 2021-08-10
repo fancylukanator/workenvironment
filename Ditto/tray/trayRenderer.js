@@ -1,7 +1,7 @@
 // this file controls button clicks etc on the toolbar window
 const electron = require('electron');
 const { app, BrowserWindow, shell, ipcMain} = require('electron');
-const ipc = electron.ipcRenderer;
+const ipcRenderer = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
 
 // create the list of workSpaces
@@ -18,7 +18,10 @@ document.getElementById('open').addEventListener('click', (event) => {
     displayButtons();
 
     //open workspace
-    openWorkspace(workspaceName);
+    //openWorkspace(workspaceName);
+
+    //update tray title 
+    ipcRenderer.send('update-title-tray-window-event', workspaceName);
 })
 
 //Create Button
@@ -38,6 +41,9 @@ document.getElementById('close').addEventListener('click', (event) => {
 
     //close workspace
     closeWorkspace(workspaceName);
+
+    //update tray title
+    ipcRenderer.send('update-title-tray-window-event', '');
 })
 
 

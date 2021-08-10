@@ -25,6 +25,9 @@ class TrayIcon {
       }
     });
   }
+  updateTitle(title) {
+    this.trayIcon.setTitle(title)
+  }
 }
 
 module.exports = TrayIcon;

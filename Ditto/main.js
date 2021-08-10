@@ -71,3 +71,7 @@ app.on('window-all-closed', function () {
 ipc.on('minimize', function(event) {
   BrowserWindow.getFocusedWindow().minimize();
 });
+
+ipcMain.on('update-title-tray-window-event', function(event, title) {
+  trayIcon.updateTitle(title);
+});
