@@ -137,6 +137,7 @@ function deleteTempItem(type,index){
       break;
     case "Files":
       fileArray.splice(index,1)
+      fileAppsArray.splice(index,1)
       updateTable(document.getElementById('fileList'), fileArray, "Files")
       break;
     case "Apps":

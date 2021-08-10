@@ -114,6 +114,7 @@ function detailsTable(table, array, active, type){
       // Second cell contains ability to toggle activation
       
       /* CURRENTLY INACTIVE - Activation toggle.
+
       cell2.innerHTML = '<input type="checkbox" id = "c2-' + type + '-' + i + '"/>';
       var cb = document.getElementById("c2-" + type + "-" + i);
       cb.id = "checkbox-" + type + "-" + i;
@@ -419,7 +420,6 @@ async function openWorkspace(workspaceName) {
 
 
 // FUNCTION TO CLOSE WORKSPACE
-// ISSUE: If app is already closed when closing tabs or documents, it'll reopen the app
 async function closeWorkspace(workspaceName){
 
     //update tray title
@@ -430,29 +430,41 @@ async function closeWorkspace(workspaceName){
 
     // Close all of the tabs
     for(var j in project.urls) {
-        await execShPromise('osascript -e \'try \ntell windows of application "' + project.browser + '"\ndelete (tabs whose URL contains "' + project.urls[j] + '") \nend tell \nend try\'', true);
+        await execShPromise('osascript -e \'try \nif application "' + project.browser + '" is running then \ntell windows of application "' + project.browser + '"\ndelete (tabs whose URL contains "' + project.urls[j] + '") \nend tell \nend if \nend try\'', true);
         console.log("Closed url " + project.urls[j]);
 
     }
 
     // Quit the web browser if it has no other windows open
     if(project.urls.length > 0){
-        await execShPromise('osascript -e \'try \ntell application "' + project.browser + '"\nif (count of windows) = 0 then quit \nend tell \nend try\'');
+        await execShPromise('osascript -e \'try \nif application "' + project.browser + '" is running then \ntell application "' + project.browser + '"\nif (count of windows) = 0 then quit \nend tell \nend if \nend try\'');
     }
 
     // Close all of the documents
     for(var k in project.files){
 
-        // Get the filename without the path for easier document finding
-        fileName = project.files[k].substring(project.files[k].lastIndexOf('/')+1,project.files[k].lastIndexOf('.'))
-        console.log("Closed file " + fileName);
+        // Does things a little differently depending on the application
+        switch(project.fileApps[k]){
+            case "Adobe Acrobat Reader DC":
+                // Get the document name
+                fileName = project.files[k].substring(project.files[k].lastIndexOf('/')+1, project.files[k].length)
 
-        // Closes the documents
-        // ISSUE: THIS KILLS ADOBE ACROBAT READER FOR SOME REASON.
-        await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '"\nclose (documents whose name contains "' + fileName + '") \nend tell \nend try\'');
+                // Closes the document in Adobe Reader
+                await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nclose document "' + fileName + '" \nend tell \nend if \nend try\'');
+                break;
+            default:
+                // Get the filename without the path for easier document finding
+                fileName = project.files[k].substring(project.files[k].lastIndexOf('/')+1,project.files[k].lastIndexOf('.'))
+                
+                // Closes the document in the respective app
+                await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nclose (documents whose name contains "' + fileName + '") \nend tell \nend if \nend try\'');
+                break;
+        }
+
+        console.log("Closed file " + fileName);
         
         // Closes the app if it has no other documents open
-        await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend try\'');
+        await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
 
     }
 
@@ -496,6 +508,12 @@ async function captureWorkspace() {
         if (index !== -1) {
           openApps.splice(index, 1);
         }
+
+        // REMOVE: REMOVE THIS SECTION ON EXPORT
+        var index = openApps.indexOf("Electron");
+        if (index !== -1) {
+          openApps.splice(index, 1);
+        }
       
       
       
@@ -506,12 +524,12 @@ async function captureWorkspace() {
         if (index !== -1) {
           openApps.splice(index, 1, "Adobe Acrobat Reader DC");
         }
-      
-        // ISSUE: Visual Studio Code displays as 'Electron' for whatever reason
-        //var index = openApps.indexOf("Electron");
-        //if (index !== -1) {
-        //  openApps.splice(index, 1, "Visual Studio Code");
-        //}
+
+        // Quick fix for VSCode
+        var index = openApps.indexOf("Electron");
+        if (index !== -1) {
+          openApps.splice(index, 1, "Visual Studio Code");
+        }
       
       
         // Loop through all of the open apps to see if they have open documents or tabs
