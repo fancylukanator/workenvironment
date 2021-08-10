@@ -7,7 +7,12 @@
     display: inline-block;
     width: calc(50% - 4px);
     margin: 0 auto;
-  }
+}
+
+.actionSwitch {
+    margin: 0 auto;
+    width: calc(100% - 4px);
+}
 
 ul {
     list-style-type: none;

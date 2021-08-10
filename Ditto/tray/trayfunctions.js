@@ -15,6 +15,7 @@ function updateToolbarList(){
             entry.tabIndex = 1;
             entry.onclick = function() {
                 selectWorkspace(this.index); // Send the index for the project to selectProject
+                displayButtons();
             }
             entry.appendChild(document.createTextNode(projectData[i]));
             projectList.appendChild(entry);
@@ -32,4 +33,23 @@ function selectWorkspace(index) {
     sessionStorage.setItem('selectedWorkspace', index);
 }
 
-
+// FUNCTION THAT CHOOSES WHICH BUTTONS TO SHOW
+function displayButtons() {
+    // Choose which button layout to dispay
+    if (sessionStorage.getItem('selectedWorkspace') != null 
+    && sessionStorage.getItem('openedWorkspace') == sessionStorage.getItem('selectedWorkspace')) {
+    document.getElementById("openControls").style.display = "none";
+    document.getElementById("switchControls").style.display = "none";
+    document.getElementById("closeControls").style.display = "block";
+    } else if (sessionStorage.getItem('openedWorkspace') != null
+    && sessionStorage.getItem('selectedWorkspace') != sessionStorage.getItem('openedWorkspace')) {
+    console.log(sessionStorage.getItem('selectedWorkspace'))
+    document.getElementById("openControls").style.display = "none";
+    document.getElementById("closeControls").style.display = "none";
+    document.getElementById("switchControls").style.display = "block";
+    } else {
+    document.getElementById("switchControls").style.display = "none";
+    document.getElementById("closeControls").style.display = "none";
+    document.getElementById("openControls").style.display = "block";
+    }
+}

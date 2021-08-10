@@ -8,19 +8,19 @@
   <!-- no-drag option makes our new window non-draggable -->
   <body style='-webkit-app-region: no-drag'>
     <!-- no project opened  -->
-    <div class = "controls">
+    <div class = "openControls" id="openControls">
       <button id="open" class="action open">Open</button>
-      <button id="close" class="action create">Close</button>
+      <button id="create" class="action create">Create</button>
     </div>
-    <!--
-    <div class = "closeControls">
+    <!-- project opened -->
+    <div class = "closeControls" id="closeControls">
       <button id="save" class="action save">Save</button>
-      <button id="close" class="action close">Create</button>
+      <button id="close" class="action close">Close</button>
     </div>
-
-    <div class = "switchControls">
-      <button id="switch" class="action switch">Switch</button>
-    </div>-->
+    <!--- switch project -->
+    <div class = "switchControls" id="switchControls">
+      <button id="switch" class="actionSwitch">Switch</button>
+    </div>
     <div class ="workspaces">
       <ul tabindex="1" id="toolbarList"></ul>
       <br>
