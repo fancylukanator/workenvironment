@@ -27,6 +27,11 @@ function createWindow () {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
+
+  // request from dropdown to create a workspace in main
+  ipcMain.on('create-workspace', function(event) {
+    mainWindow.webContents.send('create-workspace', 'create');
+  });
 }
 
 
@@ -51,7 +56,7 @@ app.whenReady().then(() => {
     app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length == 1) createWindow()
   })
 
 });
@@ -77,3 +82,8 @@ ipc.on('minimize', function(event) {
 ipcMain.on('update-title-tray-window-event', function(event, title) {
   trayIcon.updateTitle(title);
 });
+
+// Open main app if closed on tray create
+//ipcMain.on('open-main', function(event) {
+//  if (BrowserWindow.getAllWindows().length == 1) createWindow();
+//});
