@@ -4,6 +4,10 @@ const { app, BrowserWindow, shell, ipcMain} = require('electron');
 const ipc = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
 
+// reset workspace selector keys
+localStorage.setItem('selectedWorkspace', '');
+localStorage.setItem('openedWorkspace', '');
+
 // create the list of workSpaces
 updateToolbarList();
 
@@ -14,11 +18,12 @@ displayButtons();
 document.getElementById('open').addEventListener('click', (event) => {
     //retrieve workspaceName
     workspaceName = localStorage.getItem('selectedWorkspace');
-    //sessionStorage.setItem('openedWorkspace', workspaceName);
-    displayButtons();
 
     //open workspace
     openWorkspace(workspaceName);
+
+    //update buttons
+    displayButtons();
 
 })
 
@@ -33,10 +38,11 @@ document.getElementById('close').addEventListener('click', (event) => {
     //retrieve workspaceName
     workspaceName = localStorage.getItem('selectedWorkspace');
 
-    displayButtons();
-
     //close workspace
     closeWorkspace(workspaceName);
+
+    //update buttons
+    displayButtons();
 })
 
 

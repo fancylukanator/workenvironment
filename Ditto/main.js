@@ -5,6 +5,7 @@ const electron = require('electron');
 const path = require('path');
 const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage} = require('electron');
 const ipc = ipcMain;
+const { webContents } = require('electron')
 
 
 // Create the browser window.
