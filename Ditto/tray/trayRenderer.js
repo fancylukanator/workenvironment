@@ -87,4 +87,45 @@ ipc.on('ping', () => {
     
     updateToolbarList();
     displayButtons();
+
+    openProject = document.getElementById("project-" + localStorage.getItem('openedWorkspace'));
+    if(openProject != null){
+        openProject.focus();
+    }
 })
+
+
+
+// LISTENERS TO ENSURE THAT THE SELECTED PROJECT REMAINS FOCUSED ON
+
+document.getElementById('menubar_background').addEventListener('click', (event) => {
+
+    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
+    if(openProject != null){
+        openProject.focus();
+    }
+});
+
+document.getElementById('openControls').addEventListener('click', (event) => {
+
+    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
+    if(openProject != null){
+        openProject.focus();
+    }
+});
+
+document.getElementById('closeControls').addEventListener('click', (event) => {
+
+    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
+    if(openProject != null){
+        openProject.focus();
+    }
+});
+
+document.getElementById('switchControls').addEventListener('click', (event) => {
+
+    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
+    if(openProject != null){
+        openProject.focus();
+    }
+});
