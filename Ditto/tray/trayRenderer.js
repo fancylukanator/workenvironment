@@ -34,7 +34,7 @@ document.getElementById('open').addEventListener('click', (event) => {
 //Create Button
 document.getElementById('create').addEventListener('click', (event) => {
     //send message to main
-    ipc.send('open-main', 'open');
+    ipc.send('create-workspace', '');
 
     //hide tray
     remote.getCurrentWindow().hide();
