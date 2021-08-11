@@ -343,6 +343,11 @@ async function addToWorkspace(type){
 // FUNTION TO LAUNCH A PROJECT
 async function openWorkspace(workspaceName) {
 
+    // Set keys in storage
+    localStorage.setItem('openedWorkspace', workspaceName);
+    localStorage.setItem('selectedWorkspace', workspaceName);
+
+
     // Update icon tray title
     ipc.send('update-title-tray-window-event', workspaceName);
 
@@ -421,6 +426,10 @@ async function openWorkspace(workspaceName) {
 
 // FUNCTION TO CLOSE WORKSPACE
 async function closeWorkspace(workspaceName){
+
+    // remove keys from storage
+    localStorage.removeItem('openedWorkspace');
+    localStorage.removeItem('selectedWorkspace');
 
     //update tray title
     ipc.send('update-title-tray-window-event', '');

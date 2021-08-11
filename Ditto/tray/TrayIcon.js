@@ -1,5 +1,7 @@
 const path = require('path');
-const { BrowserWindow, Tray } = require('electron');
+const { BrowserWindow, Tray, ipcMain } = require('electron');
+const { webContents } = require('electron')
+
 // Electron-positioner - npm package for positioning of the Tray window. Our tray window should appear under the Tray icon.
 
 const Positioner = require('electron-positioner');
@@ -21,7 +23,11 @@ class TrayIcon {
         let positioner = new Positioner(trayWindow);
         positioner.move('trayCenter', bounds)
 
+        // send notice to page to run functions to display most up to date data
+        trayWindow.webContents.send('ping', 'opened')
+
         trayWindow.show();
+
       }
     });
   }

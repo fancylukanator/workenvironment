@@ -30,20 +30,19 @@ function updateToolbarList(){
 function selectWorkspace(index) {
     // send workspace name to sessionStorage so that open/close
     // button know what workspace to operate on
-    sessionStorage.setItem('selectedWorkspace', index);
+    localStorage.setItem('selectedWorkspace', index);
 }
 
 // FUNCTION THAT CHOOSES WHICH BUTTONS TO SHOW
 function displayButtons() {
     // Choose which button layout to dispay
-    if (sessionStorage.getItem('selectedWorkspace') != null 
-    && sessionStorage.getItem('openedWorkspace') == sessionStorage.getItem('selectedWorkspace')) {
+    if (localStorage.getItem('selectedWorkspace') != null 
+    && localStorage.getItem('openedWorkspace') == localStorage.getItem('selectedWorkspace')) {
     document.getElementById("openControls").style.display = "none";
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "block";
-    } else if (sessionStorage.getItem('openedWorkspace') != null
-    && sessionStorage.getItem('selectedWorkspace') != sessionStorage.getItem('openedWorkspace')) {
-    console.log(sessionStorage.getItem('selectedWorkspace'))
+    } else if (localStorage.getItem('openedWorkspace') != null
+    && localStorage.getItem('selectedWorkspace') != localStorage.getItem('openedWorkspace')) {
     document.getElementById("openControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
     document.getElementById("switchControls").style.display = "block";

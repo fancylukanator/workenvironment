@@ -1,7 +1,7 @@
 // this file controls button clicks etc on the toolbar window
 const electron = require('electron');
 const { app, BrowserWindow, shell, ipcMain} = require('electron');
-const ipcRenderer = electron.ipcRenderer;
+const ipc = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
 
 // create the list of workSpaces
@@ -13,8 +13,8 @@ displayButtons();
 //Open Button
 document.getElementById('open').addEventListener('click', (event) => {
     //retrieve workspaceName
-    workspaceName = sessionStorage.getItem('selectedWorkspace');
-    sessionStorage.setItem('openedWorkspace', workspaceName);
+    workspaceName = localStorage.getItem('selectedWorkspace');
+    //sessionStorage.setItem('openedWorkspace', workspaceName);
     displayButtons();
 
     //open workspace
@@ -31,10 +31,8 @@ document.getElementById('create').addEventListener('click', (event) => {
 //Close Button
 document.getElementById('close').addEventListener('click', (event) => {
     //retrieve workspaceName
-    workspaceName = sessionStorage.getItem('selectedWorkspace');
+    workspaceName = localStorage.getItem('selectedWorkspace');
 
-    sessionStorage.removeItem('openedWorkspace');
-    sessionStorage.removeItem('selectedWorkspace');
     displayButtons();
 
     //close workspace
@@ -45,7 +43,7 @@ document.getElementById('close').addEventListener('click', (event) => {
 //Save Button
 document.getElementById('save').addEventListener('click', (event) => {
     //retrieve workspaceName
-    workspaceName = sessionStorage.getItem('selectedWorkspace');
+    workspaceName = localStorage.getItem('selectedWorkspace');
 
     //save workspace
     toolbarsaveWorkspace(workspaceName);
@@ -55,11 +53,18 @@ document.getElementById('save').addEventListener('click', (event) => {
 //Switch Button
 document.getElementById('switch').addEventListener('click', (event) => {
     //retrieve workspaceName
-    newworkspaceName = sessionStorage.getItem('selectedWorkspace');
-    currentworkspaceName = sessionStorage.getItem('openedWorkspace');
+    newworkspaceName = localStorage.getItem('selectedWorkspace');
+    currentworkspaceName = localStorage.getItem('openedWorkspace');
 
     //switch workspace
     //toolbarsaveWorkspace(currrentworkspaceName);
     closeWorkspace(currentworkspaceName);
     openWorkspace(newworkspaceName);
 })
+
+//Update all data, icon has been clicked
+ipc.on('ping', () => {
+    updateToolbarList();
+    displayButtons();
+})
+
