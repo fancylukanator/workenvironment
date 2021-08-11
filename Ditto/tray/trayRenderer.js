@@ -1,7 +1,7 @@
 // this file controls button clicks etc on the toolbar window
 const electron = require('electron');
 const { app, BrowserWindow, shell, ipcMain} = require('electron');
-const ipcRenderer = electron.ipcRenderer;
+const ipc = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
 
 // create the list of workSpaces
@@ -59,7 +59,6 @@ document.getElementById('switch').addEventListener('click', (event) => {
     currentworkspaceName = sessionStorage.getItem('openedWorkspace');
 
     //switch workspace
-    //toolbarsaveWorkspace(currrentworkspaceName);
-    closeWorkspace(currentworkspaceName);
-    openWorkspace(newworkspaceName);
-})
+    switchWorkspace(currentworkspaceName, newworkspaceName);
+
+});
