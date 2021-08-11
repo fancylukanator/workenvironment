@@ -440,8 +440,8 @@ async function openWorkspace(workspaceName) {
 async function closeWorkspace(workspaceName){
 
     // remove keys from storage
-    localStorage.removeItem('openedWorkspace');
-    localStorage.removeItem('selectedWorkspace');
+    localStorage.setItem('openedWorkspace', '');
+    localStorage.setItem('selectedWorkspace','');
 
     //update tray title
     ipc.send('update-title-tray-window-event', '');

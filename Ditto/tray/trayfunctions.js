@@ -40,12 +40,12 @@ function selectWorkspace(index) {
 // FUNCTION THAT CHOOSES WHICH BUTTONS TO SHOW
 function displayButtons() {
     // Choose which button layout to dispay
-    if (localStorage.getItem('selectedWorkspace') != null 
+    if (localStorage.getItem('selectedWorkspace') != '' 
     && localStorage.getItem('openedWorkspace') == localStorage.getItem('selectedWorkspace')) {
     document.getElementById("openControls").style.display = "none";
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "block";
-    } else if (localStorage.getItem('openedWorkspace') != null
+    } else if (localStorage.getItem('openedWorkspace') != ''
     && localStorage.getItem('selectedWorkspace') != localStorage.getItem('openedWorkspace')) {
     document.getElementById("openControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
