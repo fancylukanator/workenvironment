@@ -359,7 +359,6 @@ async function openWorkspace(workspaceName) {
     localStorage.setItem('openedWorkspace', workspaceName);
     localStorage.setItem('selectedWorkspace', workspaceName);
 
-
     // Update icon tray title
     ipc.send('update-title-tray-window-event', workspaceName);
 
