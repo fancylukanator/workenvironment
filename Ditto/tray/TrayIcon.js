@@ -8,8 +8,8 @@ const Positioner = require('electron-positioner');
 
 class TrayIcon {
   constructor(trayWindow) {
-    // Path to the app icon that will be displayed in the Tray (icon size: 22px)
-    let iconPath = path.join(__dirname, './../pictures/icongreyscale.png')
+    // Path to the app icon that will be displayed in the Tray (icon size: 18px)
+    let iconPath = path.join(__dirname, './../pictures/menubarlogo@2x.png')
 
     this.trayIcon = new Tray(iconPath);
     this.trayIcon.setToolTip('Ditto'); // This tooltip will shows up, when user will hover our tray-icon.
