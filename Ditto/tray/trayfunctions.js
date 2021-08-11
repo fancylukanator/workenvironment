@@ -9,6 +9,10 @@ function updateToolbarList(){
         // Construct new project list
         projectData = Object.keys(localStorage);
         for(var i in projectData) {
+            // ignore keys that are not workspaces
+            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace') {
+                continue;
+            }
             var entry = document.createElement('li');
             entry.id = "project-" + i;
             entry.index = projectData[i]
