@@ -64,13 +64,13 @@ document.getElementById('switch').addEventListener('click', (event) => {
 
     //switch workspace
     //toolbarsaveWorkspace(currrentworkspaceName);
-    closeWorkspace(currentworkspaceName);
-    openWorkspace(newworkspaceName);
-})
+
+    switchWorkspace(currentworkspaceName, newworkspaceName);
+
+});
 
 //Update all data, icon has been clicked
 ipc.on('ping', () => {
     updateToolbarList();
     displayButtons();
 })
-

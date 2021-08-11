@@ -278,6 +278,14 @@ async function toolbarsaveWorkspace(workspaceName){
 
 
 
+// FUNCTION TO SWITCH WORKSPACES
+async function switchWorkspace(currentworkspaceName, newworkspaceName){
+    await closeWorkspace(currentworkspaceName);
+    await openWorkspace(newworkspaceName);
+}
+
+
+
 // FUNCTION TO DELETE A WORKSPACE
 function deleteWorkspace(workspaceName) {
     localStorage.removeItem(workspaceName)
@@ -528,6 +536,11 @@ async function captureWorkspace() {
           openApps.splice(index, 1);
         }
       
+        // Ignore Electron app
+        var index = openApps.indexOf("Electron");
+        if (index !== -1) {
+          openApps.splice(index, 1);
+        }
       
       
         // SECTION TO RENAME SPECIFIC APPS IN THE CAPTURE
@@ -539,6 +552,8 @@ async function captureWorkspace() {
         }
 
         // Quick fix for VSCode
+      
+        // ISSUE: Visual Studio Code displays as 'Electron' for whatever reason
         var index = openApps.indexOf("Electron");
         if (index !== -1) {
           openApps.splice(index, 1, "Visual Studio Code");
