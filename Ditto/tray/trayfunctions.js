@@ -14,8 +14,8 @@ function updateToolbarList(){
                 continue;
             }
             var entry = document.createElement('li');
-            entry.id = "project-" + i;
-            entry.index = projectData[i]
+            entry.id = projectData[i];
+            entry.index = projectData[i];
             entry.tabIndex = 1;
             entry.onclick = function() {
                 selectWorkspace(this.index); // Send the index for the project to selectProject
