@@ -19,15 +19,16 @@ document.getElementById('open').addEventListener('click', (event) => {
     //retrieve workspaceName
     workspaceName = localStorage.getItem('selectedWorkspace');
 
-    //open workspace
-    openWorkspace(workspaceName);
+    if(workspaceName != null && workspaceName != ""){
+        //open workspace
+        openWorkspace(workspaceName);
 
-    //hide tray
-    remote.getCurrentWindow().hide();
+        //hide tray
+        remote.getCurrentWindow().hide();
 
-    //update buttons
-    displayButtons();
-
+        //update buttons
+        displayButtons();
+    }
 })
 
 //Create Button
@@ -80,6 +81,10 @@ document.getElementById('switch').addEventListener('click', (event) => {
 
 //Update all data, icon has been clicked
 ipc.on('ping', () => {
+
+    // Sets the selected workspace to be the open workspace (either something or nothing)
+    localStorage.setItem('selectedWorkspace', localStorage.getItem('openedWorkspace'));
+    
     updateToolbarList();
     displayButtons();
 })
