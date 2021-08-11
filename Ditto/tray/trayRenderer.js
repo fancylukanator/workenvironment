@@ -35,6 +35,8 @@ document.getElementById('open').addEventListener('click', (event) => {
 document.getElementById('create').addEventListener('click', (event) => {
     // not sure how to do this
     // need to close dropdown and open main app as if 'create project' button was just clicked
+    localStorage.setItem('selectedWorkspace', '');
+
 })
 
 //Close Button
