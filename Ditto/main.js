@@ -73,6 +73,7 @@ ipc.on('minimize', function(event) {
   BrowserWindow.getFocusedWindow().minimize();
 });
 
+// Dynamic tray title
 ipcMain.on('update-title-tray-window-event', function(event, title) {
   trayIcon.updateTitle(title);
 });

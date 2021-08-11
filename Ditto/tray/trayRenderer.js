@@ -1,6 +1,6 @@
 // this file controls button clicks etc on the toolbar window
 const electron = require('electron');
-const { app, BrowserWindow, shell, ipcMain} = require('electron');
+const { app, BrowserWindow, shell, ipcMain, remote} = require('electron');
 const ipc = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
 
@@ -22,6 +22,9 @@ document.getElementById('open').addEventListener('click', (event) => {
     //open workspace
     openWorkspace(workspaceName);
 
+    //hide tray
+    remote.getCurrentWindow().hide();
+
     //update buttons
     displayButtons();
 
@@ -40,6 +43,9 @@ document.getElementById('close').addEventListener('click', (event) => {
 
     //close workspace
     closeWorkspace(workspaceName);
+
+    //hide tray
+    remote.getCurrentWindow().hide();
 
     //update buttons
     displayButtons();
@@ -66,6 +72,9 @@ document.getElementById('switch').addEventListener('click', (event) => {
     //toolbarsaveWorkspace(currrentworkspaceName);
 
     switchWorkspace(currentworkspaceName, newworkspaceName);
+
+    //hide tray
+    remote.getCurrentWindow().hide();
 
 });
 
