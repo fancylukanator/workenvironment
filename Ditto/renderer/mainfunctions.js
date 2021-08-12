@@ -535,12 +535,6 @@ async function captureWorkspace() {
           openApps.splice(index, 1);
         }
       
-        // Ignore Electron app
-        var index = openApps.indexOf("Electron");
-        if (index !== -1) {
-          openApps.splice(index, 1);
-        }
-      
       
         // SECTION TO RENAME SPECIFIC APPS IN THE CAPTURE
       

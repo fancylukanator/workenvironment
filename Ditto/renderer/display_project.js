@@ -83,6 +83,12 @@ document.getElementById('saveProject').addEventListener('click', (event)=> {
     // Get the index of the project to be saved over
     index = document.getElementById("projectName").index;
 
+    // Sets the current workspace to the current one
+    localStorage.setItem('openedWorkspace', index)
+
+    // Updates the icon tray title
+    ipc.send('update-title-tray-window-event', index);
+
     // Resave the workspace
     resaveWorkspace(index);
     console.log("resaved");
