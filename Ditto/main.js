@@ -85,12 +85,17 @@ ipcMain.on('update-title-tray-window-event', function(event, title) {
 
 // Open main app if closed on tray create
 ipcMain.on('menubar-create', function(event) {
+
+  // If the main window was closed
   if (BrowserWindow.getAllWindows().length == 1){
-    createWindow();
+    createWindow(); // Create new window
+    // Waits to then create new project once HTML is loaded
     BrowserWindow.fromId(mainWindowID).webContents.on('did-finish-load', function () {
       BrowserWindow.fromId(mainWindowID).webContents.send('create-workspace', 'create');
     })
+    // If main window is still kicking around
   } else {
+    // Restores the window if it was minimized
     if(BrowserWindow.fromId(mainWindowID).isMinimized()){
       BrowserWindow.fromId(mainWindowID).restore();
     }
