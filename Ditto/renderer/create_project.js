@@ -163,6 +163,12 @@ document.getElementById('created_proj').addEventListener('click', (ev) => {
 
   ev.preventDefault();// stop form from submitting
 
+  // Sets the current workspace to the current one
+  localStorage.setItem('openedWorkspace', document.getElementById('wspace').value)
+
+  // Updates the icon tray title
+  ipc.send('update-title-tray-window-event', document.getElementById('wspace').value);
+
   // save project to localStorage
   saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, document.getElementById('wspace').value);
 
