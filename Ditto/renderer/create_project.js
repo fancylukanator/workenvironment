@@ -6,7 +6,7 @@ appArray = [];
 defaultBrowser = "";
 
 
-
+/*
 // Adds new manual link to the URL array...
 document.getElementById('addurl').addEventListener('click', (event) => {
   // Prevent multiple button clicks
@@ -21,7 +21,7 @@ document.getElementById('addurl').addEventListener('click', (event) => {
     updateTable(document.getElementById('urlList'), urlArray, "URLs")
   }
 });
-
+*/
 
 
 // Adds new open URLs to the URL array...
@@ -40,7 +40,7 @@ function addURL(url){
 }
 
 
-
+/*
 // Adds new files to the FILE array...
 document.getElementById('addfile').addEventListener('change', (event) => {
   let files = document.getElementById('addfile').files;
@@ -53,9 +53,9 @@ document.getElementById('addfile').addEventListener('change', (event) => {
   }
   updateTable(document.getElementById('fileList'), fileArray, "Files")
 });
+*/
 
-
-
+/*
 // Select applications from dropdown menu
 var expandedApps = false;
 document.getElementById("selectApps").addEventListener('click', (event) => {
@@ -68,7 +68,7 @@ document.getElementById("selectApps").addEventListener('click', (event) => {
     expandedApps = false;
   }
 });
-
+*/
 
 
 // Adds new apps to the APP array...
@@ -158,37 +158,43 @@ function deleteTempItem(type,index){
 // creates a project button
 // hides form content when submitted
 
+document.getElementById('create_new_proj').addEventListener('click', () => {
+  loadCreateProject();
+});
 
-document.getElementById('created_proj').addEventListener('click', (ev) => {
+async function loadCreateProject() {
 
-  ev.preventDefault();// stop form from submitting
-
-  // Sets the current workspace to the current one
-  localStorage.setItem('openedWorkspace', document.getElementById('wspace').value)
-
-  // Updates the icon tray title
-  ipc.send('update-title-tray-window-event', document.getElementById('wspace').value);
-
-  // save project to localStorage
-  saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, document.getElementById('wspace').value);
-
-  // reset project creation portal
-  document.forms[0].reset();
-
-  // Reset and clear all project creation stuff
-  document.getElementById('urlList').innerHTML = "";
-  document.getElementById('fileList').innerHTML = "";
-  document.getElementById('appList').innerHTML = "";
   urlArray = [];
   fileArray = [];
-  appArray = [];
+  fileAppsArray = [];
   appArray = [];
   defaultBrowser = "";
+  workspaceName = "UNTITLED";
 
-  // Hide create project form, return to home
-  document.getElementById("create_project").style.display = "none";
+  await captureWorkspace();
+
+  // Sets the current workspace to the current one
+  localStorage.setItem('openedWorkspace', workspaceName)
+
+  // Updates the icon tray title
+  ipc.send('update-title-tray-window-event', workspaceName);
+
+  // save project to localStorage
+  saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
   
   // Update the project list
   updateProjectList()
 
-});
+  // Open up the newly created project
+  displayProject(workspaceName)
+
+  // Select the workspace name to be renamed
+  node = document.getElementById("projectName")
+
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(node);
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+};

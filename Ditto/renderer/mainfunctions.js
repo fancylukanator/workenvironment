@@ -65,9 +65,11 @@ function updateProjectList(){
 // FUNCTION TO DISPLAY THE DETAILS OF A WORKSPACE
 async function displayProject(index) {
 
+    /*
     // Clear out the apps from create_project
     appList = document.getElementById("checkboxes-apps");
     appList.innerHTML = "";
+    */
 
     // Get project data of interest
     projectData = JSON.parse(localStorage.getItem(index));
@@ -141,6 +143,7 @@ function detailsTable(table, array, active, type){
       }
     }
 
+    /*
     // Final row to add additional stuff
     row = table.insertRow()
     var cell1 = row.insertCell();
@@ -170,6 +173,7 @@ function detailsTable(table, array, active, type){
             displayApps(array);
             break;
     }
+    */
 }
 
 
