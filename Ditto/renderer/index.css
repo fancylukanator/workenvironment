@@ -72,3 +72,25 @@ table {
     background-color: #1e90ff;
   }
   
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 90%;
+    margin: 3% 3% 3% 3%;
+}
+  
+ul li {
+    margin: 0 0 0 0;
+    padding-left: 15px;
+    text-align: left;
+    padding-bottom: 5px;
+    border-top: 1px solid grey;
+}
+
+ul li:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+li:focus {
+    background-color: rgb(245, 245, 245);
+}

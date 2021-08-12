@@ -48,6 +48,7 @@ function updateProjectList(){
             var entry = document.createElement('li');
             entry.id = "project-" + i;
             entry.index = projectData[i]
+            entry.tabIndex = 1;
             entry.onclick = function() {
                 displayProject(this.index); // Send the index for the project to displayProject
             }
