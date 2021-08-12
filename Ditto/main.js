@@ -90,6 +90,6 @@ ipcMain.on('update-title-tray-window-event', function(event, title) {
 });
 
 // Open main app if closed on tray create
-ipcMain.on('main-window', function(event) {
+ipcMain.on('open-main', function(event) {
   if (BrowserWindow.getAllWindows().length == 1) createWindow();
 });
