@@ -7,6 +7,7 @@ const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage} = require('
 const ipc = ipcMain;
 const { webContents } = require('electron')
 
+let mainWindowID;
 
 // Create the browser window.
 function createWindow () {
@@ -21,6 +22,9 @@ function createWindow () {
     }
   })
 
+  // Store the ID of the main window
+  mainWindowID = mainWindow.id;
+
   // and load the index.html of the app.
   mainWindow.loadFile('./renderer/index.html')
   console.log("Open home...")
@@ -28,16 +32,6 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  // Remove listeners when the window is closed
-  mainWindow.on('closed', (e) => {
-    ipcMain.removeAllListeners('create-workspace');
-  })
-
-  // request from dropdown to create a workspace in main
-  ipcMain.on('create-workspace', function(event) {
-    console.log('recieved request from tray')
-    mainWindow.webContents.send('create-workspace', 'create');
-  });
 }
 
 
@@ -90,6 +84,17 @@ ipcMain.on('update-title-tray-window-event', function(event, title) {
 });
 
 // Open main app if closed on tray create
-ipcMain.on('main-window', function(event) {
-  if (BrowserWindow.getAllWindows().length == 1) createWindow();
+ipcMain.on('menubar-create', function(event) {
+  if (BrowserWindow.getAllWindows().length == 1){
+    createWindow();
+    BrowserWindow.fromId(mainWindowID).webContents.on('did-finish-load', function () {
+      BrowserWindow.fromId(mainWindowID).webContents.send('create-workspace', 'create');
+    })
+  } else {
+    if(BrowserWindow.fromId(mainWindowID).isMinimized()){
+      BrowserWindow.fromId(mainWindowID).restore();
+    }
+    BrowserWindow.fromId(mainWindowID).focus()
+    BrowserWindow.fromId(mainWindowID).webContents.send('create-workspace', 'create');
+  }
 });
