@@ -10,7 +10,7 @@ const { webContents } = require('electron')
 
 // Create the browser window.
 function createWindow () {
-  const mainWindow = new BrowserWindow({
+  var mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -28,8 +28,14 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  // Remove listeners when the window is closed
+  mainWindow.on('closed', (e) => {
+    ipcMain.removeAllListeners('create-workspace');
+  })
+
   // request from dropdown to create a workspace in main
   ipcMain.on('create-workspace', function(event) {
+    console.log('recieved request from tray')
     mainWindow.webContents.send('create-workspace', 'create');
   });
 }
@@ -56,7 +62,7 @@ app.whenReady().then(() => {
     app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length == 1) createWindow()
+    if (BrowserWindow.getAllWindows().length == 1) createWindow();
   })
 
 });
@@ -65,7 +71,7 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  if (process.platform !== 'darwin') app.quit() 
 })
 
 
@@ -84,6 +90,6 @@ ipcMain.on('update-title-tray-window-event', function(event, title) {
 });
 
 // Open main app if closed on tray create
-//ipcMain.on('open-main', function(event) {
-//  if (BrowserWindow.getAllWindows().length == 1) createWindow();
-//});
+ipcMain.on('main-window', function(event) {
+  if (BrowserWindow.getAllWindows().length == 1) createWindow();
+});

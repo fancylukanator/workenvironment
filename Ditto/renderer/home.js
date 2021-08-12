@@ -83,5 +83,6 @@ async function getApps(){
 
 // Display create content from tray request
 ipc.on('create-workspace', () => {
+    console.log('recieved request from main')
     loadCreateProject();
 });

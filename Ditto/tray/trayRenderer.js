@@ -33,7 +33,10 @@ document.getElementById('open').addEventListener('click', (event) => {
 
 //Create Button
 document.getElementById('create').addEventListener('click', (event) => {
-    //send message to main
+    //send message to main to ensure a window is open
+    ipc.send('open-main', '');
+
+    //send message to main to create workspace
     ipc.send('create-workspace', '');
 
     //hide tray
