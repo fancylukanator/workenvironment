@@ -126,28 +126,41 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 
 
 // Check to see if the user changed a project name
-document.getElementById('projectName').addEventListener('input', (event) =>{
+document.getElementById('projectName').addEventListener('blur', (event) =>{
 
-    // Get the index of the project to be deleted
-    index = document.getElementById("projectName").index
+    // Ensures that the project name is unique & it is not only whitespace
+    if(localStorage.getItem(document.getElementById("projectName").textContent) == null && /\S/.test(document.getElementById("projectName").textContent)){
+        // Get the index of the project to be deleted
+        index = document.getElementById("projectName").index
 
-    // Get the project
-    var project = JSON.parse(localStorage.getItem(index));
+        // Get the project
+        var project = JSON.parse(localStorage.getItem(index));
 
-    // Change the project name
-    project.name = document.getElementById("projectName").textContent;
+        // Change the project name
+        project.name = document.getElementById("projectName").textContent;
 
-    // Updates the icon tray title
-    ipc.send('update-title-tray-window-event', project.name);
+        // If the project is open, sets the new name to be the open project
+        if(localStorage.getItem("openedWorkspace") != "" && localStorage.getItem("openedWorkspace") != null){
+            localStorage.setItem("openedWorkspace", project.name)
+            localStorage.setItem("selectedWorkspace", project.name)
 
-    //reset the data in the key
-    localStorage.removeItem(index)
-    localStorage.setItem(project.name, JSON.stringify(project))
-    console.log("Updated the name.")
+            // Updates the icon tray title
+            ipc.send('update-title-tray-window-event', project.name);
+        }
 
-    // Update the index of the element
-    document.getElementById("projectName").index = project.name
+        //reset the data in the key
+        localStorage.removeItem(index)
+        localStorage.setItem(project.name, JSON.stringify(project))
+        console.log("Updated the name.")
 
-    // Update the name of the project
-    updateProjectList()
+        // Update the index of the element
+        document.getElementById("projectName").index = project.name
+
+        // Update the name of the project
+        updateProjectList()
+    } else{
+        // Resets the project name to the original if it was not unique
+        document.getElementById("projectName").textContent = document.getElementById("projectName").index;
+    }
+
 });
