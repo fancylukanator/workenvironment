@@ -125,7 +125,7 @@ document.getElementById('closeProject').addEventListener('click', (event)=> {
 document.getElementById('launchProject').addEventListener('click', (event) =>{
 
     // Minimize window upon opening a project
-    ipc.send('minimize');
+    //ipc.send('minimize');
 
     // Call async function to open project
     openWorkspace(document.getElementById("projectName").index);

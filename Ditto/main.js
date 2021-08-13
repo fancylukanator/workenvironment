@@ -72,9 +72,10 @@ app.on('window-all-closed', function () {
 
 // LISTENERS
 
-// Waiting to hear if the window should be minimized...
+// Waiting to hear if the window should be closed...
 ipc.on('minimize', function(event) {
-  BrowserWindow.getFocusedWindow().minimize();
+  if (BrowserWindow.getAllWindows().length == 1) return;
+  BrowserWindow.fromId(mainWindowID).close();
 });
 
 // Dynamic tray title
@@ -107,4 +108,4 @@ ipcMain.on('menubar-create', function(event) {
 ipcMain.on('minimize-main', () => {
   if (BrowserWindow.getAllWindows().length == 1) return;
   BrowserWindow.fromId(mainWindowID).close();
-})
+});
