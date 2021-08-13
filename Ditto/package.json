@@ -37,7 +37,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./icon/ditto_icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
