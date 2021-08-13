@@ -51,6 +51,7 @@ function updateProjectList(){
             entry.tabIndex = 1;
             entry.onclick = function() {
                 displayProject(this.index); // Send the index for the project to displayProject
+                selectWorkspace(this.index);
             }
             entry.appendChild(document.createTextNode(projectData[i]));
             projectList.appendChild(entry);
@@ -59,6 +60,13 @@ function updateProjectList(){
     catch(e){
         console.log(e);
     }
+}
+
+// FUNCTION THAT INDICATES WHICH PROJECT IS SELECTED SO THAT IT CAN BE OPENED OR CLOSED
+function selectWorkspace(index) {
+    // send workspace name to sessionStorage so that open/close
+    // button know what workspace to operate on
+    localStorage.setItem('selectedWorkspace', index);
 }
 
 
@@ -675,5 +683,25 @@ function findFiles(app, apps, documents, documentApps, detectDocPaths, detectDoc
     // Adds the app to the list of apps if it has no documents opened in it
     if(docPaths.length == 0){
       apps.push(app);
+    }
+}
+
+// FUNCTION THAT CHOOSES WHICH BUTTONS TO SHOW
+function mainButtons() {
+    // Choose which button layout to dispay
+    if (localStorage.getItem('selectedWorkspace') != '' 
+    && localStorage.getItem('openedWorkspace') == localStorage.getItem('selectedWorkspace')) {
+    document.getElementById("openControls").style.display = "none";
+    document.getElementById("switchControls").style.display = "none";
+    document.getElementById("closeControls").style.display = "block";
+    } else if (localStorage.getItem('openedWorkspace') != ''
+    && localStorage.getItem('selectedWorkspace') != localStorage.getItem('openedWorkspace')) {
+    document.getElementById("openControls").style.display = "none";
+    document.getElementById("closeControls").style.display = "none";
+    document.getElementById("switchControls").style.display = "block";
+    } else {
+    document.getElementById("switchControls").style.display = "none";
+    document.getElementById("closeControls").style.display = "none";
+    document.getElementById("openControls").style.display = "block";
     }
 }

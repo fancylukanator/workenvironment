@@ -56,7 +56,10 @@ function displayApps(current_apps){
     }
 }
 
-// Delete project and minimize project details
+// Load correct buttons
+mainButtons();
+
+// Delete button. Delete project and minimize project details
 document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
     // prevent multiple button clicks
@@ -74,7 +77,7 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 });
 
 
-// Re-save the project
+// Save button. Re-save the project
 document.getElementById('saveProject').addEventListener('click', (event)=> {
 
     // prevent multiple button clicks
@@ -97,7 +100,7 @@ document.getElementById('saveProject').addEventListener('click', (event)=> {
 
 
 
-// Close the project
+// Close Button. Close the project
 document.getElementById('closeProject').addEventListener('click', (event)=> {
 
     // prevent multiple button clicks
@@ -111,17 +114,23 @@ document.getElementById('closeProject').addEventListener('click', (event)=> {
 
     console.log("closed");
 
+    // update buttons
+    mainButtons();
+
 });
 
 
 
-// Listen to if the user wishes to open a specific project
+// Open Button. Listen to if the user wishes to open a specific project
 document.getElementById('launchProject').addEventListener('click', (event) =>{
     // Minimize window upon opening a project
     ipc.send('minimize');
 
     // Call async function to open project
     openWorkspace(document.getElementById("projectName").index);
+
+    // Update Buttons
+    mainButtons();
 });
 
 

@@ -91,6 +91,7 @@ ipc.on('ping', () => {
     
     updateToolbarList();
     displayButtons();
+    updateProjectList();
 
     openProject = document.getElementById("project-" + localStorage.getItem('openedWorkspace'));
     if(openProject != null){
