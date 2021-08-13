@@ -125,17 +125,13 @@ document.getElementById('closeProject').addEventListener('click', (event)=> {
 document.getElementById('launchProject').addEventListener('click', (event) =>{
 
     // Minimize window upon opening a project
-    ipc.send('minimize');
+    ipc.send('hide');
 
     // Call async function to open project
     openWorkspace(document.getElementById("projectName").index);
 
-    // Update Buttons
-    mainButtons();
-
-    // highlight this workspace when the app is re opened
-    highlightWorkspace();
 });
+
 
 
 // Switch Button. Listen to if the user wishes to switch to a specific project

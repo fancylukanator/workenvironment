@@ -448,6 +448,9 @@ async function openWorkspace(workspaceName) {
             await execShPromise('osascript -e \'try \ntell application "' + project.apps[l] + '" to activate \nend try\'', true);
         }
     }
+
+    // Minimize window upon opening a project
+    ipc.send('minimize');
 }
 
 

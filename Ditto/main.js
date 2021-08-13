@@ -72,9 +72,22 @@ app.on('window-all-closed', function () {
 
 // LISTENERS
 
-// Waiting to hear if the window should be minimized...
+// Waiting to hear if the window should be closed out...
 ipc.on('minimize', function(event) {
-  BrowserWindow.getFocusedWindow().minimize();
+  try{
+    BrowserWindow.fromId(mainWindowID).close();
+  } catch(e){
+    console.log("Error - Unable to hide main window.")
+  }
+});
+
+// Waiting to hear if the window should be closed out...
+ipc.on('hide', function(event) {
+  try{
+    BrowserWindow.fromId(mainWindowID).hide();
+  } catch(e){
+    console.log("Error - Unable to hide main window.")
+  }
 });
 
 // Dynamic tray title
