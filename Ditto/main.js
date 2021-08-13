@@ -120,4 +120,4 @@ ipcMain.on('menubar-create', function(event) {
 ipcMain.on('minimize-main', () => {
   if (BrowserWindow.getAllWindows().length == 1) return;
   BrowserWindow.fromId(mainWindowID).close();
-})
+});

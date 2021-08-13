@@ -382,6 +382,8 @@ async function openWorkspace(workspaceName) {
     // Get project data of interest
     project = JSON.parse(localStorage.getItem(workspaceName));
 
+    // Close main window
+    ipc.send('minimize');
 
     // Open all of the active urls in a new browser window
     let script = "";
