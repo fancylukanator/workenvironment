@@ -146,6 +146,9 @@ document.getElementById('projectName').addEventListener('input', (event) =>{
     // Change the project name
     project.name = document.getElementById("projectName").textContent;
 
+    // Updates the icon tray title
+    ipc.send('update-title-tray-window-event', project.name);
+
     //reset the data in the key
     localStorage.removeItem(index)
     localStorage.setItem(project.name, JSON.stringify(project))

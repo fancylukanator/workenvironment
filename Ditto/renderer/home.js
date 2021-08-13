@@ -5,7 +5,7 @@ updateProjectList();
 
 
 
-
+/*
 // Checks for when the new project button is clicked
 document.getElementById('create_new_proj').addEventListener('click', () => {
     loadCreateProject();
@@ -44,7 +44,7 @@ async function loadCreateProject(){
     }
 }
 
-
+*/
 
 async function getApps(){
 
@@ -56,6 +56,7 @@ async function getApps(){
     var fs = require('fs');
     var files = fs.readdirSync(folder);
 
+    /*
     // Reset the checkbox html code
     appList = document.getElementById("checkboxes-apps");
     appList.innerHTML = "";
@@ -79,6 +80,7 @@ async function getApps(){
             appList.appendChild(label);
         }
     }
+    */
 }
 
 // Display create content from tray request
