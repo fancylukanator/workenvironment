@@ -4,6 +4,9 @@ updateProjectList();
 // highlight workspace if opened
 highlightWorkspace();
 
+// display correct buttons
+mainButtons();
+
 
 
 /*

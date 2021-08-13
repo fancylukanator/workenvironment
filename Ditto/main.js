@@ -103,7 +103,8 @@ ipcMain.on('menubar-create', function(event) {
   }
 });
 
+// Close main window when the dropdown menu is opened
 ipcMain.on('minimize-main', () => {
   if (BrowserWindow.getAllWindows().length == 1) return;
-  BrowserWindow.fromId(mainWindowID).minimize();
+  BrowserWindow.fromId(mainWindowID).close();
 })

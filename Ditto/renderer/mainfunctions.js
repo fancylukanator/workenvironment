@@ -47,6 +47,7 @@ function updateProjectList(){
             }
             var entry = document.createElement('li');
             entry.id = "project-" + i;
+            entry.id = projectData[i];
             entry.index = projectData[i]
             entry.tabIndex = 1;
             entry.onclick = function() {
@@ -710,5 +711,14 @@ function mainButtons() {
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
     document.getElementById("openControls").style.display = "block";
+    }
+}
+
+function highlightWorkspace () {
+    openProject = document.getElementById(localStorage.getItem('openedWorkspace'));
+    if(openProject != null){
+        openProject.click();
+        openProject.focus();
+
     }
 }
