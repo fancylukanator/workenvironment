@@ -165,12 +165,24 @@ document.getElementById('create_new_proj').addEventListener('click', () => {
 
 async function loadCreateProject() {
 
+  // Display to the user that the workspace is being loaded
+  document.getElementById("loading").style.display = "block"
+
+  // Hide the previously displayed project
+  document.getElementById("display_project").style.display = "none";
+
   urlArray = [];
   fileArray = [];
   fileAppsArray = [];
   appArray = [];
   defaultBrowser = "";
-  workspaceName = "UNTITLED";
+
+  // Ensures that the new project has an unique name
+  counter = 1;
+  while(localStorage.getItem("Workspace " + counter) != null){
+    counter = counter + 1;
+  }
+  workspaceName = "Workspace " + counter;
 
   await captureWorkspace();
 
@@ -186,6 +198,9 @@ async function loadCreateProject() {
   // save project to localStorage
   saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
   
+  // Hide the loading display
+  document.getElementById("loading").style.display = "none"
+
   // Update the project list
   updateProjectList()
 
