@@ -52,6 +52,7 @@ function updateProjectList(){
             entry.onclick = function() {
                 displayProject(this.index); // Send the index for the project to displayProject
                 selectWorkspace(this.index);
+                mainButtons();
             }
             entry.appendChild(document.createTextNode(projectData[i]));
             projectList.appendChild(entry);
@@ -295,6 +296,8 @@ async function toolbarsaveWorkspace(workspaceName){
 async function switchWorkspace(currentworkspaceName, newworkspaceName){
     await closeWorkspace(currentworkspaceName);
     await openWorkspace(newworkspaceName);
+    //update Buttons
+    mainButtons();
 }
 
 

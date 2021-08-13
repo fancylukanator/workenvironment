@@ -29,6 +29,9 @@ document.getElementById('open').addEventListener('click', (event) => {
         //update buttons
         displayButtons();
     }
+    //update main
+    mainButtons();
+    updateProjectList();
 })
 
 //Create Button
@@ -54,6 +57,10 @@ document.getElementById('close').addEventListener('click', (event) => {
 
     //update buttons
     displayButtons();
+
+    //update main
+    mainButtons();
+    updateProjectList();
 })
 
 
@@ -64,6 +71,10 @@ document.getElementById('save').addEventListener('click', (event) => {
 
     //save workspace
     toolbarsaveWorkspace(workspaceName);
+
+    //update main
+    mainButtons();
+    updateProjectList();
 })
 
 
@@ -81,6 +92,10 @@ document.getElementById('switch').addEventListener('click', (event) => {
     //hide tray
     remote.getCurrentWindow().hide();
 
+    //update main
+    mainButtons();
+    updateProjectList();
+
 });
 
 //Update all data, icon has been clicked
@@ -97,6 +112,8 @@ ipc.on('ping', () => {
     if(openProject != null){
         openProject.focus();
     }
+    // now send message to main
+    ipc.send('minimize-main', '');
 })
 
 

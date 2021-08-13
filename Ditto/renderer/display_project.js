@@ -134,6 +134,18 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 });
 
 
+// Switch Button. Listen to if the user wishes to switch to a specific project
+document.getElementById('switchProject').addEventListener('click', (event) =>{
+    //retrieve workspaceName
+    newworkspaceName = localStorage.getItem('selectedWorkspace');
+    currentworkspaceName = localStorage.getItem('openedWorkspace');
+
+    // call function to switch
+    switchWorkspace(currentworkspaceName, newworkspaceName);
+
+});
+
+
 // Check to see if the user changed a project name
 document.getElementById('projectName').addEventListener('input', (event) =>{
 
@@ -152,6 +164,8 @@ document.getElementById('projectName').addEventListener('input', (event) =>{
     //reset the data in the key
     localStorage.removeItem(index)
     localStorage.setItem(project.name, JSON.stringify(project))
+    localStorage.setItem('selectedWorkspace', project.name)
+    localStorage.setItem('openedWorkspace', project.name)
     console.log("Updated the name.")
 
     // Update the index of the element

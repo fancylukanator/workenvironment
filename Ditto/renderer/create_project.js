@@ -160,6 +160,7 @@ function deleteTempItem(type,index){
 
 document.getElementById('create_new_proj').addEventListener('click', () => {
   loadCreateProject();
+  // Display correct buttons
 });
 
 async function loadCreateProject() {
@@ -176,6 +177,9 @@ async function loadCreateProject() {
   // Sets the current workspace to the current one
   localStorage.setItem('openedWorkspace', workspaceName)
 
+  // Sets the selected workspace to the current one
+  localStorage.setItem('selectedWorkspace', workspaceName)
+
   // Updates the icon tray title
   ipc.send('update-title-tray-window-event', workspaceName);
 
@@ -187,6 +191,9 @@ async function loadCreateProject() {
 
   // Open up the newly created project
   displayProject(workspaceName)
+
+  // Load correct buttons
+  mainButtons()
 
   // Select the workspace name to be renamed
   node = document.getElementById("projectName")

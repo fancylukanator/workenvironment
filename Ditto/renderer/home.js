@@ -1,7 +1,8 @@
 // Initial call to create a project list
 updateProjectList();
 
-
+// highlight workspace if opened
+highlightWorkspace();
 
 
 
