@@ -20,17 +20,17 @@ body, html{
 #create_project{
     float: right;
     width: auto;
-    height: auto;
+    height: 100%;
     display: none;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 #display_project{
     float: right;
     width: auto;
-    height: auto;
+    height: 100%;
     display: none;
-    overflow: scroll;
+    overflow-y: scroll;
     font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
     font-size: 14px;
     font-style: normal;
