@@ -540,6 +540,11 @@ async function captureWorkspace() {
         if (index !== -1) {
           openApps.splice(index, 1);
         }
+
+        var index = openApps.indexOf("Ditto");
+        if (index !== -1) {
+          openApps.splice(index, 1);
+        }
       
         // Ignore Finder
         var index = openApps.indexOf("Finder");
@@ -548,11 +553,12 @@ async function captureWorkspace() {
         }
 
         // REMOVE: REMOVE THIS SECTION ON EXPORT
+        /*
         var index = openApps.indexOf("Electron");
         if (index !== -1) {
           openApps.splice(index, 1);
         }
-      
+      */
       
         // SECTION TO RENAME SPECIFIC APPS IN THE CAPTURE
       

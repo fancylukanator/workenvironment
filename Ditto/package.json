@@ -1,5 +1,5 @@
 {
-  "name": "Ditto",
+  "name": "ditto",
   "version": "1.0.0",
   "description": "Transition between projects like never before.",
   "main": "main.js",
@@ -37,7 +37,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./icon/ditto_icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
