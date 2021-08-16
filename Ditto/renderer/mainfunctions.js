@@ -531,7 +531,7 @@ async function captureWorkspace() {
         detectApps = await execShPromise('osascript -e \'tell application "System Events" to get the name of every process whose background only is false\'', true);
         openApps = parseText(String(detectApps.stdout));
       
-      
+        console.log(openApps)
       
         // SECTION FOR WHICH APPS TO IGNORE IN THE CAPTURE
       
@@ -580,9 +580,11 @@ async function captureWorkspace() {
         // Loop through all of the open apps to see if they have open documents or tabs
         for(var i = 0; i < openApps.length; i++){
       
+            console.log(openApps[i]);
+
           // Different cases for specific apps
           switch(openApps[i]){
-      
+
             // All browsers are treated the same
             case "Safari":
             case "Google Chrome":
@@ -594,6 +596,9 @@ async function captureWorkspace() {
               // Collect the open tabs
               detectTabs = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get URL of tabs of windows \nend try\'', true);
               openTabs = parseText(String(detectTabs.stdout));
+
+              console.log("Tabs: " + openTabs)
+
               tabs = tabs.concat(openTabs)
       
               // Set the default browser
@@ -680,6 +685,9 @@ function findFiles(app, apps, documents, documentApps, detectDocPaths, detectDoc
     docPaths = parseText(String(detectDocPaths.stdout));
     docNames = parseText(String(detectDocNames.stdout));
   
+    console.log("Document Paths: " + docPaths);
+    console.log("Document Names: " + docNames);
+
     // Loops through each file/document within an app
     for(var j = 0; j < docPaths.length; j++){
   
