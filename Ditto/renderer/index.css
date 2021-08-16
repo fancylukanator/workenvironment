@@ -33,6 +33,7 @@ table {
   td {
     width: 350px;
     overflow: hidden;
+    user-select: none;
   }
   td+td {
     width: auto;
@@ -93,4 +94,17 @@ ul li:hover {
 
 li:focus {
     background-color: rgb(245, 245, 245);
+}
+
+li {
+  cursor: pointer;
+  user-select: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+h2 {
+  user-select: none;
 }

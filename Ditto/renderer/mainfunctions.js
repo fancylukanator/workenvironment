@@ -587,7 +587,7 @@ async function captureWorkspace() {
             case "Safari":
             case "Google Chrome":
             case "Firefox":
-            case "Brave":
+            case "Brave Browser":
             case "Opera":
             case "Chromium":
       

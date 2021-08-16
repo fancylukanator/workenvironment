@@ -4,19 +4,24 @@ html, body {
     margin: 0 auto;
 }
 
+button {
+    cursor: pointer;
+}
+
 .controls {
     margin: 3% 3%;
 }
 
 .action {
-    display: inline-block;
     width: 40%;
     margin: 3% 3% 3% 3%;
+    cursor: pointer;
 }
 
 .actionSwitch {
     margin: 3% 3% 3% 3%;
     width: 90%;
+    cursor: pointer;
 }
 
 ul {
@@ -41,3 +46,8 @@ ul li:hover {
 li:focus {
     background-color: rgb(245, 245, 245);
 }
+
+li {
+    cursor: pointer;
+    user-select: none;
+  }
