@@ -630,7 +630,9 @@ async function captureWorkspace() {
             // If the app has no special case run the default
             default:
               detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
+              console.log(detectDocPaths.stdout)
               detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
+              console.log(detectDocNames.stdout)
               findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
               break;
           }
