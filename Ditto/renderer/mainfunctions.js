@@ -110,6 +110,7 @@ function detailsTable(table, array, active, type){
     table.innerHTML = "";
 
     // Add in the header to the table
+    /*
     row = table.insertRow()
     var cell1 = row.insertCell();
     var cell2 = row.insertCell();
@@ -117,6 +118,7 @@ function detailsTable(table, array, active, type){
     cell1.innerHTML = type;
     cell2.innerHTML = ""; //"Selected";
     cell3.innerHTML = ""; //"Delete";
+    */
 
     // Add contents to the table
     for(var i = 0; i < array.length; i++){

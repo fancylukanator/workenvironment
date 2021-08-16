@@ -141,3 +141,21 @@ h2 {
   user-select: none;
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 }
+
+h3 {
+  user-select: none;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+}
+
+tr {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+td {
+  width: auto;
+}
+
+td + td {
+  width: 5%;
+}
