@@ -124,7 +124,7 @@ function detailsTable(table, array, active, type){
     for(var i = 0; i < array.length; i++){
       row = table.insertRow()
       var cell1 = row.insertCell();
-      var cell2 = row.insertCell();
+      //var cell2 = row.insertCell();
       var cell3 = row.insertCell();
 
       // First cell contains the path
