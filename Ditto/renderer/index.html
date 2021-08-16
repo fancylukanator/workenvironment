@@ -84,27 +84,29 @@
 
       <!-- div that shows / hides when a project is clicked -->
       <div id="display_project">
-        <h2 id="projectName" index="" contenteditable="true"></h2>
+        <div>
+          <h2 id="projectName" index="" contenteditable="true" style="width:60%; display: inline-block;"></h2>
+          <!-- open controls-->
+          <div class = "openControls" id="openControls" style="float: right; margin-top: 15px; margin-right: 25px;">
+            <button id="launchProject" class="action open">Open</button>
+            <button id="deleteProject" class="action delete">Delete</button>
+          </div>
+          <!-- close controls-->
+          <div class = "closeControls" id="closeControls" style="float: right; margin-top: 15px; margin-right: 25px;">
+            <button id="closeProject" class="action close">Close</button>
+            <button id="saveProject" class="action save">Save</button>
+          </div>
+          <!-- switch controls-->
+          <div class = "switchControls" id="switchControls" style="float: right; margin-top: 15px; margin-right: 25px;">
+            <button id="switchProject" class="action Switch">Switch</button>
+          </div>
+        </div>
+        <h3 id= "URLsHeader">Tabs</h3>
         <table id = "projectURLs"></table>
-        <br>
+        <h3 id="FilesHeader">Documents</h3>
         <table id = "projectFiles"></table>
-        <br>
+        <h3 id= "AppsHeader">Applications</h3>
         <table id = "projectApps"></table>
-        <br>
-        <!-- open controls-->
-        <div class = "openControls" id="openControls">
-          <button id="launchProject" class="action open">Open</button>
-          <button id="deleteProject" class="action delete">Delete</button>
-        </div>
-        <!-- close controls-->
-        <div class = "closeControls" id="closeControls">
-          <button id="closeProject" class="action close">Close</button>
-          <button id="saveProject" class="action save">Save</button>
-        </div>
-        <!-- switch controls-->
-        <div class = "switchControls" id="switchControls">
-          <button id="switchProject" class="action Switch">Switch</button>
-        </div>
  
       </div>
     </div>
