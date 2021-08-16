@@ -164,10 +164,12 @@ document.getElementById('projectName').addEventListener('blur', (event) =>{
         // Change the project name
         project.name = document.getElementById("projectName").textContent;
 
+        // Change the selected workspace
+        localStorage.setItem("selectedWorkspace", project.name)
+
         // If the project is open, sets the new name to be the open project
-        if(localStorage.getItem("openedWorkspace") != "" && localStorage.getItem("openedWorkspace") != null){
+        if(localStorage.getItem("openedWorkspace") == index){
             localStorage.setItem("openedWorkspace", project.name)
-            localStorage.setItem("selectedWorkspace", project.name)
 
             // Updates the icon tray title
             ipc.send('update-title-tray-window-event', project.name);
