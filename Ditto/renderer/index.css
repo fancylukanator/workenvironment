@@ -48,6 +48,7 @@ table {
   td {
     width: 350px;
     overflow: hidden;
+    user-select: none;
   }
   td+td {
     width: auto;
@@ -123,4 +124,17 @@ li:focus {
   font-variant: normal;
   font-weight: 400;
   line-height: 20px;
+}
+
+li {
+  cursor: pointer;
+  user-select: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+h2 {
+  user-select: none;
 }

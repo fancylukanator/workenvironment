@@ -12,7 +12,7 @@ class TrayIcon {
     let iconPath = path.join(__dirname, './../pictures/menubarlogo@2x.png')
 
     this.trayIcon = new Tray(iconPath);
-    this.trayIcon.setToolTip('Ditto'); // This tooltip will shows up, when user will hover our tray-icon.
+    //this.trayIcon.setToolTip('ditto'); // This tooltip will shows up, when user will hover our tray-icon.
 
     // By clicking on the icon we have to show Tray Window and position it in the middle under the tray icon. ( Initialy this window is hidden )
 
