@@ -12,11 +12,23 @@ html, body {
     display: inline-block;
     width: 40%;
     margin: 3% 3% 3% 3%;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .actionSwitch {
     margin: 3% 3% 3% 3%;
     width: 90%;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 ul {
@@ -32,6 +44,12 @@ ul li {
     text-align: left;
     padding-bottom: 5px;
     border-top: 1px solid grey;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 ul li:hover {
