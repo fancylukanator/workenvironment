@@ -130,6 +130,9 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
     // Call async function to open project
     openWorkspace(document.getElementById("projectName").index);
 
+    // Updates the display on the main app
+    mainButtons();
+
 });
 
 
@@ -137,12 +140,18 @@ document.getElementById('launchProject').addEventListener('click', (event) =>{
 // Switch Button. Listen to if the user wishes to switch to a specific project
 document.getElementById('switchProject').addEventListener('click', (event) =>{
 
+    // Minimize window upon opening a project
+    ipc.send('hide');
+
     //retrieve workspaceName
     newworkspaceName = localStorage.getItem('selectedWorkspace');
     currentworkspaceName = localStorage.getItem('openedWorkspace');
 
     // call function to switch
     switchWorkspace(currentworkspaceName, newworkspaceName);
+
+    // Updates the display on the main app
+    mainButtons();
 
     // highlight new workspace when the app is re opened
     highlightWorkspace();

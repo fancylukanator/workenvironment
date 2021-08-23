@@ -19,9 +19,9 @@ class TrayIcon {
     this.trayIcon.on('click', (e, bounds) => {
       if ( trayWindow.isVisible() ) {
         trayWindow.hide();
-
         // Added to make the menubar icon compatible with multiple desktops
         trayWindow.setVisibleOnAllWorkspaces(true);
+        
       } else {
         let positioner = new Positioner(trayWindow);
         positioner.move('trayCenter', bounds)
@@ -30,6 +30,7 @@ class TrayIcon {
         trayWindow.webContents.send('ping', 'opened')
 
         trayWindow.show();
+        trayWindow.focus();
 
         // Causes the menubar window to only be visible on the desktop it is opened on (mimic native menubar windows)
         trayWindow.setVisibleOnAllWorkspaces(false);

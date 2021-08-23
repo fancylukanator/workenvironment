@@ -43,6 +43,7 @@ ul {
     margin: 3% 3% 3% 3%;
     border-width: 0px;
     user-select: none;
+    border-width: 0px;
 }
 
 ul li {
@@ -103,7 +104,7 @@ hr {
     font-size: 20px;
     text-align: center;
   }
-
+  
   #create:hover {
     background-color: rgba(132, 130, 130,0.25);
 }

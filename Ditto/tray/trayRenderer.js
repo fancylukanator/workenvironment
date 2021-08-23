@@ -38,11 +38,11 @@ function openTray(){
         openWorkspace(workspaceName);
     }
 
-    //hide tray
-    remote.getCurrentWindow().hide();
-
     displayButtons();
     updateToolbarList();
+
+    //hide tray
+    remote.getCurrentWindow().hide();
 
     //update main
     mainButtons();

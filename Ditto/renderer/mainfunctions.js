@@ -263,6 +263,9 @@ function deleteItem(type, index){
 // FUNCTION TO SAVE-OVER A WORKSPACE IN MAIN APP
 async function resaveWorkspace(workspaceName){
 
+    // Display to the user that the workspace is being detected
+    document.getElementById("loading").style.display = "block";
+
     // Recapture the open workspace
     await captureWorkspace();
 
@@ -275,6 +278,9 @@ async function resaveWorkspace(workspaceName){
     updateProjectList();
 
     await displayProject(index);
+
+    // Hide to the user that the workspace is being loaded
+    document.getElementById("loading").style.display = "none"
 }
 
 // FUNCTION TO SAVE-OVER A WORKSPACE IN TOOLBAR APP
