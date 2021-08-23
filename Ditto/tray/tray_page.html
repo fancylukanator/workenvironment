@@ -4,30 +4,39 @@
     <script src="./trayfunctions.js"></script>
     <script src="./../renderer/mainfunctions.js"></script>
     <link rel="stylesheet" href="tray_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <!-- no-drag option makes our new window non-draggable -->
   <body style='-webkit-app-region: no-drag' id='menubar_background'>
     <br>
+
+    <!-- Project is open -->
+    <div class = "closeControls" id="closeControls">
+      <h5 id = "currentWorkspaceHeader">Current Workspace</h5>
+      <div id="currentWorkspace"></div>
+      <button id="close" title="Close current workspace...">&times;</button>
+      <i id="save" class="fa" title = "Save changes to current workspace...">&#xf0c7;</i>
+      <hr>
+    </div>
+
+
+
     <!-- no project opened  -->
     <div class = "openControls" id="openControls">
-      <button id="open" class="action open">Open</button>
-      <button id="create" class="action create">Create</button>
-    </div>
-    <!-- project opened -->
-    <div class = "closeControls" id="closeControls">
-      <button id="save" class="action save">Recapture</button>
-      <button id="close" class="action close">Close</button>
     </div>
     <!--- switch project -->
     <div class = "switchControls" id="switchControls">
       <button id="switch" class="actionSwitch">Switch</button>
     </div>
+
+    <h5 id="workspacesHeader">Workspaces</h5>
+    <button id="create" title="Capture new workspace...">+</button>
     <div class ="workspaces">
       <ul tabindex="1" id="toolbarList"></ul>
-      <br>
-      <br>
     </div>
+    <hr>
+    <i id="openApp" class="fa" title="Open main app...">&#xf08e;</i>
 
     <script src="./trayRenderer.js"></script>
     <script src="./../renderer/home.js"></script>

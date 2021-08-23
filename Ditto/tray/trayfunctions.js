@@ -10,7 +10,7 @@ function updateToolbarList(){
         projectData = Object.keys(localStorage);
         for(var i in projectData) {
             // ignore keys that are not workspaces
-            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace') {
+            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == localStorage.getItem('openedWorkspace')) {
                 continue;
             }
             var entry = document.createElement('li');
@@ -20,6 +20,7 @@ function updateToolbarList(){
             entry.onclick = function() {
                 selectWorkspace(this.index); // Send the index for the project to selectProject
                 displayButtons();
+                openTray();
             }
             entry.appendChild(document.createTextNode(projectData[i]));
             projectList.appendChild(entry);
@@ -45,14 +46,12 @@ function displayButtons() {
     document.getElementById("openControls").style.display = "none";
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "block";
-    } else if (localStorage.getItem('openedWorkspace') != ''
-    && localStorage.getItem('selectedWorkspace') != localStorage.getItem('openedWorkspace')) {
-    document.getElementById("openControls").style.display = "none";
-    document.getElementById("closeControls").style.display = "none";
-    document.getElementById("switchControls").style.display = "block";
+    document.getElementById("currentWorkspace").innerHTML = localStorage.getItem('openedWorkspace');
+    document.getElementById("workspacesHeader").innerHTML = "Other Workspaces";
     } else {
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
     document.getElementById("openControls").style.display = "block";
+    document.getElementById("workspacesHeader").innerHTML = "Workspaces";
     }
 }

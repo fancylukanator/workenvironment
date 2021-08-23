@@ -3,6 +3,7 @@ const electron = require('electron');
 const { app, BrowserWindow, shell, ipcMain, remote} = require('electron');
 const ipc = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
+let isProjectOpen;
 
 // reset workspace selector keys
 localStorage.setItem('selectedWorkspace', '');
@@ -14,25 +15,41 @@ updateToolbarList();
 // display proper buttons
 displayButtons();
 
-//Open Button
-document.getElementById('open').addEventListener('click', (event) => {
-    //retrieve workspaceName
-    workspaceName = localStorage.getItem('selectedWorkspace');
 
-    if(workspaceName != null && workspaceName != ""){
+
+// Opening & switching projects
+function openTray(){
+
+    //Retrieve selected & opened workspaces
+    workspaceName = localStorage.getItem('selectedWorkspace');
+    currentWorkspace = localStorage.getItem('openedWorkspace');
+
+    // Switching projects
+    if(currentWorkspace != null && currentWorkspace != "" && currentWorkspace != workspaceName){
+        
+        newworkspaceName = localStorage.getItem('selectedWorkspace');
+
+        //toolbarsaveWorkspace(currrentworkspaceName);
+    
+        switchWorkspace(currentWorkspace, workspaceName);
+
+    } else if(workspaceName != null && workspaceName != "" && workspaceName != currentWorkspace){
         //open workspace
         openWorkspace(workspaceName);
-
-        //hide tray
-        remote.getCurrentWindow().hide();
-
-        //update buttons
-        displayButtons();
     }
+
+    //hide tray
+    remote.getCurrentWindow().hide();
+
+    displayButtons();
+    updateToolbarList();
+
     //update main
     mainButtons();
     updateProjectList();
-})
+}
+
+
 
 //Create Button
 document.getElementById('create').addEventListener('click', (event) => {
@@ -44,8 +61,11 @@ document.getElementById('create').addEventListener('click', (event) => {
     remote.getCurrentWindow().hide();
 })
 
+
+
 //Close Button
 document.getElementById('close').addEventListener('click', (event) => {
+
     //retrieve workspaceName
     workspaceName = localStorage.getItem('selectedWorkspace');
 
@@ -78,76 +98,38 @@ document.getElementById('save').addEventListener('click', (event) => {
 })
 
 
-//Switch Button
-document.getElementById('switch').addEventListener('click', (event) => {
-    //retrieve workspaceName
-    newworkspaceName = localStorage.getItem('selectedWorkspace');
-    currentworkspaceName = localStorage.getItem('openedWorkspace');
 
-    //switch workspace
-    //toolbarsaveWorkspace(currrentworkspaceName);
+//Open main app
+document.getElementById('openApp').addEventListener('click', (event) => {
 
-    switchWorkspace(currentworkspaceName, newworkspaceName);
-
-    //hide tray
     remote.getCurrentWindow().hide();
 
-    //update main
-    mainButtons();
-    updateProjectList();
+    // Open main app
+    ipc.send('open-main-app', '');
+    
+})
 
-});
+
 
 //Update all data, icon has been clicked
 ipc.on('ping', () => {
 
     // Sets the selected workspace to be the open workspace (either something or nothing)
     localStorage.setItem('selectedWorkspace', localStorage.getItem('openedWorkspace'));
-    
+
     updateToolbarList();
     displayButtons();
     updateProjectList();
 
-    openProject = document.getElementById("project-" + localStorage.getItem('openedWorkspace'));
-    if(openProject != null){
-        openProject.focus();
+    // update size of menubar window
+    if(localStorage.getItem('openedWorkspace') != "" && localStorage.getItem('openedWorkspace') != null){
+        isProjectOpen = true;
+    } else{
+        isProjectOpen = false;
     }
+
+    ipc.send('menubar-height', [Object.keys(localStorage).length -2, isProjectOpen])
+
     // now send message to main
     ipc.send('minimize-main', '');
 })
-
-
-
-// LISTENERS TO ENSURE THAT THE SELECTED PROJECT REMAINS FOCUSED ON
-
-document.getElementById('menubar_background').addEventListener('click', (event) => {
-
-    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
-    if(openProject != null){
-        openProject.focus();
-    }
-});
-
-document.getElementById('openControls').addEventListener('click', (event) => {
-
-    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
-    if(openProject != null){
-        openProject.focus();
-    }
-});
-
-document.getElementById('closeControls').addEventListener('click', (event) => {
-
-    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
-    if(openProject != null){
-        openProject.focus();
-    }
-});
-
-document.getElementById('switchControls').addEventListener('click', (event) => {
-
-    openProject = document.getElementById("project-" + localStorage.getItem('selectedWorkspace'));
-    if(openProject != null){
-        openProject.focus();
-    }
-});

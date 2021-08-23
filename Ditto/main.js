@@ -121,3 +121,21 @@ ipcMain.on('minimize-main', () => {
   if (BrowserWindow.getAllWindows().length == 1) return;
   BrowserWindow.fromId(mainWindowID).close();
 });
+
+// Open main app if closed on tray create
+ipcMain.on('open-main-app', function(event) {
+
+  // If the main window was closed
+  if (BrowserWindow.getAllWindows().length == 1){
+    createWindow(); // Create new window
+    // Waits to then create new project once HTML is loaded
+
+    // If main window is still kicking around
+  } else {
+    // Restores the window if it was minimized
+    if(BrowserWindow.fromId(mainWindowID).isMinimized()){
+      BrowserWindow.fromId(mainWindowID).restore();
+    }
+    BrowserWindow.fromId(mainWindowID).focus()
+  }
+});
