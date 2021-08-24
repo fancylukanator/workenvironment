@@ -44,6 +44,7 @@ ul {
     border-width: 0px;
     user-select: none;
     border-width: 0px;
+    outline: none;
 }
 
 ul li {
@@ -59,6 +60,7 @@ ul li {
     font-weight: 400;
     line-height: 20px;
     border-radius: 5px;
+    outline: none;
 }
 
 ul li:hover {

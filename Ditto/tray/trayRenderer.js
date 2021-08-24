@@ -30,7 +30,6 @@ function openTray(){
         newworkspaceName = localStorage.getItem('selectedWorkspace');
 
         //toolbarsaveWorkspace(currrentworkspaceName);
-    
         switchWorkspace(currentWorkspace, workspaceName);
 
     } else if(workspaceName != null && workspaceName != "" && workspaceName != currentWorkspace){

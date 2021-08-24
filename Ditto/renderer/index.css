@@ -147,6 +147,7 @@ ul {
     border-width: 0px;
     user-select: none;
     border-width: 0px;
+    outline: none;
 }
   
 ul li {
@@ -162,6 +163,7 @@ ul li {
     padding-bottom: 3px;
     padding-top: 3px;
     border-radius: 5px;
+    outline: none;
 }
 
 ul li:hover {
@@ -232,4 +234,11 @@ td {
 
 td + td {
   width: 5%;
+}
+
+#projectDetails{
+  overflow-x:hidden;
+  overflow-y:auto;
+  width: calc(775px - 210px);
+  height: 400px;
 }

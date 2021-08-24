@@ -34,6 +34,7 @@ function createWindow () {
 
   // Only display the main window once the HTML is loaded in
   mainWindow.webContents.on('did-finish-load', function() {
+    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
     mainWindow.show();
   });
 
@@ -145,5 +146,6 @@ ipcMain.on('open-main-app', function(event) {
       BrowserWindow.fromId(mainWindowID).restore();
     }
     BrowserWindow.fromId(mainWindowID).focus()
+    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
   }
 });

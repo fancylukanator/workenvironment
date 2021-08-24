@@ -89,3 +89,10 @@ ipc.on('create-workspace', () => {
     console.log('recieved request from main')
     loadCreateProject();
 });
+
+ipc.on('display-workspace', () => {
+    openProject = localStorage.getItem("openedWorkspace");
+    if(openProject != null && openProject != ""){
+        displayProject(openProject);
+    }
+})

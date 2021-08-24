@@ -1,3 +1,7 @@
+// enable analytics
+const { getGlobal } = require('electron').remote;
+//const trackEvent = getGlobal('trackEvent');
+
 // FUNCTION THAT TAKES TABS, DOCUMENTS, APPS, NAME AND SAVES A WORKSPACE IN LOCALSTORAGE
 function saveWorkspace(tabs, defaultBrowser, documents, documentApps, apps, workspaceName) {
     // create project object
@@ -47,10 +51,10 @@ function updateProjectList(){
             }
             var entry = document.createElement('li');
             entry.id = "project-" + i;
+            entry.title = "Display the details of " + projectData[i] + "...";
             entry.id = projectData[i];
             entry.index = projectData[i]
             entry.tabIndex = 1;
-            entry.title = "Display the details of " + projectData[i] + "...";
             entry.onclick = function() {
                 displayProject(this.index); // Send the index for the project to displayProject
                 selectWorkspace(this.index);
@@ -264,9 +268,6 @@ function deleteItem(type, index){
 // FUNCTION TO SAVE-OVER A WORKSPACE IN MAIN APP
 async function resaveWorkspace(workspaceName){
 
-    // Display to the user that the workspace is being detected
-    document.getElementById("loading").style.display = "block";
-
     // Recapture the open workspace
     await captureWorkspace();
 
@@ -279,9 +280,6 @@ async function resaveWorkspace(workspaceName){
     updateProjectList();
 
     await displayProject(index);
-
-    // Hide to the user that the workspace is being loaded
-    document.getElementById("loading").style.display = "none"
 }
 
 // FUNCTION TO SAVE-OVER A WORKSPACE IN TOOLBAR APP
@@ -381,6 +379,9 @@ async function addToWorkspace(type){
 // FUNTION TO LAUNCH A PROJECT
 async function openWorkspace(workspaceName) {
 
+    // Send information to analytics
+    // trackEvent('User Interaction', 'Workspace Opened');
+
     // Set keys in storage
     localStorage.setItem('openedWorkspace', workspaceName);
     localStorage.setItem('selectedWorkspace', workspaceName);
@@ -465,6 +466,9 @@ async function openWorkspace(workspaceName) {
 // FUNCTION TO CLOSE WORKSPACE
 async function closeWorkspace(workspaceName){
 
+    // Send information to analytics
+    // trackEvent('User Interaction', 'Workspace Closed');
+
     // remove keys from storage
     localStorage.setItem('openedWorkspace', '');
     localStorage.setItem('selectedWorkspace','');
@@ -525,6 +529,10 @@ async function closeWorkspace(workspaceName){
 
 // FUNCTION TO CAPTURE WORKSPACE
 async function captureWorkspace() {
+
+        // Send information to analytics
+        // trackEvent('User Interaction', 'Workspace Captured');
+
         // Initializes arrays to store the open apps, tabs, and documents
         let apps = [];
         let tabs = [];
@@ -633,8 +641,8 @@ async function captureWorkspace() {
       
             // If the app has no special case run the default
             default:
-              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
-              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
+              detectDocPaths = await execShPromise('osascript ./appleScripts/getDocPaths.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
+              detectDocNames = await execShPromise('osascript ./appleScripts/getDocNames.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
               findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
               break;
           }
@@ -727,5 +735,14 @@ function mainButtons() {
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
     document.getElementById("openControls").style.display = "block";
+    }
+}
+
+function highlightWorkspace () {
+    openProject = document.getElementById(localStorage.getItem('openedWorkspace'));
+    if(openProject != null){
+        openProject.click();
+        openProject.focus();
+
     }
 }
