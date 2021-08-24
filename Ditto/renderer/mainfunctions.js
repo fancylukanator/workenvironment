@@ -1,3 +1,7 @@
+// enable analytics
+const { getGlobal } = require('electron').remote;
+const trackEvent = getGlobal('trackEvent');
+
 // FUNCTION THAT TAKES TABS, DOCUMENTS, APPS, NAME AND SAVES A WORKSPACE IN LOCALSTORAGE
 function saveWorkspace(tabs, defaultBrowser, documents, documentApps, apps, workspaceName) {
     // create project object
@@ -374,6 +378,9 @@ async function addToWorkspace(type){
 // FUNTION TO LAUNCH A PROJECT
 async function openWorkspace(workspaceName) {
 
+    // Send information to analytics
+    trackEvent('User Interaction', 'Workspace Opened');
+
     // Set keys in storage
     localStorage.setItem('openedWorkspace', workspaceName);
     localStorage.setItem('selectedWorkspace', workspaceName);
@@ -458,6 +465,9 @@ async function openWorkspace(workspaceName) {
 // FUNCTION TO CLOSE WORKSPACE
 async function closeWorkspace(workspaceName){
 
+    // Send information to analytics
+    trackEvent('User Interaction', 'Workspace Closed');
+
     // remove keys from storage
     localStorage.setItem('openedWorkspace', '');
     localStorage.setItem('selectedWorkspace','');
@@ -518,6 +528,10 @@ async function closeWorkspace(workspaceName){
 
 // FUNCTION TO CAPTURE WORKSPACE
 async function captureWorkspace() {
+
+        // Send information to analytics
+        trackEvent('User Interaction', 'Workspace Captured');
+
         // Initializes arrays to store the open apps, tabs, and documents
         let apps = [];
         let tabs = [];

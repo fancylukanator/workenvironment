@@ -7,6 +7,11 @@ const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage} = require('
 const ipc = ipcMain;
 const { webContents } = require('electron')
 
+// Analytics
+const { trackEvent } = require('./analytics');
+global.trackEvent = trackEvent;
+
+
 let mainWindowID;
 
 // Create the browser window.
@@ -30,7 +35,7 @@ function createWindow () {
   console.log("Open home...")
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
 }
 
@@ -45,6 +50,9 @@ let tray = null;
 let trayIcon = null;
 
 app.whenReady().then(() => {
+
+  //testing google analytics setup
+  trackEvent('User Interaction', 'Ditto App Opened');
 
   tray = new TrayWindow();
   trayIcon = new TrayIcon(tray.window);
