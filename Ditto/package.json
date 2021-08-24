@@ -15,6 +15,7 @@
     "make-linux": "electron-forge make --platform linux"
   },
   "dependencies": {
+    "applescript": "^1.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "exec-sh": "^0.4.0",
     "get-chrome-tabs": "^1.0.0",
@@ -23,7 +24,6 @@
     "open": "^8.2.1",
     "ps-list": "^7.2.0",
     "read-browser-tabs": "^1.0.4",
-    "run-applescript": "^6.0.0",
     "tasklist": "^4.0.1",
     "terminate": "^2.2.1",
     "universal-analytics": "^0.4.23",
