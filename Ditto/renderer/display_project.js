@@ -152,10 +152,6 @@ document.getElementById('switchProject').addEventListener('click', (event) =>{
 
     // Updates the display on the main app
     mainButtons();
-
-    // highlight new workspace when the app is re opened
-    highlightWorkspace();
-
 });
 
 

@@ -9,18 +9,20 @@
     <script src="./mainfunctions.js"></script>
   </head>
   <body>
-
+    <div class="titlebar-row">
+      <header class="titlebar left-tb"></header>
+      <header class="titlebar right-tb"></header>
+    </div>
     <div id="home">
       <div id ="left" class="left">
         <div id="projects">
-          <br>
-          <h2>Workspaces</h2>
+          <h5>Workspaces</h5>
+          <button id="create_new_proj" title="Capture new workspace...">+</button>
           <ul tabindex="1" id="projectList"></ul>
           <br>
           <br>
         </div>
         
-        <button id="create_new_proj" class="action create">Create New Project</button>
         <p id="loading" style="display: none;">Detecting workspace... Please wait.</p>
         <br>
         <br>
@@ -86,20 +88,19 @@
       <!-- div that shows / hides when a project is clicked -->
       <div id="display_project">
         <div>
-          <br>
           <h2 id="projectName" index="" contenteditable="true" style="width:60%; display: inline-block;"></h2>
           <!-- open controls-->
-          <div class = "openControls" id="openControls" style="float: right; margin-top: 15px; margin-right: 25px;">
+          <div class = "openControls" id="openControls" style="float: right; margin-right: 25px;">
             <button id="launchProject" class="action open">Open</button>
             <button id="deleteProject" class="action delete">Delete</button>
           </div>
           <!-- close controls-->
-          <div class = "closeControls" id="closeControls" style="float: right; margin-top: 15px; margin-right: 25px;">
+          <div class = "closeControls" id="closeControls" style="float: right; margin-right: 25px;">
             <button id="closeProject" class="action close">Close</button>
             <button id="saveProject" class="action save">Recapture</button>
           </div>
           <!-- switch controls-->
-          <div class = "switchControls" id="switchControls" style="float: right; margin-top: 15px; margin-right: 25px;">
+          <div class = "switchControls" id="switchControls" style="float: right; margin-right: 25px;">
             <button id="switchProject" class="action Switch">Switch</button>
           </div>
         </div>

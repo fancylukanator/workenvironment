@@ -12,9 +12,12 @@ let mainWindowID;
 // Create the browser window.
 function createWindow () {
   var mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 775,
+    height: 500,
     show: false,
+    resizable: false,
+    titleBarStyle: 'hiddenInset',
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,

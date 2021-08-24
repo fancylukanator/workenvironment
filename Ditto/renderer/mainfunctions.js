@@ -50,6 +50,7 @@ function updateProjectList(){
             entry.id = projectData[i];
             entry.index = projectData[i]
             entry.tabIndex = 1;
+            entry.title = "Display the details of " + projectData[i] + "...";
             entry.onclick = function() {
                 displayProject(this.index); // Send the index for the project to displayProject
                 selectWorkspace(this.index);
@@ -726,14 +727,5 @@ function mainButtons() {
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
     document.getElementById("openControls").style.display = "block";
-    }
-}
-
-function highlightWorkspace () {
-    openProject = document.getElementById(localStorage.getItem('openedWorkspace'));
-    if(openProject != null){
-        openProject.click();
-        openProject.focus();
-
     }
 }
