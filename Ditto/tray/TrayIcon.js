@@ -44,9 +44,9 @@ class TrayIcon {
 
       // If a project is open, add additional height
       if(args[1]){
-        height = 90 + 26*args[0] + 36;
+        height = 88 + 26*args[0] + 40;
       } else{ // Adds 26 pixels to the height for each project
-        height = 90 + 26*args[0];
+        height = 88 + 26*args[0];
       }
 
       trayWindow.setSize(275,height);

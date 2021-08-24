@@ -8,7 +8,7 @@ class TrayWindow {
     this.window = new BrowserWindow({
       show: false, // Initially, we should hide it, in such way we will remove blink-effect. 
       roundedCorners: true,
-      height: 90, // 26 per workspace
+      height: 88, // 26 per workspace
       width: 275,
       frame: false,  // This option will remove frame buttons. By default window has standart chrome header buttons (close, hide, minimize). We should change this option because we want to display our window like tray window not like common chrome-like window.
       resizable: false,
