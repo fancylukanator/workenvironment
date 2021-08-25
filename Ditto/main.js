@@ -6,6 +6,7 @@ const path = require('path');
 const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage} = require('electron');
 const ipc = ipcMain;
 const { webContents } = require('electron')
+const { autoUpdater } = require('electron-updater');
 
 // Analytics
 const { trackEvent } = require('./analytics');
@@ -75,6 +76,10 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length == 1) createWindow();
 
     BrowserWindow.fromId(mainWindowID).show()
+
+    //check for updates
+    autoUpdater.checkForUpdatesAndNotify();
+
   })
 
 });
@@ -156,4 +161,15 @@ ipcMain.on('open-main-app', function(event) {
     BrowserWindow.fromId(mainWindowID).focus()
     BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
   }
+});
+
+// Handle Updates
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
 });

@@ -1,0 +1,4 @@
+appId: ditto
+publish:
+  provider: github
+  token: [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]
