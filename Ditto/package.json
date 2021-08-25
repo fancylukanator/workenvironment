@@ -23,7 +23,8 @@
     "ps-list": "^7.2.0",
     "read-browser-tabs": "^1.0.4",
     "tasklist": "^4.0.1",
-    "terminate": "^2.2.1"
+    "terminate": "^2.2.1",
+    "universal-analytics": "^0.4.23"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.57",
