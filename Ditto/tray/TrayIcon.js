@@ -19,9 +19,9 @@ class TrayIcon {
     this.trayIcon.on('click', (e, bounds) => {
       if ( trayWindow.isVisible() ) {
         trayWindow.hide();
-
         // Added to make the menubar icon compatible with multiple desktops
         trayWindow.setVisibleOnAllWorkspaces(true);
+        
       } else {
         let positioner = new Positioner(trayWindow);
         positioner.move('trayCenter', bounds)
@@ -30,6 +30,7 @@ class TrayIcon {
         trayWindow.webContents.send('ping', 'opened')
 
         trayWindow.show();
+        trayWindow.focus();
 
         // Causes the menubar window to only be visible on the desktop it is opened on (mimic native menubar windows)
         trayWindow.setVisibleOnAllWorkspaces(false);
@@ -43,9 +44,9 @@ class TrayIcon {
 
       // If a project is open, add additional height
       if(args[1]){
-        height = 90 + 26*args[0] + 36;
+        height = 88 + 26*args[0] + 40;
       } else{ // Adds 26 pixels to the height for each project
-        height = 90 + 26*args[0];
+        height = 88 + 26*args[0];
       }
 
       trayWindow.setSize(275,height);

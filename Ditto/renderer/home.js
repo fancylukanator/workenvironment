@@ -1,9 +1,6 @@
 // Initial call to create a project list
 updateProjectList();
 
-// highlight workspace if opened
-highlightWorkspace();
-
 // display correct buttons
 mainButtons();
 
@@ -92,3 +89,10 @@ ipc.on('create-workspace', () => {
     console.log('recieved request from main')
     loadCreateProject();
 });
+
+ipc.on('display-workspace', () => {
+    openProject = localStorage.getItem("openedWorkspace");
+    if(openProject != null && openProject != ""){
+        displayProject(openProject);
+    }
+})

@@ -51,6 +51,7 @@ function updateProjectList(){
             }
             var entry = document.createElement('li');
             entry.id = "project-" + i;
+            entry.title = "Display the details of " + projectData[i] + "...";
             entry.id = projectData[i];
             entry.index = projectData[i]
             entry.tabIndex = 1;
@@ -640,8 +641,8 @@ async function captureWorkspace() {
       
             // If the app has no special case run the default
             default:
-              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
-              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
+              detectDocPaths = await execShPromise('osascript ./appleScripts/getDocPaths.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
+              detectDocNames = await execShPromise('osascript ./appleScripts/getDocNames.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
               findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
               break;
           }

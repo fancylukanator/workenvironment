@@ -15,6 +15,7 @@ function updateToolbarList(){
             }
             var entry = document.createElement('li');
             entry.id = "project-" + projectData[i];
+            entry.title = "Launch " + projectData[i] + "...";
             entry.index = projectData[i];
             entry.tabIndex = 1;
             entry.onclick = function() {

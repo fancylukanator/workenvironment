@@ -17,8 +17,12 @@ let mainWindowID;
 // Create the browser window.
 function createWindow () {
   var mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 775,
+    height: 500,
+    show: false,
+    resizable: false,
+    titleBarStyle: 'hiddenInset',
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -32,7 +36,12 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadFile('./renderer/index.html')
-  console.log("Open home...")
+
+  // Only display the main window once the HTML is loaded in
+  mainWindow.webContents.on('did-finish-load', function() {
+    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
+    mainWindow.show();
+  });
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -64,6 +73,8 @@ app.whenReady().then(() => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length == 1) createWindow();
+
+    BrowserWindow.fromId(mainWindowID).show()
   })
 
 });
@@ -83,9 +94,8 @@ app.on('window-all-closed', function () {
 // Waiting to hear if the window should be closed out...
 ipc.on('minimize', function(event) {
   try{
-    BrowserWindow.fromId(mainWindowID).close();
+    BrowserWindow.fromId(mainWindowID).hide(); // Can also do .close() to fully close down
   } catch(e){
-    console.log("Error - Unable to hide main window.")
   }
 });
 
@@ -94,7 +104,6 @@ ipc.on('hide', function(event) {
   try{
     BrowserWindow.fromId(mainWindowID).hide();
   } catch(e){
-    console.log("Error - Unable to hide main window.")
   }
 });
 
@@ -145,5 +154,6 @@ ipcMain.on('open-main-app', function(event) {
       BrowserWindow.fromId(mainWindowID).restore();
     }
     BrowserWindow.fromId(mainWindowID).focus()
+    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
   }
 });
