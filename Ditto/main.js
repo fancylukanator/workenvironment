@@ -11,11 +11,6 @@ const { webContents } = require('electron')
 const { trackEvent } = require('./analytics');
 global.trackEvent = trackEvent;
 
-// M1 test
-const { M1test } = require('./M1test.js');
-
-M1test();
-
 
 let mainWindowID;
 
