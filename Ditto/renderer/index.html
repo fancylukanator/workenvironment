@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>ditto</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="./mainfunctions.js"></script>
   </head>
   <body>
@@ -19,16 +20,37 @@
           <h5>Workspaces</h5>
           <button id="create_new_proj" title="Capture new workspace...">+</button>
           <ul tabindex="1" id="projectList"></ul>
-          <br>
-          <br>
+          <button id="help" class="fa">&#xf059;</button>
         </div>
-        
-        <div id="loading" style="display: none;">
-          <p>Detecting your workspace...</p>
-          <p>Please wait!</p>
-        </div>
+      </div>
+
+      <div id="default-home" style="display: none;">
+        <img id="home-logo" src="../pictures/home-logo.png" width="150" />
         <br>
         <br>
+        <table id="user-guide">
+          <tr>
+            <td>Capture a new workspace</td>
+            <td><button class="guide-button">+</button></td>
+          </tr>
+          <tr>
+            <td>Open a workspace</td>
+            <td><button class="fa guide-button">&#xf115;</button></td>
+          </tr>
+          <tr>
+            <td>Recapture current workspace</td>
+            <td><button class="fa guide-button">&#xf0c7;</button></td>
+          </tr>
+          <tr>
+            <td>Close current workspace</td>
+            <td><button class="guide-button">&times;</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="loading" style="display: none;">
+        <img id="loading_gif" src="../pictures/loading_icon_icon8.gif" alt="Detecting workspace... Please wait."  width="100" />
+        <p id="detecting_app"></p>
       </div>
       <!-- display update notifications-->
       <div id="notification" class="hidden">

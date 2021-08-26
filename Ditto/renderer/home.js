@@ -94,6 +94,10 @@ ipc.on('display-workspace', () => {
     openProject = localStorage.getItem("openedWorkspace");
     if(openProject != null && openProject != ""){
         displayProject(openProject);
+    } else{
+        // Hide the previously displayed project
+        document.getElementById("display_project").style.display = "none";
+        document.getElementById("default-home").style.display = "block";
     }
 })
 
@@ -122,3 +126,7 @@ ipc.on('checking_for_update', () => {
     message.innerText = 'Checking for update';
     notification.classList.remove('hidden');
 });*/
+document.getElementById("help").addEventListener('click',()=>{
+    document.getElementById("display_project").style.display = "none";
+    document.getElementById("default-home").style.display = "block";
+})
