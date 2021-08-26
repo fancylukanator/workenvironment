@@ -645,8 +645,11 @@ async function captureWorkspace() {
       
             // If the app has no special case run the default
             default:
-              detectDocPaths = await execShPromise('osascript ./appleScripts/getDocPaths.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
-              detectDocNames = await execShPromise('osascript ./appleScripts/getDocNames.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
+              // Attempted fix for the M1 chip...
+              //detectDocPaths = await execShPromise('osascript ./appleScripts/getDocPaths.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
+              //detectDocNames = await execShPromise('osascript ./appleScripts/getDocNames.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
+              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
+              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
               findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
               break;
           }
