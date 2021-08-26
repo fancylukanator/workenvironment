@@ -1,5 +1,5 @@
 appId: com.electron.ditto
-icon: './pictures/icon@2x.png'
+icon: './icon/ditto_icon.icns'
 afterSign: './build/notarize.js'
 dmg:
   sign: false

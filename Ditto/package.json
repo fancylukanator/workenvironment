@@ -7,7 +7,7 @@
   "license": "",
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/fancylukanator/workenvironment.git"
+    "url" : "https://github.com/fancylukanator/dittoapp.git"
   },
   "scripts": {
     "start": "electron-forge start",

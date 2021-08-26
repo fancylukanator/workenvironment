@@ -44,8 +44,10 @@ function createWindow () {
     mainWindow.show();
   });
 
+  // Check for Update
   mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
+    //BrowserWindow.fromId(mainWindowID).send('update_available');
   });
   
 
@@ -176,6 +178,12 @@ autoUpdater.on('update-available', () => {
 autoUpdater.on('update-downloaded', () => {
   BrowserWindow.fromId(mainWindowID).send('update_downloaded');
 });
+/*autoUpdater.on('checking-for-update', () => {
+  BrowserWindow.fromId(mainWindowID).send('checking_for_update');
+});
+autoUpdater.on('update-not-available', () => {
+  BrowserWindow.fromId(mainWindowID).send('update_not_available');
+});*/
 ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall();
 });

@@ -752,5 +752,5 @@ function closeNotification() {
     notification.classList.add('hidden');
 }
 function restartApp() {
-    ipcRenderer.send('restart_app');
+    ipc.send('restart_app');
 }

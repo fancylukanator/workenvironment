@@ -103,12 +103,22 @@ const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
 ipc.on('update_available', () => {
   ipc.removeAllListeners('update_available');
-  message.innerText = 'A new update is available';
+  message.innerText = 'A new update is being downloaded.';
   notification.classList.remove('hidden');
 });
 ipc.on('update_downloaded', () => {
   ipc.removeAllListeners('update_downloaded');
-  message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+  message.innerText = 'Update downloaded. It will be installed on restart. Restart now?';
   restartButton.classList.remove('hidden');
   notification.classList.remove('hidden');
 });
+/*ipc.on('update_not_available', () => {
+    ipc.removeAllListeners('update_not_available');
+    message.innerText = 'Update Not Available';
+    notification.classList.remove('hidden');
+});
+ipc.on('checking_for_update', () => {
+    ipc.removeAllListeners('checking_for_update');
+    message.innerText = 'Checking for update';
+    notification.classList.remove('hidden');
+});*/

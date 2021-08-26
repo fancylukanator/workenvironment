@@ -244,9 +244,11 @@ td + td {
 }
 
 #notification {
+  font-size: 12px;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 225px;
+  left: 288px;
   width: 200px;
   padding: 20px;
   border-radius: 5px;
