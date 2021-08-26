@@ -167,6 +167,7 @@ async function loadCreateProject() {
 
   // Hide the previously displayed project
   document.getElementById("display_project").style.display = "none";
+  document.getElementById("default-home").style.display = "none";
 
   // Display to the user that the workspace is being loaded
   document.getElementById("loading").style.display = "block"

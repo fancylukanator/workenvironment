@@ -69,6 +69,16 @@ body, html{
     background-color: rgb(230,230,230);
 }
 
+#default-home{
+  text-align: center;
+  display: inline-block;
+}
+
+#home-logo{
+  margin-top: 75px;
+  opacity: 0.5;
+}
+
 #loading{
   text-align: center;
   display: inline-block;

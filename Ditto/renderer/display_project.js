@@ -73,6 +73,8 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
     console.log("deleted");
 
     document.getElementById("display_project").style.display = "none";
+    document.getElementById("default-home").style.display = "block";
+    
     updateProjectList()
 });
 

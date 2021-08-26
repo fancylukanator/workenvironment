@@ -103,6 +103,7 @@ async function displayProject(index) {
     // List all of the applications
     detailsTable(document.getElementById("projectApps"),projectData.apps,projectData.apps_active,"Apps")
 
+    document.getElementById("default-home").style.display = "none";
     document.getElementById("display_project").style.display = "block";
     document.getElementById("create_project").style.display = "none";
 }

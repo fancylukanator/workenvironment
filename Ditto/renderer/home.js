@@ -97,5 +97,6 @@ ipc.on('display-workspace', () => {
     } else{
         // Hide the previously displayed project
         document.getElementById("display_project").style.display = "none";
+        document.getElementById("default-home").style.display = "block";
     }
 })
