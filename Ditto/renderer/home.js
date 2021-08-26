@@ -94,5 +94,8 @@ ipc.on('display-workspace', () => {
     openProject = localStorage.getItem("openedWorkspace");
     if(openProject != null && openProject != ""){
         displayProject(openProject);
+    } else{
+        // Hide the previously displayed project
+        document.getElementById("display_project").style.display = "none";
     }
 })

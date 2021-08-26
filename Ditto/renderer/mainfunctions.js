@@ -596,7 +596,10 @@ async function captureWorkspace() {
       
         // Loop through all of the open apps to see if they have open documents or tabs
         for(var i = 0; i < openApps.length; i++){
-      
+
+          // Display which app is being captured
+          document.getElementById("detecting_app").innerHTML = "Detecting " + openApps[i] + "...";
+
           // Different cases for specific apps
           switch(openApps[i]){
       

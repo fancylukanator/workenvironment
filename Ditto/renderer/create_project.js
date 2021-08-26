@@ -165,11 +165,12 @@ document.getElementById('create_new_proj').addEventListener('click', () => {
 
 async function loadCreateProject() {
 
-  // Display to the user that the workspace is being loaded
-  document.getElementById("loading").style.display = "block"
-
   // Hide the previously displayed project
   document.getElementById("display_project").style.display = "none";
+
+  // Display to the user that the workspace is being loaded
+  document.getElementById("loading").style.display = "block"
+  document.getElementById("detecting_app").innerHTML = "Initializing capture...";
 
   urlArray = [];
   fileArray = [];
