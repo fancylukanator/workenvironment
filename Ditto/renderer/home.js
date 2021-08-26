@@ -100,3 +100,8 @@ ipc.on('display-workspace', () => {
         document.getElementById("default-home").style.display = "block";
     }
 })
+
+document.getElementById("help").addEventListener('click',()=>{
+    document.getElementById("display_project").style.display = "none";
+    document.getElementById("default-home").style.display = "block";
+})

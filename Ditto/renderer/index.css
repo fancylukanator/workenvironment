@@ -61,6 +61,28 @@ body, html{
     height: 100%;
 }
 
+#help{
+  color:rgb(76, 76, 76);
+  height: 24px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 10px;
+  padding-top: 0px;
+  padding-bottom: 1px;
+  background-color: Transparent;
+  border-color: none;
+  border-width: 0px;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 10px;
+}
+
+#help:hover {
+  background-color: rgba(132, 130, 130,0.25);
+}
+
 #left{
     float: left;
     width: 200px;
@@ -77,6 +99,40 @@ body, html{
 #home-logo{
   margin-top: 75px;
   opacity: 0.5;
+}
+
+#user-guide{
+  width:auto;
+  margin-left: 360px;
+  color:rgb(76, 76, 76);
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  font-size: 13px;
+}
+
+#user-guide tr:nth-child(even){
+  background-color: white;
+}
+
+#user-guide td{
+  width: auto;
+  overflow: hidden;
+  text-align: right;
+  padding: 5px;
+}
+
+#user-guide td + td{
+  width: 50px;
+  overflow: hidden;
+  text-align: left;
+  padding: 5px;
+}
+
+.guide-button{
+  pointer-events: none;
+  cursor: not-allowed;
+  height:20px;
+  width: 30px;
+  text-align: center;
 }
 
 #loading{
