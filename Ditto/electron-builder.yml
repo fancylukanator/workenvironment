@@ -1,4 +1,13 @@
-appId: ditto
+appId: com.electron.ditto
+icon: './pictures/icon@2x.png'
+afterSign: './build/notarize.js'
+dmg:
+  sign: false
+mac:
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: ./build/entitlements.mac.plist
+  entitlementsInherit: ./build/entitlements.mac.plist
 publish:
   provider: github
-  token: [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]
+  token: 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

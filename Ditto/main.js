@@ -44,8 +44,13 @@ function createWindow () {
     mainWindow.show();
   });
 
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
+  
+
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
 }
 
@@ -61,6 +66,10 @@ let trayIcon = null;
 
 app.whenReady().then(() => {
 
+  //check for updates
+  autoUpdater.checkForUpdatesAndNotify();
+  //BrowserWindow.fromId(mainWindowID).send('update_available');
+
   //testing google analytics setup
   trackEvent('User Interaction', 'Ditto App Opened');
 
@@ -69,16 +78,13 @@ app.whenReady().then(() => {
 
 
     createWindow()
-
     app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length == 1) createWindow();
 
     BrowserWindow.fromId(mainWindowID).show()
-
-    //check for updates
-    autoUpdater.checkForUpdatesAndNotify();
+    
 
   })
 
@@ -165,10 +171,10 @@ ipcMain.on('open-main-app', function(event) {
 
 // Handle Updates
 autoUpdater.on('update-available', () => {
-  mainWindow.webContents.send('update_available');
+  BrowserWindow.fromId(mainWindowID).send('update_available');
 });
 autoUpdater.on('update-downloaded', () => {
-  mainWindow.webContents.send('update_downloaded');
+  BrowserWindow.fromId(mainWindowID).send('update_downloaded');
 });
 ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall();
