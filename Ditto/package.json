@@ -6,8 +6,8 @@
   "author": "Ditto Development Team",
   "license": "",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/fancylukanator/dittoapp.git"
+    "type": "git",
+    "url": "https://github.com/fancylukanator/dittoapp.git"
   },
   "scripts": {
     "start": "electron-forge start",

@@ -343,3 +343,23 @@ td + td {
 .hidden {
   display: none;
 }
+
+.removeItem{
+  float: right;
+  color:rgb(76, 76, 76);
+  margin-top: 9px;
+  margin-bottom: 0px;
+  margin-right: 10px;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  background-color: Transparent;
+  border-color: none;
+  border-width: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.removeItem:hover {
+  background-color: rgba(132, 130, 130,0.25);
+}
