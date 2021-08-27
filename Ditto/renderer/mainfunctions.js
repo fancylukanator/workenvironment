@@ -127,6 +127,14 @@ function detailsTable(table, array, active, type){
     cell3.innerHTML = ""; //"Delete";
     */
 
+    // Hide the type headers if none of its type exist in the project
+    if(array.length == 0){
+        document.getElementById(type + "Header").style.display = "none";
+    } else{
+        document.getElementById(type + "Header").style.display = "block";
+    }
+
+
     // Add contents to the table
     for(var i = 0; i < array.length; i++){
       row = table.insertRow()
@@ -154,7 +162,7 @@ function detailsTable(table, array, active, type){
       */
 
       // Third cell allows the item to be deleted from the project
-      cell3.innerHTML = '<button class="removeItem" type="button" id = "c3-' + type + '-' + i + '">x</button>';
+      cell3.innerHTML = '<button class="removeItem" type="button" id = "c3-' + type + '-' + i + '">&times;</button>';
       var del = document.getElementById("c3-" + type + "-" + i);
       del.id = "delete-" + type + "-" + i;
       del.index = i

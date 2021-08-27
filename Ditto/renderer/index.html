@@ -34,10 +34,6 @@
             <td><button class="guide-button">+</button></td>
           </tr>
           <tr>
-            <td>Open a workspace</td>
-            <td><button class="fa guide-button">&#xf115;</button></td>
-          </tr>
-          <tr>
             <td>Recapture current workspace</td>
             <td><button class="fa guide-button">&#xf0c7;</button></td>
           </tr>
@@ -123,16 +119,16 @@
       <!-- div that shows / hides when a project is clicked -->
       <div id="display_project">
         <div>
-          <h2 id="projectName" index="" contenteditable="true" style="width:60%; display: inline-block; outline: none;"></h2>
+          <h2 id="projectName" index="" contenteditable="true"></h2>
           <!-- open controls-->
           <div class = "openControls" id="openControls" style="float: right; margin-right: 25px;">
             <button id="launchProject" class="action open">Open</button>
-            <button id="deleteProject" class="action delete">Delete</button>
+            <button id="deleteProject" class="action delete">Delete Project</button>
           </div>
           <!-- close controls-->
           <div class = "closeControls" id="closeControls" style="float: right; margin-right: 25px;">
-            <button id="closeProject" class="action close">Close</button>
-            <button id="saveProject" class="action save">Recapture</button>
+            <button id="saveProject" class="fa action save">&#xf0c7;</button>
+            <button id="closeProject" class="action close">&times;</button>
           </div>
           <!-- switch controls-->
           <div class = "switchControls" id="switchControls" style="float: right; margin-right: 25px;">
