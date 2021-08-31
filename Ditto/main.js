@@ -15,6 +15,9 @@ global.trackEvent = trackEvent;
 
 let mainWindowID;
 
+// Auto open app at login
+app.setLoginItemSettings({openAtLogin: true});
+
 // Create the browser window.
 function createWindow () {
   var mainWindow = new BrowserWindow({
