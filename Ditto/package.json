@@ -17,7 +17,7 @@
     "make-mac": "electron-forge make --platform darwin",
     "make-win": "electron-forge make --platform win32",
     "make-linux": "electron-forge make --platform linux",
-    "build": "electron-builder build --mac --publish never",
+    "build": "electron-builder build --mac --universal --publish never",
     "deploy": "electron-builder build --mac --publish always"
   },
   "dependencies": {
