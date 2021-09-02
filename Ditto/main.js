@@ -27,6 +27,9 @@ function createWindow () {
     resizable: false,
     titleBarStyle: 'hiddenInset',
     frame: false,
+    //vibrancy: "menu",
+    //visualEffectState: "active",
+    //transparent: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
