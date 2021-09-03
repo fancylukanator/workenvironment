@@ -97,7 +97,7 @@ ipc.on('display-workspace', () => {
     } else{
         // Hide the previously displayed project
         document.getElementById("display_project").style.display = "none";
-        document.getElementById("default-home").style.display = "block";
+        document.getElementById("default-home").style.display = "inline-block";
     }
 })
 
@@ -128,5 +128,5 @@ ipc.on('checking_for_update', () => {
 });*/
 document.getElementById("help").addEventListener('click',()=>{
     document.getElementById("display_project").style.display = "none";
-    document.getElementById("default-home").style.display = "block";
+    document.getElementById("default-home").style.display = "inline-block";
 })
