@@ -18,7 +18,7 @@
     "make-win": "electron-forge make --platform win32",
     "make-linux": "electron-forge make --platform linux",
     "build": "electron-builder build --mac --universal --publish never",
-    "deploy": "electron-builder build --mac --publish always"
+    "deploy": "electron-builder build --mac --universal --publish always"
   },
   "dependencies": {
     "applescript": "^1.0.0",
