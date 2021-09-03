@@ -613,7 +613,9 @@ async function captureWorkspace() {
         for(var i = 0; i < openApps.length; i++){
 
           // Display which app is being captured
-          document.getElementById("detecting_app").innerHTML = "Detecting " + openApps[i] + "...";
+          try{
+            document.getElementById("detecting_app").innerHTML = "Detecting " + openApps[i] + "...";
+          } catch(e){}
 
           // Different cases for specific apps
           switch(openApps[i]){

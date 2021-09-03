@@ -30,7 +30,7 @@ class TrayWindow {
     this.window.loadFile('./tray/tray_page.html')
 
     // Open the DevTools.
-    // this.window.webContents.openDevTools()
+    this.window.webContents.openDevTools()
 
     // Object BrowserWindow has a lot of standart events/
     // We will hide tray window on blur. To emulate standart behavior of the tray-like apps.
