@@ -104,6 +104,7 @@ async function displayProject(index) {
     detailsTable(document.getElementById("projectApps"),projectData.apps,projectData.apps_active,"Apps")
 
     document.getElementById("default-home").style.display = "none";
+    document.getElementById("loading").style.display = "none";
     document.getElementById("display_project").style.display = "block";
     document.getElementById("create_project").style.display = "none";
 }
@@ -125,6 +126,14 @@ function detailsTable(table, array, active, type){
     cell2.innerHTML = ""; //"Selected";
     cell3.innerHTML = ""; //"Delete";
     */
+
+    // Hide the type headers if none of its type exist in the project
+    if(array.length == 0){
+        document.getElementById(type + "Header").style.display = "none";
+    } else{
+        document.getElementById(type + "Header").style.display = "block";
+    }
+
 
     // Add contents to the table
     for(var i = 0; i < array.length; i++){
@@ -153,7 +162,7 @@ function detailsTable(table, array, active, type){
       */
 
       // Third cell allows the item to be deleted from the project
-      cell3.innerHTML = '<button type="button" id = "c3-' + type + '-' + i + '">x</button>';
+      cell3.innerHTML = '<button class="removeItem" type="button" id = "c3-' + type + '-' + i + '">&times;</button>';
       var del = document.getElementById("c3-" + type + "-" + i);
       del.id = "delete-" + type + "-" + i;
       del.index = i
@@ -268,6 +277,11 @@ function deleteItem(type, index){
 
 // FUNCTION TO SAVE-OVER A WORKSPACE IN MAIN APP
 async function resaveWorkspace(workspaceName){
+
+    // Display the loading gif
+    document.getElementById("display_project").style.display = "none";
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("detecting_app").innerHTML = "Initializing capture...";
 
     // Recapture the open workspace
     await captureWorkspace();

@@ -15,6 +15,9 @@ global.trackEvent = trackEvent;
 
 let mainWindowID;
 
+// Auto open app at login
+app.setLoginItemSettings({openAtLogin: true});
+
 // Create the browser window.
 function createWindow () {
   var mainWindow = new BrowserWindow({
@@ -24,6 +27,9 @@ function createWindow () {
     resizable: false,
     titleBarStyle: 'hiddenInset',
     frame: false,
+    //vibrancy: "menu",
+    //visualEffectState: "active",
+    //transparent: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -52,7 +58,7 @@ function createWindow () {
   
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
 }
 
