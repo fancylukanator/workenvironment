@@ -105,7 +105,7 @@ async function displayProject(index) {
 
     document.getElementById("default-home").style.display = "none";
     document.getElementById("loading").style.display = "none";
-    document.getElementById("display_project").style.display = "block";
+    document.getElementById("display_project").style.display = "inline-block";
     document.getElementById("create_project").style.display = "none";
 }
 
