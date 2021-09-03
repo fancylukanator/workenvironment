@@ -221,4 +221,46 @@ async function loadCreateProject() {
   selection.removeAllRanges();
   selection.addRange(range);
 
+  // Onboarding for Display Projects
+  introJs().setOptions({
+    showBullets: false,
+    showProgress: true,
+    steps: [{
+      title: 'Congrats!',
+      intro: 'You created your first workspace. All of your workspace details are contained here.'
+    },
+    {
+      element: document.getElementById('projectName'),
+      title: 'Name',
+      intro: 'Click and type to rename the workspace.'
+    },
+    {
+      element: document.querySelector('.removeItem'),
+      title: 'Edit',
+      intro: 'If you don\'t want something in your workspace, remove it here.'
+    },
+    {
+      element: document.getElementById('saveProject'),
+      title: 'Recapture',
+      intro: 'As you progress through your project, recapture it to keep your workspace up do date.'
+    },
+    {
+      element: document.getElementById('closeProject'),
+      title: 'Close',
+      intro: 'Close this workspace! Don\'t worry it will stay here to be opened later. Be sure to recapture your workspace before closing.'
+    },
+    {
+      title: 'Switch',
+      intro: 'When you have multiple workspaces created, transition between them using the Switch button.'
+    },
+    {
+      title: 'Toolbar Menu',
+      intro: 'Checkout the toolbar menu above for quick access to all of your workspaces! \n  <img src="../pictures/toolbar.jpeg">'
+    },
+    {
+      title: 'Welcome to Ditto',
+      intro: 'If you have any questions or feedback about Ditto, please get in touch with our team. We\'d love to hear from you.'
+    }]
+  }).start();
+
 };
