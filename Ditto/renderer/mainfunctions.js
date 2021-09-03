@@ -280,7 +280,7 @@ async function resaveWorkspace(workspaceName){
 
     // Display the loading gif
     document.getElementById("display_project").style.display = "none";
-    document.getElementById("loading").style.display = "block";
+    document.getElementById("loading").style.display = "inline-block";
     document.getElementById("detecting_app").innerHTML = "Initializing capture...";
 
     // Recapture the open workspace

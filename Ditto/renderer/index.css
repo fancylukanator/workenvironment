@@ -143,7 +143,11 @@ body, html{
 
 #loading{
   text-align: center;
-  display: inline-block;
+  display: none;
+  height: 100%;
+  width: calc(100% - 210px);
+  background: white;
+  float: right;
 }
 
 #loading_gif{
@@ -345,6 +349,7 @@ td + td {
   overflow-y:auto;
   width: 100%;
   height: 370px;
+  /*border: 1px solid black;*/
 }
 
 #notification {
@@ -389,11 +394,11 @@ td + td {
   border-color: none;
   border-width: 0px;
   border-radius: 20px;
-  font-size: 18px;
+  padding-bottom: 4px;
+  font-size: 16px;
   text-align: center;
-  height:35px;
-  width: 35px;
-  padding-left: 8px;
+  height:30px;
+  width: auto;
 }
 
 #saveProject:hover {
@@ -406,11 +411,11 @@ td + td {
   border-color: none;
   border-width: 0px;
   border-radius: 20px;
-  padding-bottom: 3px;
-  font-size: 18px;
+  padding-bottom: 4px;
+  font-size: 16px;
   text-align: center;
-  height:35px;
-  width: 35px;
+  height:30px;
+  width: auto;
 }
 
 #closeProject:hover {
