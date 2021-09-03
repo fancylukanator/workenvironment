@@ -46,7 +46,7 @@ function updateProjectList(){
         projectData = Object.keys(localStorage);
         for(var i in projectData) {
             // ignore keys that are not workspaces
-            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace') {
+            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
                 continue;
             }
             var entry = document.createElement('li');
@@ -774,4 +774,95 @@ function closeNotification() {
 }
 function restartApp() {
     ipc.send('restart_app');
+}
+
+// Onboarding for workspace intro
+function workspacesIntro() {
+    // check if tour has been done
+    var doneTour = localStorage.getItem('workspaceTour') === 'done';
+    if (doneTour) return;
+
+    // do tour for first time
+    introJs().setOptions({
+        showBullets: false,
+        showProgress: true,
+        steps: [{
+        title: 'Congrats!',
+        intro: 'You created your first workspace. All of your workspace details are contained here.'
+        },
+        {
+        element: document.getElementById('projectName'),
+        title: 'Name',
+        intro: 'Click and type to rename the workspace.'
+        },
+        {
+        element: document.querySelector('.removeItem'),
+        title: 'Edit',
+        intro: 'If you don\'t want something in your workspace, remove it here.'
+        },
+        {
+        element: document.getElementById('saveProject'),
+        title: 'Recapture',
+        intro: 'As you progress through your project, recapture it to keep your workspace up do date.'
+        },
+        {
+        element: document.getElementById('closeProject'),
+        title: 'Close',
+        intro: 'Close this workspace! Don\'t worry it will stay here to be opened later. Be sure to recapture your workspace before closing.'
+        },
+        {
+        title: 'Switch',
+        intro: 'When you have multiple workspaces created, transition between them using the Switch button.'
+        },
+        {
+        title: 'Toolbar Menu',
+        intro: 'Checkout the toolbar menu above for quick access to all of your workspaces! \n  <img src="../pictures/toolbar.jpeg">'
+        },
+        {
+        title: 'Welcome to Ditto',
+        intro: 'If you have any questions or feedback about Ditto, please get in touch with our team. We\'d love to hear from you.'
+        }]
+    }).start()
+    // add a flag when were done
+    .oncomplete(function() {
+        localStorage.setItem('workspaceTour', 'done');
+    })
+    // add a flag when we exit
+    .onexit(function() {
+        localStorage.setItem('workspaceTour', 'done');
+    });
+}
+
+// on boarding for main intro
+function mainIntro() {
+    // check if tour has been done
+    var doneTour = localStorage.getItem('mainTour') === 'done';
+    if (doneTour) return;
+
+    // do tour for first time
+    introJs().setOptions({
+        showBullets: false,
+        showProgress: true,
+        steps: [{
+          title: 'Welcome to Ditto 👋',
+          intro: 'Thank you for downloading the app! Let us show you around.'
+        },
+        {
+          title: 'Permissions',
+          intro: 'For each application you have open, you will be asked to enable automation permissions. This allows Ditto to open and close your apps.'
+        },
+        {
+          element: document.getElementById('create_new_proj'),
+          title: 'Workspaces',
+          intro: 'Workspaces are where projectivity is maximized! Create a workspace for your unique workflows and switch between them effortlessly! All open tabs, documents, and applications will be captured.' 
+        }]
+    }).start()
+    // add a flag when were done
+    .oncomplete(function() {
+        localStorage.setItem('mainTour', 'done');
+    })
+    // add a flag when we exit
+    .onexit(function() {
+        localStorage.setItem('mainTour', 'done');
+    });
 }

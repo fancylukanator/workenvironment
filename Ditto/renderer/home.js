@@ -1,3 +1,7 @@
+// Display onboarding tutorial
+introJs();
+mainIntro();
+
 // Initial call to create a project list
 updateProjectList();
 

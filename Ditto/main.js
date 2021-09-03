@@ -53,12 +53,11 @@ function createWindow () {
   // Check for Update
   mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
-    //BrowserWindow.fromId(mainWindowID).send('update_available');
   });
   
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
 }
 
