@@ -10,7 +10,7 @@ function updateToolbarList(){
         projectData = Object.keys(localStorage);
         for(var i in projectData) {
             // ignore keys that are not workspaces
-            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == localStorage.getItem('openedWorkspace')) {
+            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == localStorage.getItem('openedWorkspace')|| projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
                 continue;
             }
             var entry = document.createElement('li');
