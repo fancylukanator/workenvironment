@@ -48,7 +48,7 @@ function displayButtons() {
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "block";
     document.getElementById("currentWorkspace").innerHTML = localStorage.getItem('openedWorkspace');
-    document.getElementById("workspacesHeader").innerHTML = "Other Workspaces";
+    document.getElementById("workspacesHeader").innerHTML = "Switch Workspaces";
     } else {
     document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
