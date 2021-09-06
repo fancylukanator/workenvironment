@@ -127,7 +127,7 @@ ipc.on('ping', () => {
         isProjectOpen = false;
     }
 
-    ipc.send('menubar-height', [Object.keys(localStorage).length -2, isProjectOpen])
+    ipc.send('menubar-height', [Object.keys(localStorage).length -4, isProjectOpen])
 
     // now send message to main
     ipc.send('minimize-main', '');
