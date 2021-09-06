@@ -816,7 +816,7 @@ function workspacesIntro() {
         },
         {
         title: 'Toolbar Menu',
-        intro: 'Checkout the toolbar menu above for quick access to all of your workspaces! \n  <img src="../pictures/toolbar.jpeg">'
+        intro: 'Checkout the toolbar menu above for quick access to all of your workspaces! \n <br> <br>  &nbsp; &nbsp; <img src="../pictures/toolbar.jpeg">'
         },
         {
         title: 'Welcome to Ditto',
