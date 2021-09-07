@@ -31,7 +31,7 @@ body, html{
 }
 
 .right-tb {
-  width: calc(775px - 210px);
+  width: calc(100% - 210px);
   background: white;
   -webkit-app-region: drag;
   user-select: none;
