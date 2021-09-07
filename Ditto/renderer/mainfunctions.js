@@ -317,7 +317,7 @@ async function toolbarsaveWorkspace(workspaceName){
 
 // FUNCTION TO SWITCH WORKSPACES
 async function switchWorkspace(currentworkspaceName, newworkspaceName){
-    await closeWorkspace(currentworkspaceName);
+    await closeUnique(currentworkspaceName,newworkspaceName);
     await openWorkspace(newworkspaceName);
     //update Buttons
     mainButtons();
@@ -474,6 +474,76 @@ async function openWorkspace(workspaceName) {
     }
     // Close main window
     ipc.send('minimize');
+}
+
+
+
+// FUNCTION TO CLOSE UNIQUE PORTIONS OF A WORKSPACE ON SWITCH
+async function closeUnique(currentworkspaceName, newworkspaceName){
+
+    // Send information to analytics
+    trackEvent('User Interaction', 'Workspace Closed');
+
+    // remove keys from storage
+    localStorage.setItem('openedWorkspace', '');
+    localStorage.setItem('selectedWorkspace','');
+
+    //update tray title
+    ipc.send('update-title-tray-window-event', '');
+
+    // Get project data of interest
+    project = JSON.parse(localStorage.getItem(currentworkspaceName));
+    newProject = JSON.parse(localStorage.getItem(newworkspaceName));
+
+    // Remove common elements between projects to ensure only unique portions are quit
+
+    // Close all of the tabs
+    for(var j in project.urls) {
+        await execShPromise('osascript -e \'try \nif application "' + project.browser + '" is running then \ntell windows of application "' + project.browser + '"\ndelete (tabs whose URL contains "' + project.urls[j] + '") \nend tell \nend if \nend try\'', true);
+        console.log("Closed url " + project.urls[j]);
+
+    }
+
+    // Quit the web browser if it has no other windows open
+    if(project.urls.length > 0){
+        await execShPromise('osascript -e \'try \nif application "' + project.browser + '" is running then \ntell application "' + project.browser + '"\nif (count of windows) = 0 then quit \nend tell \nend if \nend try\'');
+    }
+
+    // Close all of the unique documents
+    for(var k in project.files){
+        if(!newProject.files.includes(project.files[k])){
+            // Does things a little differently depending on the application
+            switch(project.fileApps[k]){
+                case "Adobe Acrobat Reader DC":
+                    // Get the document name
+                    fileName = project.files[k].substring(project.files[k].lastIndexOf('/')+1, project.files[k].length)
+
+                    // Closes the document in Adobe Reader
+                    await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nclose document "' + fileName + '" \nend tell \nend if \nend try\'');
+                    break;
+                default:
+                    // Get the filename without the path for easier document finding
+                    fileName = project.files[k].substring(project.files[k].lastIndexOf('/')+1,project.files[k].lastIndexOf('.'))
+                    
+                    // Closes the document in the respective app
+                    await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nclose (documents whose name contains "' + fileName + '") \nend tell \nend if \nend try\'');
+                    break;
+            }
+
+            console.log("Closed file " + fileName);
+            
+            // Closes the app if it has no other documents open
+            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
+        }
+
+    }
+
+    // Close all of the applications
+    for(var l in project.apps) {
+        if(!newProject.apps.includes(project.apps[l])){
+            await execShPromise('osascript -e \'try \nquit app "' + project.apps[l] + '"\nend try\'', true);
+        }
+    }
 }
 
 
