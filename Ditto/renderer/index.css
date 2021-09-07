@@ -1,3 +1,61 @@
+/* Add in all colouring to elements up here */
+
+/* Colouring for light mode */
+@media (prefers-color-scheme: light) {
+  p {color: black;}
+  h5 {color:rgb(76, 76, 76);}
+  #create_new_proj {color:rgb(76, 76, 76);}
+  #projectList{color: black;}
+  #detecting_app{color:rgb(76, 76, 76);}
+  .right-tb {background: white;}
+  .left-tb {background: rgba(230,230,230,0.3);}
+  #left{background: rgba(230,230,230,0.3);}
+  #display_project{background: white;}
+  #default-home{background: white;}
+  #loading{background: white;}
+  #projectDetails{border-top: solid 1px rgb(245,245,245);}
+  #projectName{color: black;}
+  h3 {color: black;}
+  tr:nth-child(even){background-color: rgb(245,245,245);}
+  tr:nth-child(odd){background-color: white;}
+  table {color: black;}
+  #launchProject{color:rgb(76, 76, 76);}
+  #deleteProject{color:rgb(76, 76, 76);}
+  #saveProject{color:rgb(76, 76, 76);}
+  #closeProject{color:rgb(76, 76, 76);}
+  #switchProject{color:rgb(76, 76, 76);}
+  .removeItem{color:rgb(76, 76, 76);}
+}
+
+/* Colouring for dark mode */
+@media (prefers-color-scheme: dark) {
+  p {color: rgb(165, 165, 165);}
+  h5 {color:rgb(165, 165, 165);}
+  #create_new_proj {color:rgb(165, 165, 165);}
+  #projectList {color: rgb(210,210,210)}
+  #detecting_app {color:rgb(165, 165, 165);}
+  .right-tb {background: rgb(30, 30, 30);}
+  .left-tb {background: rgba(70,70,70,0.3);}
+  #left{background: rgba(70,70,70,0.3);}
+  #display_project{background: rgb(30, 30, 30);}
+  #default-home{background: rgb(30, 30, 30);}
+  #loading{background: rgb(30, 30, 30);}
+  #projectDetails{border-top: solid 1px rgb(65,65,65);}
+  #projectName{color: rgb(210,210,210)}
+  h3 {color: rgb(210,210,210)}
+  tr:nth-child(even){background-color: rgb(45,45,45);}
+  tr:nth-child(odd){background-color: rgb(30, 30, 30);}
+  table {color: rgb(200, 200, 200);}
+  #launchProject{color:rgb(165, 165, 165);}
+  #deleteProject{color:rgb(165, 165, 165);}
+  #saveProject{color:rgb(165, 165, 165);}
+  #closeProject{color:rgb(165, 165, 165);}
+  #switchProject{color:rgb(165, 165, 165);}
+  .removeItem{color:rgb(165, 165, 165);}
+}
+
+
+
 body, html{
     height: 100%;
     width: 100%;
@@ -24,7 +82,6 @@ body, html{
 
 .left-tb {
   width: 200px;
-  background: rgba(230,230,230,0.3); /*transparent;*/
   -webkit-app-region: drag;
   user-select: none;
   padding-left: 10px;
@@ -32,14 +89,12 @@ body, html{
 
 .right-tb {
   width: calc(100% - 210px);
-  background: white;
   -webkit-app-region: drag;
   user-select: none;
 }
 
 #create_new_proj{
   float: right;
-  color:rgb(76, 76, 76);
   margin-top: 9px;
   margin-bottom: 0px;
   margin-right: 10px;
@@ -94,7 +149,6 @@ body, html{
     width: 200px;
     height: 100%;
     padding-left: 10px;
-    background: rgba(230,230,230,0.3); /*transparent;*/
 }
 
 #default-home{
@@ -102,7 +156,6 @@ body, html{
   display: inline-block;
   height: 100%;
   width: calc(100% - 210px);
-  background: white;
 }
 
 #home-logo{
@@ -151,7 +204,6 @@ body, html{
   display: none;
   height: 100%;
   width: calc(100% - 210px);
-  background: white;
   float: right;
 }
 
@@ -164,7 +216,6 @@ body, html{
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
   font-size: 14px;
   user-select: none;
-  color:rgb(76, 76, 76);
 }
 
 #create_project{
@@ -178,7 +229,6 @@ body, html{
 #display_project{
     height: 100%;
     width: calc(100% - 210px - 60px);
-    background: white;
     display: none;
     overflow-y: scroll;
     overflow-x:hidden;
@@ -308,7 +358,6 @@ h3 {
 
 h5 {
   user-select: none;
-  color:rgb(76, 76, 76);
   margin-left: 3%;
   margin-bottom: 3%;
   margin-top: 8px;
@@ -324,14 +373,6 @@ tr {
   white-space: nowrap;
   border-spacing: 0px;
   border-radius: 10px;
-}
-
-tr:nth-child(even){
-  background-color: rgb(245,245,245);
-}
-
-tr:nth-child(odd){
-  background-color: white;
 }
 
 td {
@@ -355,7 +396,6 @@ td + td {
   overflow-y:auto;
   width: 100%;
   height: 370px;
-  border-top: solid 1px rgb(245,245,245);
 }
 
 #notification {
@@ -376,7 +416,6 @@ td + td {
 
 .removeItem{
   float: right;
-  color:rgb(76, 76, 76);
   margin-top: 0px;
   margin-bottom: 0px;
   margin-right: 10px;
@@ -400,7 +439,6 @@ td + td {
 }
 
 #saveProject{
-  color:rgb(76, 76, 76);
   background-color: Transparent;
   border-color: none;
   border-width: 0px;
@@ -422,7 +460,6 @@ td + td {
 }
 
 #closeProject{
-  color:rgb(76, 76, 76);
   background-color: Transparent;
   border-color: none;
   border-width: 0px;
@@ -444,7 +481,6 @@ td + td {
 }
 
 #launchProject{
-  color:rgb(76, 76, 76);
   background-color: Transparent;
   border-color: none;
   border-width: 0px;
@@ -466,7 +502,6 @@ td + td {
 }
 
 #switchProject{
-  color:rgb(76, 76, 76);
   background-color: Transparent;
   border-color: none;
   border-width: 0px;
@@ -499,7 +534,6 @@ td + td {
   bottom: 0px;
   right: 25px;
   float:left;
-  color:rgb(76, 76, 76);
   background-color: Transparent;
   border-color: none;
   border-width: 0px;
