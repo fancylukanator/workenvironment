@@ -67,6 +67,11 @@ ul li:hover {
     background-color: rgba(132, 130, 130,0.25);
 }
 
+ul li:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 li {
     cursor: pointer;
     user-select: none;
@@ -108,8 +113,13 @@ hr {
     text-align: center;
   }
   
-  #create:hover {
+#create:hover {
     background-color: rgba(132, 130, 130,0.25);
+}
+
+#create:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #save{
@@ -133,6 +143,11 @@ hr {
     background-color: rgba(132, 130, 130,0.25);
 }
 
+#save:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 #close{
     float: right;
     color:rgb(76, 76, 76);
@@ -151,6 +166,11 @@ hr {
 
 #close:hover {
     background-color: rgba(132, 130, 130,0.25);
+}
+
+#close:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #currentWorkspace{
@@ -182,6 +202,11 @@ hr {
     border-width: 0px;
     font-size: 15px;
     cursor: pointer;
+}
+
+#openApp:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #workspacesHeader{
