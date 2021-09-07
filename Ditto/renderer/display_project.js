@@ -161,7 +161,7 @@ document.getElementById('switchProject').addEventListener('click', (event) =>{
 document.getElementById('projectName').addEventListener('blur', (event) =>{
 
     // Ensures that the project name is unique & it is not only whitespace
-    if(localStorage.getItem(document.getElementById("projectName").textContent) == null && /\S/.test(document.getElementById("projectName").textContent)){
+    if(localStorage.getItem(document.getElementById("projectName").textContent) == null && /\S/.test(document.getElementById("projectName").textContent) && document.getElementById("projectName").textContent.length < 24){
         // Get the index of the project to be deleted
         index = document.getElementById("projectName").index
 
