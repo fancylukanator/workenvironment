@@ -38,14 +38,29 @@ class TrayIcon {
       }
     });
 
+
+
     // Dynamic menubar height
     ipcMain.on('menubar-height', function(event,args) {
       let height;
 
-      // If a project is open, add additional height
-      if(args[1]){
+      // If a project is open and more than 1 workspace has been created
+      if(args[1] && args[0] != 1){
         height = 88 + 26*args[0] + 45;
-      } else{ // Adds 26 pixels to the height for each project
+      }
+      
+      // If a project is open and only 1 workspace has been created
+      else if(args[1] && args[0] == 1) {
+        height = 80 + 26*args[0] + 45;
+      }
+      
+      // No project open and no projects created
+      else if(args[0] == 0){
+        height = 79;
+      }
+
+      // No project open and projects are created
+      else {
         height = 88 + 26*args[0];
       }
 
@@ -53,6 +68,8 @@ class TrayIcon {
     });
   }
 
+
+  
   updateTitle(title) {
     this.trayIcon.setTitle(title)
   }

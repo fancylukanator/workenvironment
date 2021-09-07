@@ -127,7 +127,18 @@ ipc.on('ping', () => {
         isProjectOpen = false;
     }
 
-    ipc.send('menubar-height', [Object.keys(localStorage).length -4, isProjectOpen])
+    // Figure out how many workspaces have been created
+    let numWorkspaces = 0;
+
+    for(var i in projectData) {
+        // Ignore keys that are not workspaces
+        if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
+            continue;
+        }
+        numWorkspaces = numWorkspaces + 1;
+     }
+
+    ipc.send('menubar-height', [numWorkspaces, isProjectOpen])
 
     // now send message to main
     ipc.send('minimize-main', '');
