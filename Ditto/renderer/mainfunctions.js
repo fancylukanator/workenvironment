@@ -294,7 +294,7 @@ async function resaveWorkspace(workspaceName){
     
     updateProjectList();
 
-    await displayProject(index);
+    await displayProject(workspaceName);
 }
 
 // FUNCTION TO SAVE-OVER A WORKSPACE IN TOOLBAR APP

@@ -94,6 +94,15 @@ ipc.on('create-workspace', () => {
     loadCreateProject();
 });
 
+// Display save content from tray request
+ipc.on('save-workspace', function(workspaceName){
+
+    // Resave the workspace
+    resaveWorkspace(localStorage.getItem("openedWorkspace"));
+
+    console.log("resaved");
+});
+
 ipc.on('display-workspace', () => {
     openProject = localStorage.getItem("openedWorkspace");
     if(openProject != null && openProject != ""){
@@ -130,7 +139,10 @@ ipc.on('checking_for_update', () => {
     message.innerText = 'Checking for update';
     notification.classList.remove('hidden');
 });*/
+
+/*
 document.getElementById("help").addEventListener('click',()=>{
     document.getElementById("display_project").style.display = "none";
     document.getElementById("default-home").style.display = "inline-block";
 })
+*/

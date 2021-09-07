@@ -83,17 +83,15 @@ document.getElementById('close').addEventListener('click', (event) => {
 })
 
 
+
 //Save Button
 document.getElementById('save').addEventListener('click', (event) => {
-    //retrieve workspaceName
-    workspaceName = localStorage.getItem('selectedWorkspace');
 
-    //save workspace
-    toolbarsaveWorkspace(workspaceName);
+    //send message to main to create workspace
+    ipc.send('menubar-save', '');
 
-    //update main
-    mainButtons();
-    updateProjectList();
+    //hide tray
+    remote.getCurrentWindow().hide();
 })
 
 
