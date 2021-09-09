@@ -27,6 +27,7 @@ function createWindow () {
     resizable: false,
     titleBarStyle: 'hiddenInset',
     frame: false,
+    show: false,
     vibrancy: "menu",
     visualEffectState: "active",
     transparent: true,
