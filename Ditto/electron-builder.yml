@@ -8,6 +8,7 @@ mac:
   gatekeeperAssess: false
   entitlements: ./build/entitlements.mac.plist
   entitlementsInherit: ./build/entitlements.mac.plist
+  minimumSystemVersion: 11.0.0
 publish:
   provider: github
   token: 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
