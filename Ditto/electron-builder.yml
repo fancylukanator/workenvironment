@@ -1,5 +1,5 @@
 appId: com.electron.ditto
-icon: './icon/ditto_icon.icns'
+icon: './icon/ditto.icns'
 afterSign: './build/notarize.js'
 dmg:
   sign: false
@@ -8,7 +8,7 @@ mac:
   gatekeeperAssess: false
   entitlements: ./build/entitlements.mac.plist
   entitlementsInherit: ./build/entitlements.mac.plist
-  minimumSystemVersion: 11.0.0
+  minimumSystemVersion: 10.15.0
 publish:
   provider: github
   token: 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
