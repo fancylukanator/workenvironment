@@ -1,6 +1,6 @@
 appId: com.electron.ditto
-icon: './icon/ditto.icns'
-afterSign: './build/notarize.js'
+icon: ./icon/ditto.icns
+afterSign: ./build/notarize.js
 dmg:
   sign: false
 mac:
