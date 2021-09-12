@@ -122,20 +122,20 @@
       <!-- div that shows / hides when a project is clicked -->
       <div id="display_project">
         <div>
-          <h2 id="projectName" index="" contenteditable="true"></h2>
+          <h2 id="projectName" index="" contenteditable="true" title="Rename the workspace..."></h2>
           <!-- open controls-->
           <div class = "openControls" id="openControls" style="float: right;">
-            <button id="launchProject" class="action open">Open</button>
-            <button id="deleteProject" class="action delete">Delete Workspace</button>
+            <button id="launchProject" class="action open" title="Launch workspace...">Open</button>
+            <button id="deleteProject" class="action delete" title="Permanently delete workspace...">Delete Workspace</button>
           </div>
           <!-- close controls-->
           <div class = "closeControls" id="closeControls" style="float: right;">
-            <button id="saveProject" class="action save">Recapture</button>
-            <button id="closeProject" class="action close">Close</button>
+            <button id="saveProject" class="action save" title = "Save changes to current workspace...">Recapture</button>
+            <button id="closeProject" class="action close" title="Close current workspace...">Close</button>
           </div>
           <!-- switch controls-->
           <div class = "switchControls" id="switchControls" style="float: right;">
-            <button id="switchProject" class="action Switch">Switch</button>
+            <button id="switchProject" class="action Switch" title="Switch to this workspace...">Switch</button>
           </div>
         </div>
         <div id="projectDetails">

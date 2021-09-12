@@ -162,7 +162,7 @@ function detailsTable(table, array, active, type){
       */
 
       // Third cell allows the item to be deleted from the project
-      cell3.innerHTML = '<button class="removeItem" type="button" id = "c3-' + type + '-' + i + '">&times;</button>';
+      cell3.innerHTML = '<button class="removeItem" type="button" title="Remove from workspace..." id = "c3-' + type + '-' + i + '">&times;</button>';
       var del = document.getElementById("c3-" + type + "-" + i);
       del.id = "delete-" + type + "-" + i;
       del.index = i
