@@ -179,7 +179,7 @@ function detailsTable(table, array, active, type){
       //var cell2 = row.insertCell();
       var cell3 = row.insertCell();
 
-      // First cell contains the name of the app, 
+      // First cell contains the name of the file, app, or URL
       switch(type){
         case "Files":
             cell1.innerHTML = /[^/]*$/.exec(array[i])[0];
