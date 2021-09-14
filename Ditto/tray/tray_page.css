@@ -131,11 +131,17 @@ hr {
     border-radius: 20px;
     font-size: 20px;
     text-align: center;
+    user-select: none;
   }
   
 #create:hover {
     background-color: rgba(132, 130, 130,0.25);
 }
+
+#create:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
 #save{
     float: right;
@@ -151,11 +157,17 @@ hr {
     font-size: 15px;
     cursor: pointer;
     border-radius: 20px;
+    user-select: none;
 }
 
 #save:hover {
     background-color: rgba(132, 130, 130,0.25);
 }
+
+#save:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
 #close{
     float: right;
@@ -170,11 +182,17 @@ hr {
     border-radius: 20px;
     font-size: 20px;
     text-align: center;
+    user-select: none;
 }
 
 #close:hover {
     background-color: rgba(132, 130, 130,0.25);
 }
+
+#close:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
 #currentWorkspace{
     text-align: left;
@@ -204,7 +222,13 @@ hr {
     border-width: 0px;
     font-size: 15px;
     cursor: pointer;
+    user-select: none;
 }
+
+#openApp:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
 #workspacesHeader{
     display: inline-block;
