@@ -120,7 +120,7 @@ const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
 ipc.on('update_available', () => {
   ipc.removeAllListeners('update_available');
-  message.innerText = 'A new update is being downloaded.';
+  message.innerText = 'A new update is being downloaded. Release notes: \n \n - Fixed for MacOS Catalina \n - Updated app icon \n';
   notification.classList.remove('hidden');
 });
 ipc.on('update_downloaded', () => {
