@@ -95,8 +95,7 @@ async function displayProject(index) {
     document.getElementById("projectName").textContent = index;
     document.getElementById("projectName").index = index
 
-    // List out all of the URLs
-    //detailsTable(document.getElementById("projectURLs"),projectData.urlTitles,projectData.urls_active,"URLs")
+    // List out all of the URLs. For old projects diplay the full url. For new projects only tab title
     if (projectData.urlTitles == null) {
         detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
     } else {
