@@ -10,7 +10,7 @@ function updateToolbarList(){
         projectData = Object.keys(localStorage);
         for(var i in projectData) {
             // ignore keys that are not workspaces
-            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == localStorage.getItem('openedWorkspace')|| projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
+            if (projectData[i] == 'project-order' || projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == localStorage.getItem('openedWorkspace')|| projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
                 continue;
             }
             var entry = document.createElement('li');
@@ -18,6 +18,8 @@ function updateToolbarList(){
             entry.title = "Launch " + projectData[i] + "...";
             entry.index = projectData[i];
             entry.tabIndex = 1;
+            entry.setAttribute('data-id', projectData[i]); // Used to link workspace list with main app list
+            entry.classList.add("disable-sort")
             entry.onclick = function() {
                 selectWorkspace(this.index); // Send the index for the project to selectProject
                 displayButtons();
@@ -26,6 +28,32 @@ function updateToolbarList(){
             entry.appendChild(document.createTextNode(projectData[i]));
             projectList.appendChild(entry);
         }
+
+        Sortable.create(projectList, {
+            ghostClass: "ghost",
+            group: "project-order",
+            filter: '.disable-sort',
+            store: {
+                /**
+                 * Get the order of elements. Called once during initialization.
+                 * @param   {Sortable}  sortable
+                 * @returns {Array}
+                 */
+                get: function (sortable) {
+                    var order = localStorage.getItem(sortable.options.group.name);
+                    return order ? order.split('|') : [];
+                },
+        
+                /**
+                 * Save the order of elements. Called onEnd (when the item is dropped).
+                 * @param {Sortable}  sortable
+                 */
+                set: function (sortable) {
+                    var order = sortable.toArray();
+                    localStorage.setItem(sortable.options.group.name, order.join('|'));
+                }
+            }
+        })
     }
     catch(e){
         console.log(e);

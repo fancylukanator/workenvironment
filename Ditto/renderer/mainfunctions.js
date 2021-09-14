@@ -1,6 +1,7 @@
 // enable analytics
 const { getGlobal } = require('electron').remote;
 const trackEvent = getGlobal('trackEvent');
+const Sortable = require('sortablejs');
 
 // FUNCTION THAT TAKES TABS, DOCUMENTS, APPS, NAME AND SAVES A WORKSPACE IN LOCALSTORAGE
 function saveWorkspace(tabs, defaultBrowser, documents, documentApps, apps, workspaceName) {
@@ -46,15 +47,15 @@ function updateProjectList(){
         projectData = Object.keys(localStorage);
         for(var i in projectData) {
             // ignore keys that are not workspaces
-            if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
+            if (projectData[i] == "project-order" || projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
                 continue;
             }
             var entry = document.createElement('li');
-            entry.id = "project-" + i;
             entry.title = "Display the details of " + projectData[i] + "...";
             entry.id = projectData[i];
             entry.index = projectData[i]
             entry.tabIndex = 1;
+            entry.setAttribute('data-id', projectData[i]); // Used to link workspace list with menubar list
             entry.onclick = function() {
                 displayProject(this.index); // Send the index for the project to displayProject
                 selectWorkspace(this.index);
@@ -63,11 +64,41 @@ function updateProjectList(){
             entry.appendChild(document.createTextNode(projectData[i]));
             projectList.appendChild(entry);
         }
+
+        Sortable.create(projectList, {
+            ghostClass: "ghost",
+            group: "project-order",
+            animation: 50,
+            store: {
+                /**
+                 * Get the order of elements. Called once during initialization.
+                 * @param   {Sortable}  sortable
+                 * @returns {Array}
+                 */
+                get: function (sortable) {
+                    var order = localStorage.getItem(sortable.options.group.name);
+                    return order ? order.split('|') : [];
+                },
+        
+                /**
+                 * Save the order of elements. Called onEnd (when the item is dropped).
+                 * @param {Sortable}  sortable
+                 */
+                set: function (sortable) {
+                    var order = sortable.toArray();
+                    localStorage.setItem(sortable.options.group.name, order.join('|'));
+                }
+            }
+        })
     }
     catch(e){
         console.log(e);
     }
 }
+
+// Event listeners for dragging
+
+
 
 // FUNCTION THAT INDICATES WHICH PROJECT IS SELECTED SO THAT IT CAN BE OPENED OR CLOSED
 function selectWorkspace(index) {
@@ -86,6 +117,12 @@ async function displayProject(index) {
     appList = document.getElementById("checkboxes-apps");
     appList.innerHTML = "";
     */
+
+    // Highlight the workspace on the side bar
+    if(document.getElementById("projectName").textContent != ""){
+        document.getElementById(document.getElementById("projectName").textContent).classList.remove('selectedProject');
+    }
+    document.getElementById(index).classList.add('selectedProject');
 
     // Get project data of interest
     projectData = JSON.parse(localStorage.getItem(index));
@@ -458,6 +495,7 @@ async function openWorkspace(workspaceName) {
             // Switches the order of the 'activate' and 'open' for Word to ensure no startup screen
             switch(project.fileApps[k]){
                 case "Microsoft Word":
+                case "Microsoft Excel":
                     await execShPromise('osascript -e \'try \ntell application "' + project.fileApps[k] + '"\nopen "' + project.files[k] + '" \nactivate \nend tell \nend try\'', true);
                     break;
                 default:
@@ -533,7 +571,11 @@ async function closeUnique(currentworkspaceName, newworkspaceName){
             console.log("Closed file " + fileName);
             
             // Closes the app if it has no other documents open
-            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
+            if(project.fileApps[k] == "Script Editor"){
+                await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) <= 1 then quit \nend tell \nend if \nend try\'');
+            } else{
+                await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
+            }
         }
 
     }
@@ -556,7 +598,6 @@ async function closeWorkspace(workspaceName){
 
     // remove keys from storage
     localStorage.setItem('openedWorkspace', '');
-    localStorage.setItem('selectedWorkspace','');
 
     //update tray title
     ipc.send('update-title-tray-window-event', '');
@@ -600,7 +641,11 @@ async function closeWorkspace(workspaceName){
         console.log("Closed file " + fileName);
         
         // Closes the app if it has no other documents open
-        await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
+        if(project.fileApps[k] == "Script Editor"){
+            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) <= 1 then quit \nend tell \nend if \nend try\'');
+        } else{
+            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
+        }
 
     }
 
@@ -729,15 +774,23 @@ async function captureWorkspace() {
               findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
               break;
       
-            // If the app has no special case run the default
+            // If the app is expected to have documents
+            case "Microsoft Word":
+            case "Microsoft Excel":
+            case "TextEdit":
+            case "Atom":
+            case "Script Editor":
+            case "Preview":
+            case "IDLE":
+                detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
+                detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
+                findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
+                break;
+            
+            // If the app contains no documents...
             default:
-              // Attempted fix for the M1 chip...
-              //detectDocPaths = await execShPromise('osascript ./appleScripts/getDocPaths.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
-              //detectDocNames = await execShPromise('osascript ./appleScripts/getDocNames.scpt ' + openApps[i].replaceAll(" ","\\ "), true);
-              detectDocPaths = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get path of documents \nend try\'', true);
-              detectDocNames = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of documents \nend try\'', true);
-              findFiles(openApps[i], apps, documents, documentApps, detectDocPaths, detectDocNames)
-              break;
+                apps.push(openApps[i])
+                break;
           }
         }
     
@@ -792,7 +845,12 @@ function findFiles(app, apps, documents, documentApps, detectDocPaths, detectDoc
   
     // Loops through each file/document within an app
     for(var j = 0; j < docPaths.length; j++){
-  
+
+      // Ignore any bad files
+      if(docPaths[j].includes("/private/var")){
+          continue;
+      }
+
       // Keep track of what app is used to open each document
       documentApps.push(app);
   

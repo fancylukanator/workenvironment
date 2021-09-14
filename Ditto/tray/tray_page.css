@@ -209,3 +209,7 @@ hr {
 #workspacesHeader{
     display: inline-block;
 }
+
+.ghost{
+    opacity: 0;
+}

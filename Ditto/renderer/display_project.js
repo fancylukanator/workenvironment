@@ -1,3 +1,5 @@
+const { dialog } = require('electron').remote
+
 var latest_app = "";
 
 // Select applications from dropdown menu
@@ -67,15 +69,43 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
 
     // Get the index of the project to be deleted
     index = document.getElementById("projectName").index;
+        
+    // Ensure that user wishes to delete the workspace
+    dialog.showMessageBox({
+        type: 'question',
+        title:'Delete ' + index + '?' ,
+        buttons: ['Cancel','Delete'],
+        defaultId: 1,
+        cancelId: 0,
+        title: 'Question',
+        message: 'Are you sure you want to delete "' + index + '"?',
+        detail: 'If the workspace is currently closed, you will no longer have access to it or any of its items.',
+    }).then(result => {
 
-    // Delete the project
-    deleteWorkspace(index);
-    console.log("deleted");
+        // If user truly wants to delete their workspace
+        if (result.response === 1) {
 
-    document.getElementById("display_project").style.display = "none";
-    document.getElementById("default-home").style.display = "inline-block";
-    
-    updateProjectList()
+            // Delete the project
+            deleteWorkspace(index);
+            console.log("deleted");
+
+            // Remove the current workspace
+            localStorage.setItem('openedWorkspace',"")
+
+            // Remove the workspace name
+            document.getElementById("projectName").textContent = "";
+
+            // Updates the icon tray title
+            ipc.send('update-title-tray-window-event',"");
+
+            document.getElementById("display_project").style.display = "none";
+            document.getElementById("default-home").style.display = "inline-block";
+            
+            updateProjectList()
+        } 
+    });
+
+
 });
 
 
@@ -187,11 +217,23 @@ document.getElementById('projectName').addEventListener('blur', (event) =>{
         localStorage.setItem(project.name, JSON.stringify(project))
         console.log("Updated the name.")
 
+        // Update the name of the project on the list
+        entry = document.getElementById(index);
+        entry.innerHTML = project.name;
+        entry.id = "project-" + index;
+        entry.title = "Display the details of " + project.name + "...";
+        entry.id =  project.name;
+        entry.index =  project.name;
+        entry.tabIndex = 1;
+        entry.onclick = function() {
+                displayProject(this.index); // Send the index for the project to displayProject
+                selectWorkspace(this.index);
+                mainButtons();
+        }
+
         // Update the index of the element
         document.getElementById("projectName").index = project.name
 
-        // Update the name of the project
-        updateProjectList()
     } else{
         // Resets the project name to the original if it was not unique
         document.getElementById("projectName").textContent = document.getElementById("projectName").index;

@@ -1,5 +1,4 @@
 // Display onboarding tutorial
-introJs();
 mainIntro();
 
 // Initial call to create a project list
@@ -107,6 +106,7 @@ ipc.on('display-workspace', () => {
     openProject = localStorage.getItem("openedWorkspace");
     if(openProject != null && openProject != ""){
         displayProject(openProject);
+        mainButtons();
     } else{
         // Hide the previously displayed project
         document.getElementById("display_project").style.display = "none";

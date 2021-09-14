@@ -165,6 +165,11 @@ document.getElementById('create_new_proj').addEventListener('click', () => {
 
 async function loadCreateProject() {
 
+  // Unselect project from list
+  if(document.getElementById("projectName").textContent != ""){
+    document.getElementById(document.getElementById("projectName").textContent).classList.remove('selectedProject');
+  }
+  
   // Hide the previously displayed project
   document.getElementById("display_project").style.display = "none";
   document.getElementById("default-home").style.display = "none";

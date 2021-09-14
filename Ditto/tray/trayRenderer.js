@@ -130,7 +130,7 @@ ipc.on('ping', () => {
 
     for(var i in projectData) {
         // Ignore keys that are not workspaces
-        if (projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
+        if (projectData[i] == 'project-order' || projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
             continue;
         }
         numWorkspaces = numWorkspaces + 1;
