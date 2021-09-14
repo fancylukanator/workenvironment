@@ -179,8 +179,15 @@ function detailsTable(table, array, active, type){
       //var cell2 = row.insertCell();
       var cell3 = row.insertCell();
 
-      // First cell contains the path
-      cell1.innerHTML = array[i];
+      // First cell contains the name of the app, 
+      switch(type){
+        case "Files":
+            cell1.innerHTML = /[^/]*$/.exec(array[i])[0];
+            break;
+        default:
+            cell1.innerHTML = array[i];
+            break;
+      }
 
       // Second cell contains ability to toggle activation
       
@@ -571,11 +578,7 @@ async function closeUnique(currentworkspaceName, newworkspaceName){
             console.log("Closed file " + fileName);
             
             // Closes the app if it has no other documents open
-            if(project.fileApps[k] == "Script Editor"){
-                await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) <= 1 then quit \nend tell \nend if \nend try\'');
-            } else{
-                await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
-            }
+            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
         }
 
     }
@@ -641,11 +644,7 @@ async function closeWorkspace(workspaceName){
         console.log("Closed file " + fileName);
         
         // Closes the app if it has no other documents open
-        if(project.fileApps[k] == "Script Editor"){
-            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) <= 1 then quit \nend tell \nend if \nend try\'');
-        } else{
-            await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
-        }
+        await execShPromise('osascript -e \'try \nif application "' + project.fileApps[k] + '" is running then \ntell application "' + project.fileApps[k] + '"\nif (count of documents) = 0 then quit \nend tell \nend if \nend try\'');
 
     }
 
