@@ -189,9 +189,6 @@ function detailsTable(table, array, active, type){
         case "Files":
             cell1.innerHTML = /[^/]*$/.exec(array[i])[0];
             break;
-        case "URLs":
-            cell1.innerHTML = array[i].url;
-            break;
         default:
             cell1.innerHTML = array[i];
             break;
@@ -297,8 +294,10 @@ function deleteItem(type, index){
     switch(type){
         case "URLs":
             project.urls.splice(index,1)
-            project.urlTitles.splice(index,1)
             project.urls_active.splice(index,1)
+            if(project.urlTitles != null){
+                project.urlTitles.splice(index,1)
+            }
             break;
         case "Files":
             project.files.splice(index,1)
