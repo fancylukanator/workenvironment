@@ -4,6 +4,7 @@ fileArray = [];
 fileAppsArray = [];
 appArray = [];
 defaultBrowser = "";
+tabTitleArray = [];
 
 
 /*
@@ -198,7 +199,7 @@ async function loadCreateProject() {
   ipc.send('update-title-tray-window-event', workspaceName);
 
   // save project to localStorage
-  saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
+  saveWorkspace(urlArray, urlTitleArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
   
   // Hide the loading display
   document.getElementById("loading").style.display = "none"

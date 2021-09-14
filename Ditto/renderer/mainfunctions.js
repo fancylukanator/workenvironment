@@ -3,13 +3,14 @@ const { getGlobal } = require('electron').remote;
 const trackEvent = getGlobal('trackEvent');
 
 // FUNCTION THAT TAKES TABS, DOCUMENTS, APPS, NAME AND SAVES A WORKSPACE IN LOCALSTORAGE
-function saveWorkspace(tabs, defaultBrowser, documents, documentApps, apps, workspaceName) {
+function saveWorkspace(tabs, tabTitles, defaultBrowser, documents, documentApps, apps, workspaceName) {
     // create project object
     let project = {
         name: workspaceName, // Name of the project
   
         // Items contained within the project
         urls: tabs,
+        urlTitles: tabTitles,
         files: documents,
         apps: apps,
 
@@ -95,7 +96,12 @@ async function displayProject(index) {
     document.getElementById("projectName").index = index
 
     // List out all of the URLs
-    detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
+    //detailsTable(document.getElementById("projectURLs"),projectData.urlTitles,projectData.urls_active,"URLs")
+    if (projectData.urlTitles == null) {
+        detailsTable(document.getElementById("projectURLs"),projectData.urls,projectData.urls_active,"URLs")
+    } else {
+        detailsTable(document.getElementById("projectURLs"),projectData.urlTitles,projectData.urls_active,"URLs")
+    }
 
     // List out all of the files
     detailsTable(document.getElementById("projectFiles"),projectData.files,projectData.files_active,"Files")
@@ -245,6 +251,7 @@ function deleteItem(type, index){
     switch(type){
         case "URLs":
             project.urls.splice(index,1)
+            project.urlTitles.splice(index,1)
             project.urls_active.splice(index,1)
             break;
         case "Files":
@@ -621,6 +628,7 @@ async function captureWorkspace() {
         // Initializes arrays to store the open apps, tabs, and documents
         let apps = [];
         let tabs = [];
+        let tabTitles = [];
         let documents = [];
       
         // Array to keep track of what app should be used to open each document
@@ -700,16 +708,21 @@ async function captureWorkspace() {
       
               // Collect the open tabs
               detectTabs = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get URL of tabs of windows \nend try\'', true);
-              openTabs = parseText(String(detectTabs.stdout));
-              tabs = tabs.concat(openTabs)
+              detectTitles = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get title of tabs of windows \nend try\'', true);
+              urlFormated = parseText(String(detectTabs.stdout));
+              titleFormated = parseText(String(detectTitles.stdout));
+              
+              // Fill title and url arrays
+              tabs = tabs.concat(urlFormated);
+              tabTitles = tabTitles.concat(titleFormated);
       
               // Set the default browser
-              if(openTabs.length > 0){
+              if(urlFormated.length > 0){
                 webBrowser = openApps[i]
               }
       
               // Adds browser to list of apps if no tabs are open
-              if(openTabs.length == 0){
+              if(urlFormated.length == 0){
                 apps.push(openApps[i]);
               }
       
@@ -742,6 +755,7 @@ async function captureWorkspace() {
         }
     
         urlArray = tabs;
+        urlTitleArray = tabTitles;
         fileArray = documents;
         fileAppsArray = documentApps;
         appArray = apps;
