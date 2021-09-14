@@ -184,6 +184,9 @@ function detailsTable(table, array, active, type){
         case "Files":
             cell1.innerHTML = /[^/]*$/.exec(array[i])[0];
             break;
+        case "URLs":
+            cell1.innerHTML = array[i].url;
+            break;
         default:
             cell1.innerHTML = array[i];
             break;
