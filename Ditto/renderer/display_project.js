@@ -74,16 +74,16 @@ document.getElementById('deleteProject').addEventListener('click', (event)=> {
     dialog.showMessageBox({
         type: 'question',
         title:'Delete ' + index + '?' ,
-        buttons: ['Cancel','Delete'],
+        buttons: ['Delete','Cancel'],
         defaultId: 1,
         cancelId: 0,
         title: 'Question',
         message: 'Are you sure you want to delete "' + index + '"?',
-        detail: 'If the workspace is currently closed, you will no longer have access to it or any of its items.',
+        detail: 'If the workspace is closed, you will no longer have access to it or its content.',
     }).then(result => {
 
         // If user truly wants to delete their workspace
-        if (result.response === 1) {
+        if (result.response === 0) {
 
             // Delete the project
             deleteWorkspace(index);
