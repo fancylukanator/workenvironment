@@ -3,7 +3,7 @@
 // Modules to control application life and create native browser window
 const electron = require('electron');
 const path = require('path');
-const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage} = require('electron');
+const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage, dialog} = require('electron');
 const ipc = ipcMain;
 const { webContents } = require('electron')
 const { autoUpdater } = require('electron-updater');
@@ -92,10 +92,8 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length == 1) createWindow();
 
     BrowserWindow.fromId(mainWindowID).show()
-    
 
-  })
-
+    });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -202,15 +200,18 @@ ipcMain.on('open-main-app', function(event) {
 autoUpdater.on('update-available', () => {
   BrowserWindow.fromId(mainWindowID).send('update_available');
 });
-autoUpdater.on('update-downloaded', () => {
-  BrowserWindow.fromId(mainWindowID).send('update_downloaded');
-});
-/*autoUpdater.on('checking-for-update', () => {
-  BrowserWindow.fromId(mainWindowID).send('checking_for_update');
-});
-autoUpdater.on('update-not-available', () => {
-  BrowserWindow.fromId(mainWindowID).send('update_not_available');
-});*/
-ipcMain.on('restart_app', () => {
-  autoUpdater.quitAndInstall();
+
+autoUpdater.on('update-downloaded', function (releaseInfo) {
+  var options = {
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: "Ditto update",
+      message: 'A new version of Ditto is available. Restart the application to apply the updates.',
+      detail: releaseInfo.releaseNotes
+  };
+  dialog.showMessageBox(options).then(result => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
 });

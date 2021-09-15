@@ -115,7 +115,10 @@ ipc.on('display-workspace', () => {
 })
 
 // Handle Updates
-const notification = document.getElementById('notification');
+ipc.on('update_available', () => {
+    console.log('downloading update');
+});
+/*const notification = document.getElementById('notification');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
 ipc.on('update_available', () => {
@@ -123,9 +126,9 @@ ipc.on('update_available', () => {
   message.innerText = 'A new update is being downloaded. Release notes: \n \n - Fixed for MacOS Catalina \n - Updated app icon \n';
   notification.classList.remove('hidden');
 });
-ipc.on('update_downloaded', () => {
+ipc.on('update_downloaded', (notes) => {
   ipc.removeAllListeners('update_downloaded');
-  message.innerText = 'Update downloaded. It will be installed on restart. Restart now?';
+  message.innerText = notes;
   restartButton.classList.remove('hidden');
   notification.classList.remove('hidden');
 });
