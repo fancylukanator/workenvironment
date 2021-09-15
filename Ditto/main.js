@@ -199,6 +199,15 @@ ipcMain.on('open-main-app', function(event) {
 // Handle Updates
 autoUpdater.on('update-available', () => {
   BrowserWindow.fromId(mainWindowID).send('update_available');
+  var options = {
+    type: 'info',
+    buttons: ['Dismiss'],
+    title: "Ditto update",
+    message: 'A new version of Ditto is being downloaded...',
+  };
+  dialog.showMessageBox(options).then(result => {
+    // do stuff here with result if needed
+  });
 });
 
 autoUpdater.on('update-downloaded', function (releaseInfo) {
