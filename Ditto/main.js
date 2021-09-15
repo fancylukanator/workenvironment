@@ -203,7 +203,9 @@ autoUpdater.on('update-available', () => {
   BrowserWindow.fromId(mainWindowID).send('update_available');
 });
 autoUpdater.on('update-downloaded', () => {
-  BrowserWindow.fromId(mainWindowID).send('update_downloaded');
+  try{
+    BrowserWindow.fromId(mainWindowID).send('update_downloaded');
+  } catch(e){}
 });
 /*autoUpdater.on('checking-for-update', () => {
   BrowserWindow.fromId(mainWindowID).send('checking_for_update');
