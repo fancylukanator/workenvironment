@@ -472,9 +472,12 @@ async function openWorkspace(workspaceName) {
             // Creates a script to open all tabs in Safari in a new window
             case "Safari":
                 script = 'osascript -e \'try \ntell application "Safari"';
-                if(alreadyOpen.stdout == "true\n"){
+                
+                /*if(alreadyOpen.stdout == "true\n"){
                     script += '\nmake new document'
-                }
+                }*/
+
+                script += '\nmake new document'
                 script += '\nactivate \nset URL of front document to {"' + project.urls[0] + '"}'
 
                 for(let j = 1; j < project.urls.length; j++){
@@ -746,15 +749,20 @@ async function captureWorkspace() {
             // All browsers are treated the same
             case "Safari":
             case "Google Chrome":
-            case "Firefox":
             case "Brave Browser":
             case "Opera":
             case "Chromium":
       
               // Collect the open tabs
               detectTabs = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get URL of tabs of windows \nend try\'', true);
-              detectTitles = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get title of tabs of windows \nend try\' -s s', true);
               urlFormated = parseText(String(detectTabs.stdout));
+
+              // Collect the titles of tabs
+              if(openApps[i] != "Safari"){
+                detectTitles = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get title of tabs of windows \nend try\' -s s', true);
+              } else{ // For Safari, they are called "names" not "titles"
+                detectTitles = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get name of tabs of windows \nend try\' -s s', true);
+              }
               titleFormated = parseTitle(String(detectTitles.stdout));
               
               // Fill title and url arrays
