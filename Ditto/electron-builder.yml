@@ -1,5 +1,6 @@
 appId: com.electron.ditto
 afterSign: ./build/notarize.js
+artifactName: ditto.${ext}
 dmg:
   sign: false
 mac:
