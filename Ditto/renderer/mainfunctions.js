@@ -342,7 +342,7 @@ async function resaveWorkspace(workspaceName){
     deleteWorkspace(workspaceName);
 
     // Save the new workspace into memory
-    saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
+    saveWorkspace(urlArray, urlTitleArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
     
     updateProjectList();
 
@@ -359,7 +359,7 @@ async function toolbarsaveWorkspace(workspaceName){
     deleteWorkspace(workspaceName);
 
     // Save the new workspace into memory
-    saveWorkspace(urlArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
+    saveWorkspace(urlArray, urlTitleArray, defaultBrowser, fileArray, fileAppsArray, appArray, workspaceName);
     
     updateProjectList();
 
@@ -753,9 +753,9 @@ async function captureWorkspace() {
       
               // Collect the open tabs
               detectTabs = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get URL of tabs of windows \nend try\'', true);
-              detectTitles = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get title of tabs of windows \nend try\'', true);
+              detectTitles = await execShPromise('osascript -e \'try \ntell application "' + openApps[i] + '" to get title of tabs of windows \nend try\' -s s', true);
               urlFormated = parseText(String(detectTabs.stdout));
-              titleFormated = parseText(String(detectTitles.stdout));
+              titleFormated = parseTitle(String(detectTitles.stdout));
               
               // Fill title and url arrays
               tabs = tabs.concat(urlFormated);
@@ -816,6 +816,14 @@ async function captureWorkspace() {
 }
 
 
+
+// FUNCTION TO BREAKDOWN URL TITLES INTO ARRAY
+function parseTitle(text){
+    text = text.replace('{{"','');
+    text = text.replace('"}}','');
+    var array = text.split('", "');
+    return array;
+}
 
 
 // FUNCTION TO BREAKDOWN COMMA/SPACE DELIMITED TEXT INTO ARRAY
