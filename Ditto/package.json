@@ -1,7 +1,7 @@
 {
   "name": "ditto",
   "version": "1.0.11",
-  "description": "Transition between projects like never before.",
+  "description": "Transition between workspaces like never before.",
   "main": "main.js",
   "author": "Ditto Development Team",
   "license": "",
@@ -10,13 +10,7 @@
     "url": "https://github.com/fancylukanator/dittoapp.git"
   },
   "scripts": {
-    "start": "electron-forge start",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "make-mac": "electron-forge make --platform darwin",
-    "make-win": "electron-forge make --platform win32",
-    "make-linux": "electron-forge make --platform linux",
+    "start": "electron .",
     "build": "electron-builder build --mac --universal --publish never",
     "deploy": "electron-builder build --mac --universal --publish always"
   },
@@ -31,42 +25,8 @@
     "uuid": "^3.4.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.57",
     "electron": "^12.0.13",
     "electron-builder": "^22.11.7",
     "electron-positioner": "^4.1.0"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "./icon/ditto_icon.icns"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "platforms": [
-            "win32"
-          ],
-          "config": {
-            "name": "my_electron_app"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin",
-            "linux"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
   }
 }
