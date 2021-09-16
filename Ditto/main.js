@@ -1,18 +1,21 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const electron = require('electron');
 const path = require('path');
-const { app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage, dialog} = require('electron');
-const ipc = ipcMain;
-const { webContents } = require('electron')
+const {app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage, dialog, webContents} = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 // Analytics
 const { trackEvent } = require('./analytics');
 global.trackEvent = trackEvent;
 
+// Tray Window
+const TrayWindow  = require('./tray/TrayWindow');
+const TrayIcon = require('./tray/TrayIcon');
+let tray = null;
+let trayIcon = null;
 
+// Keep track of the app's main window ID
 let mainWindowID;
 
 // Auto open app at login
@@ -47,7 +50,7 @@ function createWindow () {
 
   // Only display the main window once the HTML is loaded in
   mainWindow.webContents.on('did-finish-load', function() {
-    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
+    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace','');
     mainWindow.show();
   });
 
@@ -56,43 +59,37 @@ function createWindow () {
     autoUpdater.checkForUpdatesAndNotify();
   });
   
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
-
 }
 
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-const TrayWindow  = require('./tray/TrayWindow');
-const TrayIcon = require('./tray/TrayIcon');
-
-let tray = null;
-let trayIcon = null;
-
+// Will run when the app is ready to go...
 app.whenReady().then(() => {
 
-  //check for updates
+  // Check for updates
   autoUpdater.checkForUpdatesAndNotify();
-  //BrowserWindow.fromId(mainWindowID).send('update_available');
 
-  //testing google analytics setup
+  // Send app opening event to Google Analytics
   trackEvent('User Interaction', 'Ditto App Opened');
 
+  // Initialize the tray
   tray = new TrayWindow();
   trayIcon = new TrayIcon(tray.window);
 
+  // Create a new window on startup
+  createWindow()
 
-    createWindow()
-    app.on('activate', function () {
+  // If the user clicks on the app in the menu
+  app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length == 1) createWindow();
+    if (BrowserWindow.getAllWindows().length == 1){
+      createWindow();
+    }
 
+    // Display the main window
     BrowserWindow.fromId(mainWindowID).show()
-
     });
 });
 
@@ -108,26 +105,22 @@ app.on('window-all-closed', function () {
 
 // LISTENERS
 
-// Waiting to hear if the window should be closed out...
-ipc.on('minimize', function(event) {
-  try{
-    BrowserWindow.fromId(mainWindowID).hide(); // Can also do .close() to fully close down
-  } catch(e){
-  }
-});
-
-// Waiting to hear if the window should be closed out...
-ipc.on('hide', function(event) {
+// Waiting to hear if the window should be hidden...
+ipcMain.on('hide', function(event) {
   try{
     BrowserWindow.fromId(mainWindowID).hide();
   } catch(e){
   }
 });
 
+
+
 // Dynamic tray title
 ipcMain.on('update-title-tray-window-event', function(event, title) {
   trayIcon.updateTitle(title);
 });
+
+
 
 // Open main app if closed on tray create
 ipcMain.on('menubar-create', function(event) {
@@ -139,24 +132,32 @@ ipcMain.on('menubar-create', function(event) {
     BrowserWindow.fromId(mainWindowID).webContents.on('did-finish-load', function () {
       BrowserWindow.fromId(mainWindowID).webContents.send('create-workspace', 'create');
     })
-    // If main window is still kicking around
+
+  // If main window is still kicking around
   } else {
     // Restores the window if it was minimized
     if(BrowserWindow.fromId(mainWindowID).isMinimized()){
       BrowserWindow.fromId(mainWindowID).restore();
     }
+    // Restores the window if it was hidden
+    else if(!BrowserWindow.fromId(mainWindowID).isVisible()){
+      BrowserWindow.fromId(mainWindowID).show();
+    }
+    // Creates a new workspace
     BrowserWindow.fromId(mainWindowID).focus()
     BrowserWindow.fromId(mainWindowID).webContents.send('create-workspace', 'create');
   }
 });
 
-// Open main app if closed on tray create
+
+
+// Open main app if closed on tray recapture
 ipcMain.on('menubar-save', function(event) {
 
   // If the main window was closed
   if (BrowserWindow.getAllWindows().length == 1){
     createWindow(); // Create new window
-    // Waits to then create new project once HTML is loaded
+    // Waits to then resave workspace once HTML is loaded
     BrowserWindow.fromId(mainWindowID).webContents.on('did-finish-load', function () {
       BrowserWindow.fromId(mainWindowID).webContents.send('save-workspace', 'save');
     })
@@ -166,37 +167,44 @@ ipcMain.on('menubar-save', function(event) {
     if(BrowserWindow.fromId(mainWindowID).isMinimized()){
       BrowserWindow.fromId(mainWindowID).restore();
     }
+    // Restores the window if it was hidden
+    else if(!BrowserWindow.fromId(mainWindowID).isVisible()){
+      BrowserWindow.fromId(mainWindowID).show();
+    }
+    // Send work to recapture workspace
     BrowserWindow.fromId(mainWindowID).focus()
     BrowserWindow.fromId(mainWindowID).webContents.send('save-workspace', 'save');
   }
 });
 
-// Close main window when the dropdown menu is opened
-ipcMain.on('minimize-main', () => {
-  if (BrowserWindow.getAllWindows().length == 1) return;
-  BrowserWindow.fromId(mainWindowID).close();
-});
 
-// Open main app if closed on tray create
+
+// Open main app from tray
 ipcMain.on('open-main-app', function(event) {
 
   // If the main window was closed
   if (BrowserWindow.getAllWindows().length == 1){
     createWindow(); // Create new window
-    // Waits to then create new project once HTML is loaded
 
-    // If main window is still kicking around
-  } else {
-    // Restores the window if it was minimized
-    if(BrowserWindow.fromId(mainWindowID).isMinimized()){
+  // If main window was minimized
+  } else if (BrowserWindow.fromId(mainWindowID).isMinimized()){
       BrowserWindow.fromId(mainWindowID).restore();
-    }
-    BrowserWindow.fromId(mainWindowID).focus()
-    BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
+  
+  // If main window was hidden
+  } else if(!BrowserWindow.fromId(mainWindowID).isVisible()){
+    BrowserWindow.fromId(mainWindowID).show();
   }
+  
+  // Display the proper workspace if one is open
+  BrowserWindow.fromId(mainWindowID).focus()
+  BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
+
 });
 
-// Handle Updates
+
+// UPDATES
+
+// Update is avaiable
 autoUpdater.on('update-available', () => {
   BrowserWindow.fromId(mainWindowID).send('update_available');
   var options = {
@@ -210,6 +218,8 @@ autoUpdater.on('update-available', () => {
   });
 });
 
+
+// Update has been downloaded
 autoUpdater.on('update-downloaded', function (releaseInfo) {
   var options = {
       type: 'info',
