@@ -48,7 +48,10 @@
       </div>
 
       <div id="loading" style="display: none;">
-        <img id="loading_gif" src="../pictures/loading_icon_icon8.gif" alt="Detecting workspace... Please wait."  width="100" />
+        <picture>
+          <source srcset="../pictures/loading_icon_icon8_dark.gif" media="(prefers-color-scheme: dark)" id="loading_gif" width="100" alt="Detecting workspace... Please wait.">
+          <img src="../pictures/loading_icon_icon8_light.gif" id="loading_gif" width="100" alt="Detecting workspace... Please wait.">
+        </picture>
         <p id="detecting_app"></p>
       </div>
       <!-- display update notifications-->
