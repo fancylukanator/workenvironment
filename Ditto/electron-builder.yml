@@ -12,3 +12,5 @@ mac:
 publish:
   provider: github
   token: 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
+
+# this file controls electron-builder resources

@@ -16,3 +16,5 @@ exports.default = async function notarizing(context) {
     appleIdPassword: process.env.APPLEIDPASS,
   });
 };
+
+// see: https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/ for more info

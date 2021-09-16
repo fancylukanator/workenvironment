@@ -21,34 +21,20 @@
     "deploy": "electron-builder build --mac --universal --publish always"
   },
   "dependencies": {
-    "applescript": "^1.0.0",
-    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^4.3.9",
     "exec-sh": "^0.4.0",
-    "get-chrome-tabs": "^1.0.0",
     "intro.js": "^4.2.2",
     "introjs": "^0.2.2",
-    "menubar": "^9.0.5",
     "node-localstorage": "^2.2.1",
-    "open": "^8.2.1",
-    "ps-list": "^7.2.0",
-    "read-browser-tabs": "^1.0.4",
     "sortablejs": "^1.14.0",
-    "tasklist": "^4.0.1",
-    "terminate": "^2.2.1",
     "universal-analytics": "^0.4.23",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.57",
-    "@electron-forge/maker-deb": "^6.0.0-beta.57",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.57",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
-    "@electron-forge/maker-zip": "^6.0.0-beta.57",
     "electron": "^12.0.13",
     "electron-builder": "^22.11.7",
-    "electron-positioner": "^4.1.0",
-    "webextension-polyfill": "^0.8.0"
+    "electron-positioner": "^4.1.0"
   },
   "config": {
     "forge": {
