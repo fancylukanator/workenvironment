@@ -10,13 +10,11 @@ class TrayWindow {
       roundedCorners: true,
       height: 88, // 26 per workspace
       width: 275,
-      frame: false,  // This option will remove frame buttons. By default window has standart chrome header buttons (close, hide, minimize). We should change this option because we want to display our window like tray window not like common chrome-like window.
+      frame: false,
       resizable: false,
       vibrancy: "menu",
       visualEffectState: "active",
       transparent: true,
-      //transparent: true,
-      //backgroundColor: '#e9e9e9'
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
@@ -24,6 +22,7 @@ class TrayWindow {
       }
     });
 
+    // Make it so you can open the tray on any macOS space
     this.window.setVisibleOnAllWorkspaces(true);
 
     // Link to the HTML file that will render app window.
