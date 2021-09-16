@@ -1,18 +1,24 @@
 // FUNCTION THAT CREATES A LIST ELEMENT FOR EACH WORKSPACE IN LOCALSTORAGE
 function updateToolbarList(){
     try{
+        // Gets the workspace list
         var projectList = document.getElementById("toolbarList");
 
-        // Clear the current project list
+        // Clear the current workspace list
         projectList.innerHTML = "";
     
         // Construct new project list
         projectData = Object.keys(localStorage);
+
+        // For each workspace...
         for(var i in projectData) {
-            // ignore keys that are not workspaces
+
+            // Ignore keys that are not workspaces
             if (projectData[i] == 'project-order' || projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == localStorage.getItem('openedWorkspace')|| projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
                 continue;
             }
+
+            // Build the button for each workspace
             var entry = document.createElement('li');
             entry.id = "project-" + projectData[i];
             entry.title = "Launch " + projectData[i] + "...";
@@ -29,6 +35,7 @@ function updateToolbarList(){
             projectList.appendChild(entry);
         }
 
+        // Transforms the workspace list into a Sortable array (to maintain order)
         Sortable.create(projectList, {
             ghostClass: "ghost",
             group: "project-order",
@@ -69,18 +76,18 @@ function selectWorkspace(index) {
 
 // FUNCTION THAT CHOOSES WHICH BUTTONS TO SHOW
 function displayButtons() {
-    // Choose which button layout to dispay
+    // Choose which button layout to dispay...
+
+    // Workspace is currently open
     if (localStorage.getItem('selectedWorkspace') != '' 
     && localStorage.getItem('openedWorkspace') == localStorage.getItem('selectedWorkspace')) {
-    document.getElementById("openControls").style.display = "none";
-    document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "block";
     document.getElementById("currentWorkspace").innerHTML = localStorage.getItem('openedWorkspace');
     document.getElementById("workspacesHeader").innerHTML = "Switch Workspaces";
+
+    // No workspace is open
     } else {
-    document.getElementById("switchControls").style.display = "none";
     document.getElementById("closeControls").style.display = "none";
-    document.getElementById("openControls").style.display = "block";
     document.getElementById("workspacesHeader").innerHTML = "Workspaces";
     }
 }
