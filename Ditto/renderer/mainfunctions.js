@@ -963,7 +963,7 @@ function workspacesIntro() {
         {
         element: document.getElementById('saveProject'),
         title: 'Recapturing',
-        intro: 'Workspaces evolve as you work. In order to keep things up-to-date, recapture your workspace before closing it. Recapturing replaces your current saved workspace with everything you have open.'
+        intro: 'Workspaces evolve as you work. In order to keep things up-to-date, recapture your workspace before closing it. Recapturing replaces your current saved workspace with everything that currently you have open.'
         },
         {
         element: document.getElementById('closeProject'),
@@ -972,7 +972,7 @@ function workspacesIntro() {
         },
         {
         title: 'Switching',
-        intro: 'If you have a workspace open but want to jump to a different one, transition between them using the Switch button.'
+        intro: 'If you have a workspace open but want to jump to a different one, transition between them using the Switch button. Switching will close your current workspace and open the new one!'
         },
         {
         title: 'macOS Menubar',
