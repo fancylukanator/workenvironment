@@ -945,42 +945,42 @@ function workspacesIntro() {
     // do tour for first time
     introJs().setOptions({
         showBullets: false,
-        showProgress: true,
+        showProgress: false,
         steps: [{
-        title: 'Congrats!',
-        intro: 'You created your first workspace. All of your workspace details are contained here.'
+        title: 'Congratulations!',
+        intro: 'You created your first workspace. All of its details will be contained here!'
         },
         {
         element: document.getElementById('projectName'),
-        title: 'Name',
-        intro: 'Click and type to rename the workspace.'
+        title: 'Renaming',
+        intro: 'Click on its name and start typing to rename your workspace.'
         },
         {
         element: document.querySelector('.removeItem'),
-        title: 'Edit',
-        intro: 'If you don\'t want something in your workspace, remove it here.'
+        title: 'Editing',
+        intro: 'If you don\'t want something to be a part of your workspace, remove it here.'
         },
         {
         element: document.getElementById('saveProject'),
-        title: 'Recapture',
-        intro: 'As you progress through your project, recapture it to keep your workspace up do date.'
+        title: 'Recapturing',
+        intro: 'Workspaces evolve as you work. In order to keep things up-to-date, recapture your workspace before closing it. Recapturing replaces your current saved workspace with everything you have open.'
         },
         {
         element: document.getElementById('closeProject'),
-        title: 'Close',
-        intro: 'Close this workspace! Don\'t worry it will stay here to be opened later. Be sure to recapture your workspace before closing.'
+        title: 'Closing',
+        intro: 'When you close your workspace, all of the contained tabs, documents, and apps will be closed down for later.'
         },
         {
-        title: 'Switch',
-        intro: 'When you have multiple workspaces created, transition between them using the Switch button.'
+        title: 'Switching',
+        intro: 'If you have a workspace open but want to jump to a different one, transition between them using the Switch button.'
         },
         {
-        title: 'Toolbar Menu',
-        intro: 'Checkout the toolbar menu above for quick access to all of your workspaces! \n <br> <br>  &nbsp; &nbsp; <img src="../pictures/toolbar.jpeg">'
+        title: 'macOS Menubar',
+        intro: 'Checkout the menubar above for quick access to all of your workspaces! \n <br> <br>  &nbsp; &nbsp; <img src="../pictures/toolbar.png" width="175">'
         },
         {
-        title: 'Welcome to Ditto',
-        intro: 'If you have any questions or feedback about Ditto, please get in touch with our team. We\'d love to hear from you.'
+        title: 'You are ready to go!',
+        intro: 'If you have any questions or feedback about Ditto, please get in touch with our team. We\'d love to hear from you!'
         }]
     }).start()
     // add a flag when were done
@@ -1002,20 +1002,25 @@ function mainIntro() {
     // do tour for first time
     introJs().setOptions({
         showBullets: false,
-        showProgress: true,
+        showProgress: false,
         steps: [{
           title: 'Welcome to Ditto 👋',
-          intro: 'Thank you for downloading the app! Let us show you around.'
+          intro: 'We\'re here to help you better manage your workspaces! Let\'s start by showing you around.'
         },
         {
-          title: 'Permissions',
-          intro: 'For each application you have open, you will be asked to enable automation permissions. This allows Ditto to open and close your apps.'
+          title: 'In-App Permissions',
+          intro: 'In order for us to be able to detect, open, and close your open tabs and documents, we require Automation permissions. You must allow the permission for each app when prompted to get Ditto\'s full functionality!'
+        },
+        {
+            title: 'Workspaces',
+            intro: 'Workspaces are where projectivity is maximized! Create a workspace for each of your unique workflows and switch between them seamlessly. All open tabs, documents, and applications will be captured.' 
         },
         {
           element: document.getElementById('create_new_proj'),
-          title: 'Workspaces',
-          intro: 'Workspaces are where projectivity is maximized! Create a workspace for your unique workflows and switch between them effortlessly! All open tabs, documents, and applications will be captured.' 
+          title: 'Create a Workspace',
+          intro: 'Click here to capture your first workspace!' 
         }]
+
     }).start()
     // add a flag when were done
     .oncomplete(function() {
