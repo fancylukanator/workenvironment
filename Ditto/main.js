@@ -21,6 +21,7 @@ let mainWindowID;
 // Auto open app at login
 app.setLoginItemSettings({openAtLogin: true});
 
+
 // Create the browser window.
 function createWindow () {
   var mainWindow = new BrowserWindow({
@@ -102,7 +103,6 @@ app.on('window-all-closed', function () {
 
 
 
-
 // LISTENERS
 
 // Waiting to hear if the window should be hidden...
@@ -114,12 +114,10 @@ ipcMain.on('hide', function(event) {
 });
 
 
-
 // Dynamic tray title
 ipcMain.on('update-title-tray-window-event', function(event, title) {
   trayIcon.updateTitle(title);
 });
-
 
 
 // Open main app if closed on tray create
@@ -150,7 +148,6 @@ ipcMain.on('menubar-create', function(event) {
 });
 
 
-
 // Open main app if closed on tray recapture
 ipcMain.on('menubar-save', function(event) {
 
@@ -178,7 +175,6 @@ ipcMain.on('menubar-save', function(event) {
 });
 
 
-
 // Open main app from tray
 ipcMain.on('open-main-app', function(event) {
 
@@ -200,6 +196,7 @@ ipcMain.on('open-main-app', function(event) {
   BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace', '');
 
 });
+
 
 
 // UPDATES
