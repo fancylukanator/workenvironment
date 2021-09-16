@@ -529,7 +529,7 @@ async function openWorkspace(workspaceName) {
         }
     }
     // Close main window
-    ipc.send('minimize');
+    ipc.send('hide');
 }
 
 
