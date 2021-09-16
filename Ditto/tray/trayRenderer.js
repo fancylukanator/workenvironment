@@ -1,124 +1,125 @@
 // this file controls button clicks etc on the toolbar window
 const electron = require('electron');
-const { app, BrowserWindow, shell, ipcMain, remote} = require('electron');
+const { app, BrowserWindow, remote, ipcRenderer} = require('electron');
 const ipc = electron.ipcRenderer;
 const execShPromise = require("exec-sh").promise;
+
+// Used to track if a workspace is open or not
 let isProjectOpen;
 
-// reset workspace selector keys
+// Reset workspace selector keys
 localStorage.setItem('selectedWorkspace', '');
 localStorage.setItem('openedWorkspace', '');
 
-// create the list of workSpaces
+// Create the list of workspaces
 updateToolbarList();
 
-// display proper buttons
+// Display proper buttons
 displayButtons();
-
 
 
 // Opening & switching projects
 function openTray(){
 
-    //Retrieve selected & opened workspaces
+    // Retrieve selected & opened workspaces
     workspaceName = localStorage.getItem('selectedWorkspace');
     currentWorkspace = localStorage.getItem('openedWorkspace');
 
-    // Switching projects
+    // If the user is switching workspaces...
     if(currentWorkspace != null && currentWorkspace != "" && currentWorkspace != workspaceName){
-        
         newworkspaceName = localStorage.getItem('selectedWorkspace');
-
-        //toolbarsaveWorkspace(currrentworkspaceName);
         switchWorkspace(currentWorkspace, workspaceName);
 
+    // If the user is opening a workspace...
     } else if(workspaceName != null && workspaceName != "" && workspaceName != currentWorkspace){
-        //open workspace
         openWorkspace(workspaceName);
     }
 
+    // Update the tray UI
     displayButtons();
     updateToolbarList();
 
-    //hide tray
+    // Hide the tray
     remote.getCurrentWindow().hide();
 
-    //update main
+    // Update main app
     mainButtons();
     updateProjectList();
 }
 
 
 
-//Create Button
+// Create new workspace
 document.getElementById('create').addEventListener('click', (event) => {
 
-    //send message to main to create workspace
+    // Send message to main to create workspace
     ipc.send('menubar-create', '');
 
-    //hide tray
+    // Hide tray
     remote.getCurrentWindow().hide();
 })
 
 
 
-//Close Button
+// Close workspace
 document.getElementById('close').addEventListener('click', (event) => {
 
-    //retrieve workspaceName
+    // Retrieve workspace name
     workspaceName = localStorage.getItem('selectedWorkspace');
 
-    //close workspace
+    // Close workspace
     closeWorkspace(workspaceName);
 
-    //hide tray
+    // Hide tray
     remote.getCurrentWindow().hide();
 
-    //update buttons
+    // Update the buttons
     displayButtons();
 
-    //update main
+    // Update the main app
     mainButtons();
     updateProjectList();
 })
 
 
 
-//Save Button
+// Save the workspace
 document.getElementById('save').addEventListener('click', (event) => {
 
-    //send message to main to create workspace
+    // Send message to main to create workspace
     ipc.send('menubar-save', '');
 
-    //hide tray
+    // Hide the tray
     remote.getCurrentWindow().hide();
 })
 
 
 
-//Open main app
+// Open the main app
 document.getElementById('openApp').addEventListener('click', (event) => {
 
+    // Hide the tray
     remote.getCurrentWindow().hide();
 
-    // Open main app
+    // Open the main app
     ipc.send('open-main-app', '');
     
 })
 
 
 
-//Update all data, icon has been clicked
+// Update all tray data when the icon has been clicked
 ipc.on('ping', () => {
 
     // Sets the selected workspace to be the open workspace (either something or nothing)
     localStorage.setItem('selectedWorkspace', localStorage.getItem('openedWorkspace'));
 
+    // Update the UI
     updateToolbarList();
     displayButtons();
     updateProjectList();
 
-    // update size of menubar window
+    // Checks if a workspace is open or not...
     if(localStorage.getItem('openedWorkspace') != "" && localStorage.getItem('openedWorkspace') != null){
         isProjectOpen = true;
     } else{
@@ -129,6 +130,7 @@ ipc.on('ping', () => {
     let numWorkspaces = 0;
 
     for(var i in projectData) {
+
         // Ignore keys that are not workspaces
         if (projectData[i] == 'project-order' || projectData[i] == 'selectedWorkspace' || projectData[i] == 'openedWorkspace' || projectData[i] == 'mainTour' || projectData[i] == 'workspaceTour') {
             continue;
@@ -136,8 +138,9 @@ ipc.on('ping', () => {
         numWorkspaces = numWorkspaces + 1;
      }
 
+    // Set the menubar window height based on the number of workspaces
     ipc.send('menubar-height', [numWorkspaces, isProjectOpen])
 
-    // now send message to main
+    // Now send message to main to hide itself
     ipc.send('hide', '');
 })
