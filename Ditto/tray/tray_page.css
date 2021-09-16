@@ -36,34 +36,6 @@ button {
     cursor: pointer;
 }
 
-.controls {
-    margin: 3% 3%;
-}
-
-.action {
-    width: 40%;
-    margin: 3% 3% 3% 3%;
-    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 20px;
-    cursor: pointer;
-}
-
-.actionSwitch {
-    margin: 0 3% 3% 3%;
-    width: 90%;
-    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 20px;
-    cursor: pointer;
-}
-
 ul {
     list-style-type: none;
     padding: 0;
