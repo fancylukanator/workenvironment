@@ -139,5 +139,5 @@ ipc.on('ping', () => {
     ipc.send('menubar-height', [numWorkspaces, isProjectOpen])
 
     // now send message to main
-    ipc.send('minimize-main', '');
+    ipc.send('hide', '');
 })
