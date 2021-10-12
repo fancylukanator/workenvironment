@@ -4,11 +4,19 @@ artifactName: ditto.${ext}
 dmg:
   sign: false
 mac:
+  target: mas
   hardenedRuntime: true
   gatekeeperAssess: false
   entitlements: ./build/entitlements.mac.plist
   entitlementsInherit: ./build/entitlements.mac.plist
   minimumSystemVersion: 10.15.0
+mas:
+  hardenedRuntime: false
+  type: distribution
+  category: public.app-category.productivity
+  entitlements: ./build/entitlements.mas.plist
+  entitlementsInherit: ./build/entitlements.mas.inherit.plist
+  provisioningProfile: ./build/lukesteenge.provisionprofile
 publish:
   provider: github
   token: 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
