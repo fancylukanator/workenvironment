@@ -3,7 +3,6 @@
 // Modules to control application life and create native browser window
 const path = require('path');
 const {app, BrowserWindow, shell, ipcMain, Menu, Tray, nativeImage, dialog, webContents} = require('electron');
-const { autoUpdater } = require('electron-updater');
 
 // Analytics
 const { trackEvent } = require('./analytics');
@@ -54,11 +53,6 @@ function createWindow () {
     BrowserWindow.fromId(mainWindowID).webContents.send('display-workspace','');
     mainWindow.show();
   });
-
-  // Check for Update
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
   
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -67,9 +61,6 @@ function createWindow () {
 
 // Will run when the app is ready to go...
 app.whenReady().then(() => {
-
-  // Check for updates
-  autoUpdater.checkForUpdatesAndNotify();
 
   // Send app opening event to Google Analytics
   trackEvent('User Interaction', 'Ditto App Opened');
@@ -198,36 +189,3 @@ ipcMain.on('open-main-app', function(event) {
 });
 
 
-
-// UPDATES
-
-// Update is avaiable
-autoUpdater.on('update-available', () => {
-  BrowserWindow.fromId(mainWindowID).send('update_available');
-  var options = {
-    type: 'info',
-    buttons: ['Dismiss'],
-    title: "Ditto update",
-    message: 'A new version of Ditto is being downloaded...',
-  };
-  dialog.showMessageBox(options).then(result => {
-    // do stuff here with result if needed
-  });
-});
-
-
-// Update has been downloaded
-autoUpdater.on('update-downloaded', function (releaseInfo) {
-  var options = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: "Ditto update",
-      message: 'A new version of Ditto is available. Restart the application to apply the updates.',
-      detail: releaseInfo.releaseNotes
-  };
-  dialog.showMessageBox(options).then(result => {
-    if (result.response === 0) {
-      autoUpdater.quitAndInstall();
-    }
-  });
-});
